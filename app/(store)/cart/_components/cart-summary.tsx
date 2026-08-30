@@ -1,22 +1,28 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/pricing";
 
-export function CartSummary({ subtotal }: { subtotal: number }) {
+export async function CartSummary({ subtotal }: { subtotal: number }) {
+    const locale = await getLocale();
+    const t = await getTranslations("cart");
+
     return (
         <div className="flex flex-col gap-3">
             <div className="flex items-center justify-between">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span className="font-medium">{formatCurrency(subtotal)}</span>
+                <span className="text-muted-foreground">{t("subtotal")}</span>
+                <span className="font-medium">{formatCurrency(subtotal, "EUR", locale)}</span>
             </div>
             <Separator />
             <div className="flex items-center justify-between">
-                <span className="font-semibold">Total</span>
-                <span className="text-xl font-semibold">{formatCurrency(subtotal)}</span>
+                <span className="font-semibold">{t("total")}</span>
+                <span className="text-xl font-semibold">
+                    {formatCurrency(subtotal, "EUR", locale)}
+                </span>
             </div>
             <Link href="/checkout" className={buttonVariants({ size: "lg" })}>
-                Checkout
+                {t("checkout")}
             </Link>
         </div>
     );

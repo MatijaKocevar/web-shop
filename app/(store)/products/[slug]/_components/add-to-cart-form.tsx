@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/app/(store)/cart/_actions/add-to-cart";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
@@ -23,6 +24,7 @@ export function AddToCartForm({
     basePrice: number | null;
     variants: Variant[];
 }) {
+    const t = useTranslations("products");
     const [variantId, setVariantId] = useState(variants[0]?.id ?? "");
     const [quantity, setQuantity] = useState(1);
     const [pending, setPending] = useState(false);
@@ -57,7 +59,7 @@ export function AddToCartForm({
         <div className="flex flex-col gap-3">
             {variants.length > 0 && (
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Variant</span>
+                    <span className="font-medium">{t("variant")}</span>
                     <select
                         className="rounded-md border bg-background px-2 py-1.5"
                         value={variantId}
@@ -74,7 +76,7 @@ export function AddToCartForm({
 
             <div className="flex items-center gap-3">
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Quantity</span>
+                    <span className="font-medium">{t("quantity")}</span>
                     <input
                         type="number"
                         min={1}
@@ -89,7 +91,7 @@ export function AddToCartForm({
                     ) : (
                         <ShoppingCart className="size-4" />
                     )}
-                    Add to cart
+                    {t("addToCart")}
                 </Button>
             </div>
         </div>

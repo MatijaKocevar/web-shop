@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { processQueue } from "../_actions/process-queue";
 
 export function ProcessQueueButton({ hasQueued }: { hasQueued: boolean }) {
+    const t = useTranslations("admin.printQueue");
     const [pending, setPending] = useState(false);
     const [result, setResult] = useState<{ sliced: number; failed: number } | null>(null);
 
@@ -26,11 +28,11 @@ export function ProcessQueueButton({ hasQueued }: { hasQueued: boolean }) {
         <div className="flex items-center gap-3">
             <Button onClick={handleClick} disabled={pending || !hasQueued}>
                 {pending && <Loader2 className="size-4 animate-spin" />}
-                Process queue
+                {t("processQueue")}
             </Button>
             {result && (
                 <span className="text-sm text-muted-foreground">
-                    Sliced: {result.sliced}, failed: {result.failed}
+                    {t("slicedFailed", { sliced: result.sliced, failed: result.failed })}
                 </span>
             )}
         </div>

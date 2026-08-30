@@ -1,3 +1,4 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { listPrintJobs } from "@/queries/print-jobs";
@@ -9,39 +10,45 @@ import { updatePrintJobStatus } from "./_actions/update-print-job-status";
 const selectClass =
     "rounded-md border bg-background px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
+const printJobStatuses = ["QUEUED", "SLICING", "SLICED", "PRINTING", "DONE", "FAILED"];
+
 export default async function AdminPrintQueuePage() {
     const jobs = await listPrintJobs();
     const slicerAvailable = await isSlicerAvailable();
+    const locale = await getLocale();
+    const t = await getTranslations("admin.printQueue");
+    const tStatus = await getTranslations("status.printJob");
     const queued = jobs.filter((j) => j.status === "QUEUED").length;
 
     return (
         <div>
             <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Print queue</h1>
+                <h1 className="text-2xl font-semibold">{t("title")}</h1>
                 <ProcessQueueButton hasQueued={queued > 0} />
             </div>
 
             {!slicerAvailable && (
                 <div className="mb-6 rounded-lg border border-destructive/30 bg-destructive/10 px-4 py-3 text-sm">
-                    OrcaSlicer is not available on this machine. Install it (or set{" "}
-                    <code className="font-mono">ORCA_SLICER_BIN</code>) to slice jobs.
+                    {t.rich("slicerNotAvailable", {
+                        code: (chunks) => <code className="font-mono">{chunks}</code>,
+                    })}
                 </div>
             )}
 
             {jobs.length === 0 ? (
-                <p className="text-muted-foreground">No print jobs yet.</p>
+                <p className="text-muted-foreground">{t("noJobs")}</p>
             ) : (
                 <div className="overflow-hidden rounded-lg border">
                     <table className="w-full text-sm">
                         <thead className="bg-muted/50 text-left">
                             <tr>
-                                <th className="px-4 py-2 font-medium">Item</th>
-                                <th className="px-4 py-2 font-medium">Profile</th>
-                                <th className="px-4 py-2 font-medium">Est. time</th>
-                                <th className="px-4 py-2 font-medium">Material</th>
-                                <th className="px-4 py-2 font-medium">Price</th>
-                                <th className="px-4 py-2 font-medium">Status</th>
-                                <th className="px-4 py-2 font-medium">Update</th>
+                                <th className="px-4 py-2 font-medium">{t("item")}</th>
+                                <th className="px-4 py-2 font-medium">{t("profile")}</th>
+                                <th className="px-4 py-2 font-medium">{t("estTime")}</th>
+                                <th className="px-4 py-2 font-medium">{t("material")}</th>
+                                <th className="px-4 py-2 font-medium">{t("price")}</th>
+                                <th className="px-4 py-2 font-medium">{t("status")}</th>
+                                <th className="px-4 py-2 font-medium">{t("update")}</th>
                             </tr>
                         </thead>
                         <tbody className="divide-y">
@@ -61,11 +68,11 @@ export default async function AdminPrintQueuePage() {
                                     </td>
                                     <td className="px-4 py-2 text-muted-foreground">
                                         {job.price != null
-                                            ? formatCurrency(Number(job.price))
+                                            ? formatCurrency(Number(job.price), "EUR", locale)
                                             : "—"}
                                     </td>
                                     <td className="px-4 py-2">
-                                        <Badge variant="secondary">{job.status}</Badge>
+                                        <Badge variant="secondary">{tStatus(job.status)}</Badge>
                                         {job.sliceLog && (
                                             <p
                                                 className="mt-1 max-w-xs truncate text-xs text-destructive"
@@ -86,21 +93,14 @@ export default async function AdminPrintQueuePage() {
                                                 name="status"
                                                 defaultValue={job.status}
                                             >
-                                                {[
-                                                    "QUEUED",
-                                                    "SLICING",
-                                                    "SLICED",
-                                                    "PRINTING",
-                                                    "DONE",
-                                                    "FAILED",
-                                                ].map((s) => (
+                                                {printJobStatuses.map((s) => (
                                                     <option key={s} value={s}>
-                                                        {s}
+                                                        {tStatus(s)}
                                                     </option>
                                                 ))}
                                             </select>
                                             <Button type="submit" variant="outline" size="sm">
-                                                Set
+                                                {t("update")}
                                             </Button>
                                         </form>
                                     </td>

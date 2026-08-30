@@ -1,20 +1,23 @@
+import { getLocale, getTranslations } from "next-intl/server";
 import { formatCurrency } from "@/lib/pricing";
 import { getHydratedCart } from "@/queries/cart";
 import { CheckoutButton } from "./_components/checkout-button";
 
 export default async function CheckoutPage() {
     const { items, subtotal } = await getHydratedCart();
+    const locale = await getLocale();
+    const t = await getTranslations("checkout");
 
     return (
         <div className="mx-auto max-w-7xl px-4 py-10">
-            <h1 className="mb-6 text-2xl font-semibold">Checkout</h1>
+            <h1 className="mb-6 text-2xl font-semibold">{t("title")}</h1>
 
             {items.length === 0 ? (
-                <p className="text-muted-foreground">Your cart is empty.</p>
+                <p className="text-muted-foreground">{t("empty")}</p>
             ) : (
                 <div className="grid gap-8 lg:grid-cols-[1fr_320px]">
                     <div className="flex flex-col gap-2">
-                        <h2 className="text-sm font-medium">Order summary</h2>
+                        <h2 className="text-sm font-medium">{t("orderSummary")}</h2>
                         <ul className="flex flex-col divide-y rounded-xl border">
                             {items.map((item) => (
                                 <li
@@ -29,7 +32,11 @@ export default async function CheckoutPage() {
                                         </span>
                                     </span>
                                     <span className="font-medium">
-                                        {formatCurrency(item.unitPrice * item.quantity)}
+                                        {formatCurrency(
+                                            item.unitPrice * item.quantity,
+                                            "EUR",
+                                            locale,
+                                        )}
                                     </span>
                                 </li>
                             ))}
@@ -38,15 +45,12 @@ export default async function CheckoutPage() {
 
                     <aside className="h-fit rounded-xl border p-5">
                         <div className="flex items-center justify-between">
-                            <span className="font-semibold">Total</span>
+                            <span className="font-semibold">{t("total")}</span>
                             <span className="text-xl font-semibold">
-                                {formatCurrency(subtotal)}
+                                {formatCurrency(subtotal, "EUR", locale)}
                             </span>
                         </div>
-                        <p className="mt-2 text-xs text-muted-foreground">
-                            You&apos;ll be redirected to Stripe to complete payment. Final price for
-                            custom prints is confirmed by slicing before printing.
-                        </p>
+                        <p className="mt-2 text-xs text-muted-foreground">{t("stripeNote")}</p>
                         <div className="mt-4">
                             <CheckoutButton />
                         </div>

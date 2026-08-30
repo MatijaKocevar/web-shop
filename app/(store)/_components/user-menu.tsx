@@ -4,6 +4,7 @@ import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { LogOut, Settings, User as UserIcon } from "lucide-react";
 import type { Session } from "next-auth";
+import { useTranslations } from "next-intl";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -16,10 +17,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 export function UserMenu({ session }: { session: Session | null }) {
+    const t = useTranslations("common");
+
     if (!session?.user) {
         return (
             <Link href="/signin" className={buttonVariants({ variant: "ghost", size: "sm" })}>
-                Sign in
+                {t("signIn")}
             </Link>
         );
     }
@@ -60,12 +63,12 @@ export function UserMenu({ session }: { session: Session | null }) {
                 <DropdownMenuSeparator />
                 <DropdownMenuItem render={<Link href="/orders" />}>
                     <Settings className="size-4" />
-                    My orders
+                    {t("myOrders")}
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={() => signOut()}>
                     <LogOut className="size-4" />
-                    Sign out
+                    {t("signOut")}
                 </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>

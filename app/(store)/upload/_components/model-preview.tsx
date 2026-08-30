@@ -1,4 +1,5 @@
 import { X } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { ModelViewer } from "@/components/model-viewer";
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";
@@ -22,6 +23,8 @@ export function ModelPreview({
     onStats,
     onReset,
 }: Props) {
+    const t = useTranslations("upload");
+
     return (
         <div className="flex flex-col gap-4">
             <div className="relative aspect-[4/3] overflow-hidden rounded-xl border bg-muted/30">
@@ -38,7 +41,7 @@ export function ModelPreview({
                     onClick={onReset}
                 >
                     <X className="size-4" />
-                    <span className="sr-only">Remove model</span>
+                    <span className="sr-only">{t("removeModel")}</span>
                 </Button>
             </div>
 
@@ -53,7 +56,7 @@ export function ModelPreview({
                     </span>
                     {!buildVolumeOk && (
                         <span className="rounded-md border border-destructive px-2 py-1 text-destructive">
-                            Too large for {printerName}
+                            {t("tooLarge", { printer: printerName ?? "" })}
                         </span>
                     )}
                 </div>

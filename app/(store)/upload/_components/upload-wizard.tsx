@@ -1,5 +1,6 @@
 "use client";
 
+import { useTranslations } from "next-intl";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ModelPreview } from "./model-preview";
 import { PrintSettings } from "./print-settings";
@@ -18,6 +19,7 @@ export function UploadWizard({
     profiles: Profile[];
     filaments: Filament[];
 }) {
+    const t = useTranslations("upload");
     const upload = useUpload();
     const settings = usePrintSettings(profiles, filaments);
     const { quote, buildVolumeOk } = useQuote({
@@ -73,7 +75,7 @@ export function UploadWizard({
 
             <Card className="h-fit">
                 <CardHeader>
-                    <CardTitle>Print settings</CardTitle>
+                    <CardTitle>{t("printSettings")}</CardTitle>
                 </CardHeader>
                 <CardContent className="flex flex-col gap-4">
                     <PrintSettings profiles={profiles} filaments={filaments} settings={settings} />

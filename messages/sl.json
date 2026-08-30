@@ -1,0 +1,290 @@
+{
+    "metadata": {
+        "description": "Kupite 3D natisnjene izdelke ali naložite svoj model in natisnili vam ga bomo."
+    },
+    "common": {
+        "signIn": "Prijava",
+        "signOut": "Odjava",
+        "cart": "Košarica",
+        "products": "Izdelki",
+        "uploadModel": "Naloži model",
+        "myOrders": "Moja naročila",
+        "cancel": "Prekliči",
+        "save": "Shrani",
+        "delete": "Izbriši",
+        "active": "Aktivno",
+        "total": "Skupaj",
+        "none": "Brez",
+        "set": "Nastavi"
+    },
+    "nav": {
+        "about": "O nas",
+        "faq": "Pogosta vprašanja",
+        "contact": "Kontakt"
+    },
+    "home": {
+        "heroTitle": "Stvari, ki jih ne najdete nikjer drugje, natisnjene za vas.",
+        "heroSubtitle": "Kupite že izdelane 3D natisnjene izdelke ali naložite svoj model in natisnili vam ga bomo po naročilu.",
+        "browseProducts": "Prebrskaj izdelke",
+        "uploadModel": "Naloži model",
+        "latestProducts": "Najnovejši izdelki",
+        "viewAll": "Prikaži vse"
+    },
+    "products": {
+        "title": "Izdelki",
+        "itemCount": "{count, plural, one {# izdelek} two {# izdelka} few {# izdelki} other {# izdelkov}}",
+        "empty": "Ni še izdelkov.",
+        "noImage": "Ni slike",
+        "noPreview": "Ni predogleda",
+        "quoteOnUpload": "Ponudba ob nalaganju",
+        "variant": "Različica",
+        "quantity": "Količina",
+        "addToCart": "Dodaj v košarico",
+        "category": "Kategorija"
+    },
+    "cart": {
+        "title": "Košarica",
+        "emptyTitle": "Vaša košarica je prazna",
+        "emptySubtitle": "Dodajte izdelke ali naložite model, da začnete.",
+        "browseProducts": "Prebrskaj izdelke",
+        "subtotal": "Vmesni seštevek",
+        "total": "Skupaj",
+        "checkout": "Na blagajno",
+        "remove": "Odstrani",
+        "readyMade": "Izdelano",
+        "supports": "podpore"
+    },
+    "checkout": {
+        "title": "Blagajna",
+        "empty": "Vaša košarica je prazna.",
+        "orderSummary": "Povzetek naročila",
+        "total": "Skupaj",
+        "stripeNote": "Za dokončanje plačila boste preusmerjeni na Stripe. Končna cena za prilagojene natise se potrdi z rezanjem pred tiskanjem.",
+        "payStripe": "Plačaj s Stripe"
+    },
+    "orders": {
+        "title": "Moja naročila",
+        "empty": "Še ni naročil.",
+        "total": "Skupaj"
+    },
+    "upload": {
+        "title": "Naloži model",
+        "subtitle": "Spustite datoteko STL ali 3MF, izberite nastavitve in takoj dobite ponudbo.",
+        "printSettings": "Nastavitve tiskanja",
+        "printerProfile": "Tiskalnik in profil",
+        "filament": "Filament",
+        "infill": "Polnilo: {value}%",
+        "supports": "Ustvari podpore",
+        "material": "Material",
+        "printTime": "Ocenjeni čas tiskanja",
+        "estimatedPrice": "Ocenjena cena",
+        "finalPriceNote": "Končna cena se potrdi z natančnim rezom pred plačilom.",
+        "uploadHint": "Naložite model za oceno.",
+        "addToCart": "Dodaj v košarico",
+        "addedToCart": "Dodano v košarico",
+        "dropHere": "Spustite datoteko tukaj",
+        "dragDrop": "Povlecite in spustite model",
+        "browseHint": "ali kliknite za brskanje · .stl / .3mf",
+        "removeModel": "Odstrani model",
+        "tooLarge": "Preveliko za {printer}",
+        "unsupportedFile": "Nepodprta datoteka. Naložite datoteko .stl ali .3mf."
+    },
+    "signin": {
+        "title": "Prijava",
+        "subtitle": "Prijavite se za sledenje naročilom in nalaganje modelov.",
+        "continueGoogle": "Nadaljuj z Googlom",
+        "or": "ali",
+        "email": "E-pošta",
+        "emailPlaceholder": "vi@primer.si",
+        "emailMeLink": "Pošlji mi povezavo za prijavo",
+        "testLogin": "testna prijava",
+        "password": "Geslo",
+        "testLoginButton": "Testna prijava",
+        "testHint": "admin@test.com (admin) · customer@test.com (stranka)"
+    },
+    "about": {
+        "title": "O nas",
+        "p1": "Oblikujemo in 3D tiskamo funkcionalne vsakodnevne predmete na Creality K1C. Vsak izdelek je izdelan po naročilu.",
+        "p2": "Imate svoj model? Naložite datoteko STL ali 3MF in natisnili vam ga bomo v materialu in obdelavi po vaši izbiri."
+    },
+    "faq": {
+        "title": "Pogosta vprašanja",
+        "q1": "Katere formate datotek lahko naložim?",
+        "a1": "STL in 3MF. Datoteke 3MF lahko vsebujejo barve in materiale.",
+        "q2": "Kako natančna je takojšnja ponudba?",
+        "a2": "Takojšnja ponudba je ocena. Končna cena se potrdi z natančnim rezom vašega modela pred tiskanjem.",
+        "q3": "V katerih materialih tiskate?",
+        "a3": "Trenutno PLA in PETG, kmalu še več.",
+        "q4": "Koliko časa traja tiskanje?",
+        "a4": "Odvisno od velikosti in nastavitev — za vsako naročilo boste videli oceno."
+    },
+    "contact": {
+        "title": "Kontakt",
+        "body": "Vprašanja o naročilu ali prilagojenem natisu? Pišite nam na",
+        "email": "hello@printshop.example"
+    },
+    "status": {
+        "order": {
+            "PENDING": "Čaka na plačilo",
+            "PAID": "Plačano",
+            "PROCESSING": "V obdelavi",
+            "PRINTING": "Tiskanje",
+            "SHIPPED": "Poslano",
+            "DELIVERED": "Dostavljeno",
+            "CANCELLED": "Preklicano",
+            "REFUNDED": "Vrnjeno"
+        },
+        "printJob": {
+            "QUEUED": "V vrsti",
+            "SLICING": "Rezanje",
+            "SLICED": "Odrezano",
+            "PRINTING": "Tiskanje",
+            "DONE": "Končano",
+            "FAILED": "Neuspešno"
+        }
+    },
+    "role": {
+        "CUSTOMER": "Stranka",
+        "ADMIN": "Skrbnik"
+    },
+    "productType": {
+        "READY_MADE": "Izdelano",
+        "CUSTOM_PRINT": "Prilagojen natis"
+    },
+    "theme": {
+        "toggle": "Preklopi temo",
+        "light": "Svetla",
+        "dark": "Temna",
+        "system": "Sistemska"
+    },
+    "admin": {
+        "printShopAdmin": "Print Shop Admin",
+        "nav": {
+            "dashboard": "Nadzorna plošča",
+            "products": "Izdelki",
+            "filaments": "Filamenti",
+            "printers": "Tiskalniki",
+            "orders": "Naročila",
+            "printQueue": "Čakalna vrsta",
+            "users": "Uporabniki"
+        },
+        "dashboard": {
+            "title": "Nadzorna plošča",
+            "products": "Izdelki",
+            "orders": "Naročila",
+            "printJobs": "Tiskalna opravila",
+            "users": "Uporabniki"
+        },
+        "common": {
+            "name": "Ime",
+            "email": "E-pošta",
+            "material": "Material",
+            "color": "Barva",
+            "category": "Kategorija",
+            "type": "Vrsta",
+            "price": "Cena",
+            "status": "Status",
+            "upload": "Naloži",
+            "active": "Aktivno",
+            "none": "Brez"
+        },
+        "products": {
+            "title": "Izdelki",
+            "new": "Nov izdelek",
+            "newTitle": "Nov izdelek",
+            "edit": "Uredi izdelek",
+            "slug": "Povezava (slug)",
+            "slugPlaceholder": "samodejno ustvarjeno iz imena",
+            "description": "Opis",
+            "priceEur": "Cena (EUR)",
+            "newCategory": "Nova kategorija",
+            "newCategoryPlaceholder": "ustvari novo kategorijo",
+            "createProduct": "Ustvari izdelek",
+            "previewModel": "3D model za predogled",
+            "current": "Trenutno: {filename}",
+            "noModel": "Model ni naložen — na strani izdelka bo prikazana slika.",
+            "images": "Slike",
+            "deleteProduct": "Izbriši izdelek"
+        },
+        "filaments": {
+            "title": "Filamenti",
+            "new": "Nov filament",
+            "newTitle": "Nov filament",
+            "edit": "Uredi filament",
+            "density": "Gostota (g/cm³)",
+            "costPerGram": "Cena na gram (€)",
+            "costPerGramShort": "Cena/g",
+            "createFilament": "Ustvari filament",
+            "deleteFilament": "Izbriši filament"
+        },
+        "printers": {
+            "title": "Tiskalniki in profili",
+            "newProfile": "Nov profil",
+            "newPrinter": "Nov tiskalnik",
+            "newPrinterTitle": "Nov tiskalnik",
+            "editPrinter": "Uredi tiskalnik",
+            "newProfileTitle": "Nov profil",
+            "editProfile": "Uredi profil",
+            "printer": "Tiskalnik",
+            "make": "Proizvajalec",
+            "buildX": "Velikost X (mm)",
+            "buildY": "Velikost Y (mm)",
+            "buildZ": "Velikost Z (mm)",
+            "createPrinter": "Ustvari tiskalnik",
+            "deletePrinter": "Izbriši tiskalnik",
+            "profile": "Profil",
+            "layer": "Plast",
+            "infill": "Polnilo",
+            "speed": "Hitrost",
+            "machineRate": "Strojna postavka",
+            "noProfiles": "Še ni profilov.",
+            "editPrinterLink": "Uredi tiskalnik",
+            "nozzle": "Šoba (mm)",
+            "layerHeight": "Višina plasti (mm)",
+            "infillPct": "Polnilo (%)",
+            "speedUnit": "Hitrost (mm/s)",
+            "machineRateEur": "Strojna postavka (€/h)",
+            "setupFee": "Strošek priprave (€)",
+            "supportsEnabled": "Podpore omogočene",
+            "createProfile": "Ustvari profil",
+            "deleteProfile": "Izbriši profil"
+        },
+        "orders": {
+            "title": "Naročila",
+            "date": "Datum",
+            "email": "E-pošta",
+            "items": "Izdelki",
+            "total": "Skupaj",
+            "status": "Status",
+            "order": "Naročilo",
+            "stripeSession": "Stripe seja: {id}",
+            "updateStatus": "Posodobi status",
+            "backToOrders": "← Nazaj na naročila",
+            "printJobStatus": "tiskalno opravilo {status}"
+        },
+        "printQueue": {
+            "title": "Čakalna vrsta",
+            "slicerNotAvailable": "OrcaSlicer ni na voljo na tem računalniku. Namestite ga (ali nastavite {code}) za rezanje opravil.",
+            "noJobs": "Še ni tiskalnih opravil.",
+            "item": "Izdelek",
+            "profile": "Profil",
+            "estTime": "Ocenjen čas",
+            "material": "Material",
+            "price": "Cena",
+            "status": "Status",
+            "update": "Posodobi",
+            "processQueue": "Obdelaj vrsto",
+            "slicedFailed": "Odrezano: {sliced}, neuspešno: {failed}"
+        },
+        "users": {
+            "title": "Uporabniki",
+            "name": "Ime",
+            "email": "E-pošta",
+            "role": "Vloga",
+            "orders": "Naročila",
+            "joined": "Pridružen",
+            "actions": "Dejanja",
+            "deleteUser": "Izbriši uporabnika"
+        }
+    }
+}

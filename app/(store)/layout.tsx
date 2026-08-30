@@ -1,9 +1,11 @@
+import { getTranslations } from "next-intl/server";
 import { getCart } from "@/lib/cart";
 import { CartHydrator } from "./_components/cart-hydrator";
 import { StoreHeader } from "./_components/store-header";
 
 export default async function StoreLayout({ children }: { children: React.ReactNode }) {
     const items = await getCart();
+    const t = await getTranslations("nav");
 
     return (
         <div className="flex min-h-dvh flex-col">
@@ -15,13 +17,13 @@ export default async function StoreLayout({ children }: { children: React.ReactN
                     <p>© {new Date().getFullYear()} 3D Print Shop</p>
                     <nav className="flex gap-4">
                         <a href="/about" className="hover:text-foreground">
-                            About
+                            {t("about")}
                         </a>
                         <a href="/faq" className="hover:text-foreground">
-                            FAQ
+                            {t("faq")}
                         </a>
                         <a href="/contact" className="hover:text-foreground">
-                            Contact
+                            {t("contact")}
                         </a>
                     </nav>
                 </div>

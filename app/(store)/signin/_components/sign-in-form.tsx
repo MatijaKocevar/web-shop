@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { Loader2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -16,6 +17,7 @@ export function SignInForm({
     callbackUrl?: string;
     testLogin?: boolean;
 }) {
+    const t = useTranslations("signin");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loading, setLoading] = useState<"google" | "email" | "credentials" | null>(null);
@@ -23,8 +25,8 @@ export function SignInForm({
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Sign in</CardTitle>
-                <CardDescription>Sign in to track orders and upload models.</CardDescription>
+                <CardTitle>{t("title")}</CardTitle>
+                <CardDescription>{t("subtitle")}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col gap-4">
                 <Button
@@ -35,12 +37,12 @@ export function SignInForm({
                     disabled={loading !== null}
                 >
                     {loading === "google" && <Loader2 className="size-4 animate-spin" />}
-                    Continue with Google
+                    {t("continueGoogle")}
                 </Button>
 
                 <div className="flex items-center gap-3">
                     <Separator className="flex-1" />
-                    <span className="text-xs text-muted-foreground">or</span>
+                    <span className="text-xs text-muted-foreground">{t("or")}</span>
                     <Separator className="flex-1" />
                 </div>
 
@@ -53,11 +55,11 @@ export function SignInForm({
                     }}
                 >
                     <div className="flex flex-col gap-1.5">
-                        <Label htmlFor="email">Email</Label>
+                        <Label htmlFor="email">{t("email")}</Label>
                         <Input
                             id="email"
                             type="email"
-                            placeholder="you@example.com"
+                            placeholder={t("emailPlaceholder")}
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             required
@@ -65,7 +67,7 @@ export function SignInForm({
                     </div>
                     <Button type="submit" variant="outline" disabled={loading !== null}>
                         {loading === "email" && <Loader2 className="size-4 animate-spin" />}
-                        Email me a sign-in link
+                        {t("emailMeLink")}
                     </Button>
                 </form>
 
@@ -73,7 +75,7 @@ export function SignInForm({
                     <>
                         <div className="flex items-center gap-3">
                             <Separator className="flex-1" />
-                            <span className="text-xs text-muted-foreground">test login</span>
+                            <span className="text-xs text-muted-foreground">{t("testLogin")}</span>
                             <Separator className="flex-1" />
                         </div>
 
@@ -86,7 +88,7 @@ export function SignInForm({
                             }}
                         >
                             <div className="flex flex-col gap-1.5">
-                                <Label htmlFor="test-email">Email</Label>
+                                <Label htmlFor="test-email">{t("email")}</Label>
                                 <Input
                                     id="test-email"
                                     type="email"
@@ -97,7 +99,7 @@ export function SignInForm({
                                 />
                             </div>
                             <div className="flex flex-col gap-1.5">
-                                <Label htmlFor="test-password">Password</Label>
+                                <Label htmlFor="test-password">{t("password")}</Label>
                                 <Input
                                     id="test-password"
                                     type="password"
@@ -111,11 +113,9 @@ export function SignInForm({
                                 {loading === "credentials" && (
                                     <Loader2 className="size-4 animate-spin" />
                                 )}
-                                Test login
+                                {t("testLoginButton")}
                             </Button>
-                            <p className="text-xs text-muted-foreground">
-                                admin@test.com (admin) · customer@test.com (customer)
-                            </p>
+                            <p className="text-xs text-muted-foreground">{t("testHint")}</p>
                         </form>
                     </>
                 )}

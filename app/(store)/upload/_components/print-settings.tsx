@@ -1,3 +1,4 @@
+import { useTranslations } from "next-intl";
 import type { Filament, Profile } from "../_utils/types";
 import type { PrintSettings } from "../_hooks/use-print-settings";
 
@@ -8,10 +9,12 @@ type Props = {
 };
 
 export function PrintSettings({ profiles, filaments, settings }: Props) {
+    const t = useTranslations("upload");
+
     return (
         <div className="flex flex-col gap-4">
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Printer &amp; profile</span>
+                <span className="font-medium">{t("printerProfile")}</span>
                 <select
                     className="rounded-md border bg-background px-2 py-1.5"
                     value={settings.profile?.id ?? ""}
@@ -26,7 +29,7 @@ export function PrintSettings({ profiles, filaments, settings }: Props) {
             </label>
 
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Filament</span>
+                <span className="font-medium">{t("filament")}</span>
                 <select
                     className="rounded-md border bg-background px-2 py-1.5"
                     value={settings.filament?.id ?? ""}
@@ -41,7 +44,7 @@ export function PrintSettings({ profiles, filaments, settings }: Props) {
             </label>
 
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Infill: {settings.infill}%</span>
+                <span className="font-medium">{t("infill", { value: settings.infill })}</span>
                 <input
                     type="range"
                     min={5}
@@ -58,7 +61,7 @@ export function PrintSettings({ profiles, filaments, settings }: Props) {
                     checked={settings.supports}
                     onChange={(e) => settings.setSupports(e.target.checked)}
                 />
-                <span>Generate supports</span>
+                <span>{t("supports")}</span>
             </label>
         </div>
     );

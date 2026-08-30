@@ -1,25 +1,26 @@
 import Link from "next/link";
 import { ArrowRight, Upload } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { listProducts } from "@/queries/products";
 import { ProductCard } from "./products/_components/product-card";
 
 export default async function HomePage() {
     const products = await listProducts();
+    const t = await getTranslations("home");
 
     return (
         <div className="mx-auto max-w-7xl px-4">
             <section className="py-20 text-center sm:py-28">
                 <h1 className="mx-auto max-w-3xl text-4xl font-semibold tracking-tight text-balance sm:text-6xl">
-                    Things you can&apos;t find anywhere else, printed for you.
+                    {t("heroTitle")}
                 </h1>
                 <p className="mx-auto mt-6 max-w-xl text-lg text-muted-foreground">
-                    Shop ready-made 3D printed products, or upload your own model and we&apos;ll
-                    print it on demand.
+                    {t("heroSubtitle")}
                 </p>
                 <div className="mt-8 flex items-center justify-center gap-3">
                     <Link href="/products" className={buttonVariants({ size: "lg" })}>
-                        Browse products
+                        {t("browseProducts")}
                         <ArrowRight className="size-4" />
                     </Link>
                     <Link
@@ -27,7 +28,7 @@ export default async function HomePage() {
                         className={buttonVariants({ size: "lg", variant: "outline" })}
                     >
                         <Upload className="size-4" />
-                        Upload a model
+                        {t("uploadModel")}
                     </Link>
                 </div>
             </section>
@@ -35,12 +36,12 @@ export default async function HomePage() {
             {products.length > 0 && (
                 <section className="pb-24">
                     <div className="mb-6 flex items-center justify-between">
-                        <h2 className="text-xl font-semibold">Latest products</h2>
+                        <h2 className="text-xl font-semibold">{t("latestProducts")}</h2>
                         <Link
                             href="/products"
                             className={buttonVariants({ variant: "ghost", size: "sm" })}
                         >
-                            View all
+                            {t("viewAll")}
                             <ArrowRight className="size-4" />
                         </Link>
                     </div>

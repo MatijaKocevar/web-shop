@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { ShoppingCart } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { buttonVariants } from "@/components/ui/button";
 import { useCartCount } from "@/app/(store)/cart/_stores/cart-store";
 
 export function CartButton() {
     const count = useCartCount();
+    const t = useTranslations("common");
 
     return (
         <Link
@@ -20,7 +22,7 @@ export function CartButton() {
                     {count > 99 ? "99+" : count}
                 </span>
             )}
-            <span className="sr-only">Cart</span>
+            <span className="sr-only">{t("cart")}</span>
         </Link>
     );
 }

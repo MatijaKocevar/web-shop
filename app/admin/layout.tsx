@@ -9,29 +9,34 @@ import {
     ListOrdered,
     Users,
 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/lib/auth";
 import { ThemeToggle } from "@/components/theme-toggle";
-
-const nav = [
-    { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/admin/products", label: "Products", icon: Package },
-    { href: "/admin/filaments", label: "Filaments", icon: Layers },
-    { href: "/admin/printers", label: "Printers", icon: Printer },
-    { href: "/admin/orders", label: "Orders", icon: Receipt },
-    { href: "/admin/print-queue", label: "Print queue", icon: ListOrdered },
-    { href: "/admin/users", label: "Users", icon: Users },
-];
+import { LanguageSwitcher } from "@/components/language-switcher";
 
 export default async function AdminLayout({ children }: { children: React.ReactNode }) {
     const session = await auth();
     if (session?.user.role !== "ADMIN") redirect("/signin");
 
+    const t = await getTranslations("admin.nav");
+    const tCommon = await getTranslations("admin");
+
+    const nav = [
+        { href: "/admin", label: t("dashboard"), icon: LayoutDashboard },
+        { href: "/admin/products", label: t("products"), icon: Package },
+        { href: "/admin/filaments", label: t("filaments"), icon: Layers },
+        { href: "/admin/printers", label: t("printers"), icon: Printer },
+        { href: "/admin/orders", label: t("orders"), icon: Receipt },
+        { href: "/admin/print-queue", label: t("printQueue"), icon: ListOrdered },
+        { href: "/admin/users", label: t("users"), icon: Users },
+    ];
+
     return (
         <div className="flex min-h-dvh">
             <aside className="flex w-56 shrink-0 flex-col border-r">
                 <div className="flex h-14 items-center gap-2 border-b px-4 font-semibold">
-                    Print Shop Admin
+                    {tCommon("printShopAdmin")}
                 </div>
                 <nav className="flex flex-col gap-1 p-2">
                     {nav.map((item) => (
@@ -47,7 +52,10 @@ export default async function AdminLayout({ children }: { children: React.ReactN
                 </nav>
                 <div className="mt-auto flex items-center justify-between border-t p-2">
                     <span className="text-sm text-muted-foreground">{session.user.email}</span>
-                    <ThemeToggle />
+                    <div className="flex items-center gap-1">
+                        <LanguageSwitcher />
+                        <ThemeToggle />
+                    </div>
                 </div>
             </aside>
             <main className="flex-1 p-6">{children}</main>

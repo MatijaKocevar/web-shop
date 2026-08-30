@@ -1,6 +1,7 @@
 "use client";
 
 import { Trash2 } from "lucide-react";
+import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/pricing";
 import { publicUrl } from "@/lib/storage";
@@ -10,6 +11,9 @@ import { useCartStore } from "../_stores/cart-store";
 import type { HydratedCartItem } from "@/queries/cart";
 
 export function CartItems({ items }: { items: HydratedCartItem[] }) {
+    const locale = useLocale();
+    const t = useTranslations("cart");
+
     async function handleUpdateQuantity(id: string, quantity: number) {
         const next = await updateQuantity(id, quantity);
 
@@ -47,11 +51,11 @@ export function CartItems({ items }: { items: HydratedCartItem[] }) {
                                       item.filamentName,
                                       item.profileName,
                                       item.infill ? `${item.infill}%` : null,
-                                      item.supports ? "supports" : null,
+                                      item.supports ? t("supports") : null,
                                   ]
                                       .filter(Boolean)
                                       .join(" · ")
-                                : "Ready made"}
+                                : t("readyMade")}
                         </p>
                     </div>
 
@@ -74,12 +78,12 @@ export function CartItems({ items }: { items: HydratedCartItem[] }) {
                     </div>
 
                     <div className="w-20 text-right font-medium">
-                        {formatCurrency(item.unitPrice * item.quantity)}
+                        {formatCurrency(item.unitPrice * item.quantity, "EUR", locale)}
                     </div>
 
                     <Button variant="ghost" size="icon" onClick={() => handleRemove(item.id)}>
                         <Trash2 className="size-4" />
-                        <span className="sr-only">Remove</span>
+                        <span className="sr-only">{t("remove")}</span>
                     </Button>
                 </li>
             ))}

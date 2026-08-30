@@ -1,9 +1,12 @@
 import { Upload } from "lucide-react";
+import { useTranslations } from "next-intl";
 import type { DropzoneState } from "react-dropzone";
 
 type Props = Pick<DropzoneState, "getRootProps" | "getInputProps" | "isDragActive">;
 
 export function UploadDropzone({ getRootProps, getInputProps, isDragActive }: Props) {
+    const t = useTranslations("upload");
+
     return (
         <div
             {...getRootProps()}
@@ -12,13 +15,11 @@ export function UploadDropzone({ getRootProps, getInputProps, isDragActive }: Pr
             <input {...getInputProps()} />
             <Upload className="size-8 text-muted-foreground" />
             {isDragActive ? (
-                <p>Drop the file here</p>
+                <p>{t("dropHere")}</p>
             ) : (
                 <div className="flex flex-col gap-1">
-                    <p className="font-medium">Drag &amp; drop a model</p>
-                    <p className="text-sm text-muted-foreground">
-                        or click to browse · .stl / .3mf
-                    </p>
+                    <p className="font-medium">{t("dragDrop")}</p>
+                    <p className="text-sm text-muted-foreground">{t("browseHint")}</p>
                 </div>
             )}
         </div>

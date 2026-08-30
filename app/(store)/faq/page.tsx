@@ -1,26 +1,18 @@
-export default function FaqPage() {
+import { getTranslations } from "next-intl/server";
+
+export default async function FaqPage() {
+    const t = await getTranslations("faq");
+
     const faqs = [
-        {
-            q: "What file formats can I upload?",
-            a: "STL and 3MF. 3MF files can carry colors and materials.",
-        },
-        {
-            q: "How accurate is the instant quote?",
-            a: "The instant quote is an estimate. The final price is confirmed by an exact slice of your model before printing.",
-        },
-        {
-            q: "What materials do you print in?",
-            a: "Currently PLA and PETG, with more coming.",
-        },
-        {
-            q: "How long does printing take?",
-            a: "Depends on size and settings — you'll see an estimate for each order.",
-        },
+        { q: t("q1"), a: t("a1") },
+        { q: t("q2"), a: t("a2") },
+        { q: t("q3"), a: t("a3") },
+        { q: t("q4"), a: t("a4") },
     ];
 
     return (
         <div className="mx-auto max-w-2xl px-4 py-16">
-            <h1 className="mb-6 text-3xl font-semibold">FAQ</h1>
+            <h1 className="mb-6 text-3xl font-semibold">{t("title")}</h1>
             <div className="flex flex-col gap-6">
                 {faqs.map((faq) => (
                     <div key={faq.q}>

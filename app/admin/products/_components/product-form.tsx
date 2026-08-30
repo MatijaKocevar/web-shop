@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveProduct } from "../_actions/save-product";
 
@@ -17,19 +18,23 @@ type Product = {
     categoryId: string | null;
 };
 
-export function ProductForm({
+export async function ProductForm({
     product,
     categories,
 }: {
     product?: Product;
     categories: Category[];
 }) {
+    const t = await getTranslations("admin.products");
+    const tCommon = await getTranslations("admin.common");
+    const tType = await getTranslations("productType");
+
     return (
         <form action={saveProduct} className="flex max-w-xl flex-col gap-4">
             {product && <input type="hidden" name="id" value={product.id} />}
 
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Name</span>
+                <span className="font-medium">{tCommon("name")}</span>
                 <input
                     className={inputClass}
                     name="name"
@@ -39,17 +44,17 @@ export function ProductForm({
             </label>
 
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Slug</span>
+                <span className="font-medium">{t("slug")}</span>
                 <input
                     className={inputClass}
                     name="slug"
                     defaultValue={product?.slug ?? ""}
-                    placeholder="auto-generated from name"
+                    placeholder={t("slugPlaceholder")}
                 />
             </label>
 
             <label className="flex flex-col gap-1.5 text-sm">
-                <span className="font-medium">Description</span>
+                <span className="font-medium">{t("description")}</span>
                 <textarea
                     className={inputClass}
                     name="description"
@@ -60,7 +65,7 @@ export function ProductForm({
 
             <div className="grid grid-cols-2 gap-4">
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Price (EUR)</span>
+                    <span className="font-medium">{t("priceEur")}</span>
                     <input
                         className={inputClass}
                         name="price"
@@ -72,27 +77,27 @@ export function ProductForm({
                 </label>
 
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Type</span>
+                    <span className="font-medium">{tCommon("type")}</span>
                     <select
                         className={inputClass}
                         name="type"
                         defaultValue={product?.type ?? "READY_MADE"}
                     >
-                        <option value="READY_MADE">Ready made</option>
-                        <option value="CUSTOM_PRINT">Custom print</option>
+                        <option value="READY_MADE">{tType("READY_MADE")}</option>
+                        <option value="CUSTOM_PRINT">{tType("CUSTOM_PRINT")}</option>
                     </select>
                 </label>
             </div>
 
             <div className="grid grid-cols-2 gap-4">
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Category</span>
+                    <span className="font-medium">{tCommon("category")}</span>
                     <select
                         className={inputClass}
                         name="categoryId"
                         defaultValue={product?.categoryId ?? ""}
                     >
-                        <option value="">None</option>
+                        <option value="">{tCommon("none")}</option>
                         {categories.map((c) => (
                             <option key={c.id} value={c.id}>
                                 {c.name}
@@ -102,24 +107,24 @@ export function ProductForm({
                 </label>
 
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">New category</span>
+                    <span className="font-medium">{t("newCategory")}</span>
                     <input
                         className={inputClass}
                         name="newCategory"
-                        placeholder="create a new category"
+                        placeholder={t("newCategoryPlaceholder")}
                     />
                 </label>
             </div>
 
             <label className="flex items-center gap-2 text-sm">
                 <input type="checkbox" name="active" defaultChecked={product?.active ?? true} />
-                <span>Active</span>
+                <span>{tCommon("active")}</span>
             </label>
 
             <div className="flex items-center gap-2">
-                <Button type="submit">{product ? "Save" : "Create product"}</Button>
+                <Button type="submit">{product ? tCommon("save") : t("createProduct")}</Button>
                 <Link href="/admin/products" className={buttonVariants({ variant: "ghost" })}>
-                    Cancel
+                    {tCommon("cancel")}
                 </Link>
             </div>
         </form>

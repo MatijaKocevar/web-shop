@@ -1,13 +1,16 @@
 import Link from "next/link";
 import { Box } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { LanguageSwitcher } from "@/components/language-switcher";
 import { CartButton } from "./cart-button";
 import { UserMenu } from "./user-menu";
 
 export async function StoreHeader() {
     const session = await auth();
+    const t = await getTranslations("common");
 
     return (
         <header className="sticky top-0 z-40 border-b bg-background/80 backdrop-blur">
@@ -22,18 +25,19 @@ export async function StoreHeader() {
                         href="/products"
                         className={buttonVariants({ variant: "ghost", size: "sm" })}
                     >
-                        Products
+                        {t("products")}
                     </Link>
                     <Link
                         href="/upload"
                         className={buttonVariants({ variant: "ghost", size: "sm" })}
                     >
-                        Upload a model
+                        {t("uploadModel")}
                     </Link>
                 </nav>
 
                 <div className="flex items-center gap-1">
                     <ThemeToggle />
+                    <LanguageSwitcher />
                     <CartButton />
                     <UserMenu session={session} />
                 </div>

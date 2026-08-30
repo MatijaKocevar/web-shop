@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { savePrinter } from "../_actions/save-printer";
 import { deletePrinter } from "../_actions/delete-printer";
@@ -17,7 +18,10 @@ type Printer = {
     active: boolean;
 };
 
-export function PrinterForm({ printer }: { printer?: Printer }) {
+export async function PrinterForm({ printer }: { printer?: Printer }) {
+    const t = await getTranslations("admin.printers");
+    const tCommon = await getTranslations("admin.common");
+
     return (
         <div className="max-w-xl">
             <form action={savePrinter} className="flex flex-col gap-4">
@@ -25,7 +29,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
 
                 <div className="grid grid-cols-2 gap-4">
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Name</span>
+                        <span className="font-medium">{tCommon("name")}</span>
                         <input
                             className={inputClass}
                             name="name"
@@ -34,7 +38,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Make</span>
+                        <span className="font-medium">{t("make")}</span>
                         <input
                             className={inputClass}
                             name="make"
@@ -45,7 +49,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
 
                 <div className="grid grid-cols-3 gap-4">
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Build X (mm)</span>
+                        <span className="font-medium">{t("buildX")}</span>
                         <input
                             className={inputClass}
                             name="buildX"
@@ -56,7 +60,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Build Y (mm)</span>
+                        <span className="font-medium">{t("buildY")}</span>
                         <input
                             className={inputClass}
                             name="buildY"
@@ -67,7 +71,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Build Z (mm)</span>
+                        <span className="font-medium">{t("buildZ")}</span>
                         <input
                             className={inputClass}
                             name="buildZ"
@@ -81,13 +85,13 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
 
                 <label className="flex items-center gap-2 text-sm">
                     <input type="checkbox" name="active" defaultChecked={printer?.active ?? true} />
-                    <span>Active</span>
+                    <span>{tCommon("active")}</span>
                 </label>
 
                 <div className="flex items-center gap-2">
-                    <Button type="submit">{printer ? "Save" : "Create printer"}</Button>
+                    <Button type="submit">{printer ? tCommon("save") : t("createPrinter")}</Button>
                     <Link href="/admin/printers" className={buttonVariants({ variant: "ghost" })}>
-                        Cancel
+                        {tCommon("cancel")}
                     </Link>
                 </div>
             </form>
@@ -97,7 +101,7 @@ export function PrinterForm({ printer }: { printer?: Printer }) {
                     <input type="hidden" name="id" value={printer.id} />
                     <Button type="submit" variant="destructive">
                         <Trash2 className="size-4" />
-                        Delete printer
+                        {t("deletePrinter")}
                     </Button>
                 </form>
             )}

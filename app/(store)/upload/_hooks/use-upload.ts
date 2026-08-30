@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
+import { useTranslations } from "next-intl";
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";
 import { detectFormat } from "../_utils/detect-format";
 
 export function useUpload() {
+    const t = useTranslations("upload");
     const [file, setFile] = useState<File | null>(null);
     const [objectUrl, setObjectUrl] = useState<string | null>(null);
     const [format, setFormat] = useState<ModelFormat | null>(null);
@@ -17,7 +19,7 @@ export function useUpload() {
 
             const fmt = detectFormat(dropped);
             if (!fmt) {
-                setError("Unsupported file. Please upload an .stl or .3mf file.");
+                setError(t("unsupportedFile"));
                 return;
             }
 

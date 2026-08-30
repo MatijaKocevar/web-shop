@@ -35,8 +35,8 @@ export function round2(value: number): number {
     return Math.round(value * 100) / 100;
 }
 
-export function formatCurrency(value: number, currency = "EUR"): string {
-    return new Intl.NumberFormat(undefined, {
+export function formatCurrency(value: number, currency = "EUR", locale = "en"): string {
+    return new Intl.NumberFormat(locale, {
         style: "currency",
         currency,
     }).format(value);

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveProfile } from "../_actions/save-profile";
 import { deleteProfile } from "../_actions/delete-profile";
@@ -22,14 +23,23 @@ type Profile = {
     active: boolean;
 };
 
-export function ProfileForm({ profile, printers }: { profile?: Profile; printers: Printer[] }) {
+export async function ProfileForm({
+    profile,
+    printers,
+}: {
+    profile?: Profile;
+    printers: Printer[];
+}) {
+    const t = await getTranslations("admin.printers");
+    const tCommon = await getTranslations("admin.common");
+
     return (
         <div className="max-w-xl">
             <form action={saveProfile} className="flex flex-col gap-4">
                 {profile && <input type="hidden" name="id" value={profile.id} />}
 
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Printer</span>
+                    <span className="font-medium">{t("printer")}</span>
                     <select
                         className={inputClass}
                         name="printerId"
@@ -45,7 +55,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                 </label>
 
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">Name</span>
+                    <span className="font-medium">{tCommon("name")}</span>
                     <input
                         className={inputClass}
                         name="name"
@@ -56,7 +66,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
 
                 <div className="grid grid-cols-2 gap-4">
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Nozzle (mm)</span>
+                        <span className="font-medium">{t("nozzle")}</span>
                         <input
                             className={inputClass}
                             name="nozzle"
@@ -68,7 +78,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Layer height (mm)</span>
+                        <span className="font-medium">{t("layerHeight")}</span>
                         <input
                             className={inputClass}
                             name="layerHeight"
@@ -80,7 +90,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Infill (%)</span>
+                        <span className="font-medium">{t("infillPct")}</span>
                         <input
                             className={inputClass}
                             name="infill"
@@ -92,7 +102,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Speed (mm/s)</span>
+                        <span className="font-medium">{t("speedUnit")}</span>
                         <input
                             className={inputClass}
                             name="speed"
@@ -102,7 +112,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Machine rate (€/h)</span>
+                        <span className="font-medium">{t("machineRateEur")}</span>
                         <input
                             className={inputClass}
                             name="machineHourRate"
@@ -114,7 +124,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                         />
                     </label>
                     <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">Setup fee (€)</span>
+                        <span className="font-medium">{t("setupFee")}</span>
                         <input
                             className={inputClass}
                             name="setupFee"
@@ -134,7 +144,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                             name="supports"
                             defaultChecked={profile?.supports ?? false}
                         />
-                        <span>Supports enabled</span>
+                        <span>{t("supportsEnabled")}</span>
                     </label>
                     <label className="flex items-center gap-2">
                         <input
@@ -142,14 +152,14 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                             name="active"
                             defaultChecked={profile?.active ?? true}
                         />
-                        <span>Active</span>
+                        <span>{tCommon("active")}</span>
                     </label>
                 </div>
 
                 <div className="flex items-center gap-2">
-                    <Button type="submit">{profile ? "Save" : "Create profile"}</Button>
+                    <Button type="submit">{profile ? tCommon("save") : t("createProfile")}</Button>
                     <Link href="/admin/printers" className={buttonVariants({ variant: "ghost" })}>
-                        Cancel
+                        {tCommon("cancel")}
                     </Link>
                 </div>
             </form>
@@ -159,7 +169,7 @@ export function ProfileForm({ profile, printers }: { profile?: Profile; printers
                     <input type="hidden" name="id" value={profile.id} />
                     <Button type="submit" variant="destructive">
                         <Trash2 className="size-4" />
-                        Delete profile
+                        {t("deleteProfile")}
                     </Button>
                 </form>
             )}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -15,7 +16,9 @@ type ProductCardProps = {
     };
 };
 
-export function ProductCard({ product }: ProductCardProps) {
+export async function ProductCard({ product }: ProductCardProps) {
+    const locale = await getLocale();
+    const t = await getTranslations("products");
     const image = product.images[0];
 
     return (
@@ -31,7 +34,7 @@ export function ProductCard({ product }: ProductCardProps) {
                         />
                     ) : (
                         <div className="flex h-full items-center justify-center text-muted-foreground">
-                            No image
+                            {t("noImage")}
                         </div>
                     )}
                 </div>
@@ -46,11 +49,11 @@ export function ProductCard({ product }: ProductCardProps) {
                 <CardContent className="p-4 pt-0">
                     <p className="text-sm text-muted-foreground">
                         {product.price != null
-                            ? new Intl.NumberFormat(undefined, {
+                            ? new Intl.NumberFormat(locale, {
                                   style: "currency",
                                   currency: product.currency,
                               }).format(product.price)
-                            : "Quote on upload"}
+                            : t("quoteOnUpload")}
                     </p>
                 </CardContent>
                 <CardFooter className="sr-only" />

@@ -1,0 +1,290 @@
+{
+    "metadata": {
+        "description": "Buy 3D printed products or upload your own model to print."
+    },
+    "common": {
+        "signIn": "Sign in",
+        "signOut": "Sign out",
+        "cart": "Cart",
+        "products": "Products",
+        "uploadModel": "Upload a model",
+        "myOrders": "My orders",
+        "cancel": "Cancel",
+        "save": "Save",
+        "delete": "Delete",
+        "active": "Active",
+        "total": "Total",
+        "none": "None",
+        "set": "Set"
+    },
+    "nav": {
+        "about": "About",
+        "faq": "FAQ",
+        "contact": "Contact"
+    },
+    "home": {
+        "heroTitle": "Things you can't find anywhere else, printed for you.",
+        "heroSubtitle": "Shop ready-made 3D printed products, or upload your own model and we'll print it on demand.",
+        "browseProducts": "Browse products",
+        "uploadModel": "Upload a model",
+        "latestProducts": "Latest products",
+        "viewAll": "View all"
+    },
+    "products": {
+        "title": "Products",
+        "itemCount": "{count, plural, =1 {# item} other {# items}}",
+        "empty": "No products yet.",
+        "noImage": "No image",
+        "noPreview": "No preview",
+        "quoteOnUpload": "Quote on upload",
+        "variant": "Variant",
+        "quantity": "Quantity",
+        "addToCart": "Add to cart",
+        "category": "Category"
+    },
+    "cart": {
+        "title": "Cart",
+        "emptyTitle": "Your cart is empty",
+        "emptySubtitle": "Add some products or upload a model to get started.",
+        "browseProducts": "Browse products",
+        "subtotal": "Subtotal",
+        "total": "Total",
+        "checkout": "Checkout",
+        "remove": "Remove",
+        "readyMade": "Ready made",
+        "supports": "supports"
+    },
+    "checkout": {
+        "title": "Checkout",
+        "empty": "Your cart is empty.",
+        "orderSummary": "Order summary",
+        "total": "Total",
+        "stripeNote": "You'll be redirected to Stripe to complete payment. Final price for custom prints is confirmed by slicing before printing.",
+        "payStripe": "Pay with Stripe"
+    },
+    "orders": {
+        "title": "My orders",
+        "empty": "No orders yet.",
+        "total": "Total"
+    },
+    "upload": {
+        "title": "Upload a model",
+        "subtitle": "Drop an STL or 3MF file, pick your settings, and get an instant quote.",
+        "printSettings": "Print settings",
+        "printerProfile": "Printer & profile",
+        "filament": "Filament",
+        "infill": "Infill: {value}%",
+        "supports": "Generate supports",
+        "material": "Material",
+        "printTime": "Est. print time",
+        "estimatedPrice": "Estimated price",
+        "finalPriceNote": "Final price is confirmed by an exact slice before payment.",
+        "uploadHint": "Upload a model to see an estimate.",
+        "addToCart": "Add to cart",
+        "addedToCart": "Added to cart",
+        "dropHere": "Drop the file here",
+        "dragDrop": "Drag & drop a model",
+        "browseHint": "or click to browse · .stl / .3mf",
+        "removeModel": "Remove model",
+        "tooLarge": "Too large for {printer}",
+        "unsupportedFile": "Unsupported file. Please upload an .stl or .3mf file."
+    },
+    "signin": {
+        "title": "Sign in",
+        "subtitle": "Sign in to track orders and upload models.",
+        "continueGoogle": "Continue with Google",
+        "or": "or",
+        "email": "Email",
+        "emailPlaceholder": "you@example.com",
+        "emailMeLink": "Email me a sign-in link",
+        "testLogin": "test login",
+        "password": "Password",
+        "testLoginButton": "Test login",
+        "testHint": "admin@test.com (admin) · customer@test.com (customer)"
+    },
+    "about": {
+        "title": "About",
+        "p1": "We design and 3D print functional, everyday objects on a Creality K1C. Every item is made to order.",
+        "p2": "Have a model of your own? Upload an STL or 3MF file and we'll print it for you, in the material and finish you choose."
+    },
+    "faq": {
+        "title": "FAQ",
+        "q1": "What file formats can I upload?",
+        "a1": "STL and 3MF. 3MF files can carry colors and materials.",
+        "q2": "How accurate is the instant quote?",
+        "a2": "The instant quote is an estimate. The final price is confirmed by an exact slice of your model before printing.",
+        "q3": "What materials do you print in?",
+        "a3": "Currently PLA and PETG, with more coming.",
+        "q4": "How long does printing take?",
+        "a4": "Depends on size and settings — you'll see an estimate for each order."
+    },
+    "contact": {
+        "title": "Contact",
+        "body": "Questions about an order or a custom print? Email us at",
+        "email": "hello@printshop.example"
+    },
+    "status": {
+        "order": {
+            "PENDING": "Pending",
+            "PAID": "Paid",
+            "PROCESSING": "Processing",
+            "PRINTING": "Printing",
+            "SHIPPED": "Shipped",
+            "DELIVERED": "Delivered",
+            "CANCELLED": "Cancelled",
+            "REFUNDED": "Refunded"
+        },
+        "printJob": {
+            "QUEUED": "Queued",
+            "SLICING": "Slicing",
+            "SLICED": "Sliced",
+            "PRINTING": "Printing",
+            "DONE": "Done",
+            "FAILED": "Failed"
+        }
+    },
+    "role": {
+        "CUSTOMER": "Customer",
+        "ADMIN": "Admin"
+    },
+    "productType": {
+        "READY_MADE": "Ready made",
+        "CUSTOM_PRINT": "Custom print"
+    },
+    "theme": {
+        "toggle": "Toggle theme",
+        "light": "Light",
+        "dark": "Dark",
+        "system": "System"
+    },
+    "admin": {
+        "printShopAdmin": "Print Shop Admin",
+        "nav": {
+            "dashboard": "Dashboard",
+            "products": "Products",
+            "filaments": "Filaments",
+            "printers": "Printers",
+            "orders": "Orders",
+            "printQueue": "Print queue",
+            "users": "Users"
+        },
+        "dashboard": {
+            "title": "Dashboard",
+            "products": "Products",
+            "orders": "Orders",
+            "printJobs": "Print jobs",
+            "users": "Users"
+        },
+        "common": {
+            "name": "Name",
+            "email": "Email",
+            "material": "Material",
+            "color": "Color",
+            "category": "Category",
+            "type": "Type",
+            "price": "Price",
+            "status": "Status",
+            "upload": "Upload",
+            "active": "Active",
+            "none": "None"
+        },
+        "products": {
+            "title": "Products",
+            "new": "New product",
+            "newTitle": "New product",
+            "edit": "Edit product",
+            "slug": "Slug",
+            "slugPlaceholder": "auto-generated from name",
+            "description": "Description",
+            "priceEur": "Price (EUR)",
+            "newCategory": "New category",
+            "newCategoryPlaceholder": "create a new category",
+            "createProduct": "Create product",
+            "previewModel": "3D preview model",
+            "current": "Current: {filename}",
+            "noModel": "No model uploaded — the product page will show an image instead.",
+            "images": "Images",
+            "deleteProduct": "Delete product"
+        },
+        "filaments": {
+            "title": "Filaments",
+            "new": "New filament",
+            "newTitle": "New filament",
+            "edit": "Edit filament",
+            "density": "Density (g/cm³)",
+            "costPerGram": "Cost per gram (€)",
+            "costPerGramShort": "Cost/g",
+            "createFilament": "Create filament",
+            "deleteFilament": "Delete filament"
+        },
+        "printers": {
+            "title": "Printers & profiles",
+            "newProfile": "New profile",
+            "newPrinter": "New printer",
+            "newPrinterTitle": "New printer",
+            "editPrinter": "Edit printer",
+            "newProfileTitle": "New profile",
+            "editProfile": "Edit profile",
+            "printer": "Printer",
+            "make": "Make",
+            "buildX": "Build X (mm)",
+            "buildY": "Build Y (mm)",
+            "buildZ": "Build Z (mm)",
+            "createPrinter": "Create printer",
+            "deletePrinter": "Delete printer",
+            "profile": "Profile",
+            "layer": "Layer",
+            "infill": "Infill",
+            "speed": "Speed",
+            "machineRate": "Machine rate",
+            "noProfiles": "No profiles yet.",
+            "editPrinterLink": "Edit printer",
+            "nozzle": "Nozzle (mm)",
+            "layerHeight": "Layer height (mm)",
+            "infillPct": "Infill (%)",
+            "speedUnit": "Speed (mm/s)",
+            "machineRateEur": "Machine rate (€/h)",
+            "setupFee": "Setup fee (€)",
+            "supportsEnabled": "Supports enabled",
+            "createProfile": "Create profile",
+            "deleteProfile": "Delete profile"
+        },
+        "orders": {
+            "title": "Orders",
+            "date": "Date",
+            "email": "Email",
+            "items": "Items",
+            "total": "Total",
+            "status": "Status",
+            "order": "Order",
+            "stripeSession": "Stripe session: {id}",
+            "updateStatus": "Update status",
+            "backToOrders": "← Back to orders",
+            "printJobStatus": "print job {status}"
+        },
+        "printQueue": {
+            "title": "Print queue",
+            "slicerNotAvailable": "OrcaSlicer is not available on this machine. Install it (or set {code}) to slice jobs.",
+            "noJobs": "No print jobs yet.",
+            "item": "Item",
+            "profile": "Profile",
+            "estTime": "Est. time",
+            "material": "Material",
+            "price": "Price",
+            "status": "Status",
+            "update": "Update",
+            "processQueue": "Process queue",
+            "slicedFailed": "Sliced: {sliced}, failed: {failed}"
+        },
+        "users": {
+            "title": "Users",
+            "name": "Name",
+            "email": "Email",
+            "role": "Role",
+            "orders": "Orders",
+            "joined": "Joined",
+            "actions": "Actions",
+            "deleteUser": "Delete user"
+        }
+    }
+}

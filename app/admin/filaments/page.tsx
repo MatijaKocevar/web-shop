@@ -1,27 +1,30 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { buttonVariants } from "@/components/ui/button";
 import { listFilaments } from "@/queries/filaments";
 
 export default async function AdminFilamentsPage() {
     const filaments = await listFilaments();
+    const t = await getTranslations("admin.filaments");
+    const tCommon = await getTranslations("admin.common");
 
     return (
         <div>
             <div className="mb-6 flex items-center justify-between">
-                <h1 className="text-2xl font-semibold">Filaments</h1>
+                <h1 className="text-2xl font-semibold">{t("title")}</h1>
                 <Link href="/admin/filaments/new" className={buttonVariants()}>
-                    New filament
+                    {t("new")}
                 </Link>
             </div>
             <div className="overflow-hidden rounded-lg border">
                 <table className="w-full text-sm">
                     <thead className="bg-muted/50 text-left">
                         <tr>
-                            <th className="px-4 py-2 font-medium">Name</th>
-                            <th className="px-4 py-2 font-medium">Material</th>
-                            <th className="px-4 py-2 font-medium">Color</th>
-                            <th className="px-4 py-2 font-medium">Density</th>
-                            <th className="px-4 py-2 font-medium">Cost/g</th>
+                            <th className="px-4 py-2 font-medium">{tCommon("name")}</th>
+                            <th className="px-4 py-2 font-medium">{tCommon("material")}</th>
+                            <th className="px-4 py-2 font-medium">{tCommon("color")}</th>
+                            <th className="px-4 py-2 font-medium">{t("density")}</th>
+                            <th className="px-4 py-2 font-medium">{t("costPerGramShort")}</th>
                         </tr>
                     </thead>
                     <tbody className="divide-y">

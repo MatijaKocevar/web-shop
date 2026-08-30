@@ -1,4 +1,5 @@
 import { notFound } from "next/navigation";
+import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { getProductBySlug } from "@/queries/products";
 import { AddToCartForm } from "./_components/add-to-cart-form";
@@ -8,6 +9,8 @@ import { ModelViewer } from "@/components/model-viewer";
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
+    const locale = await getLocale();
+    const t = await getTranslations("products");
 
     if (!product) notFound();
 
@@ -30,7 +33,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
                         />
                     ) : (
                         <div className="flex h-full items-center justify-center text-muted-foreground">
-                            No preview
+                            {t("noPreview")}
                         </div>
                     )}
                 </div>
@@ -47,7 +50,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
 
                     {product.price != null && (
                         <p className="text-2xl font-semibold">
-                            {new Intl.NumberFormat(undefined, {
+                            {new Intl.NumberFormat(locale, {
                                 style: "currency",
                                 currency: product.currency,
                             }).format(product.price)}
