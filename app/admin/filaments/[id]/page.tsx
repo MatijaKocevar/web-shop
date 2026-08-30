@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import { getFilamentById } from "@/queries/filaments";
 import { FilamentForm } from "../_components/filament-form";
 

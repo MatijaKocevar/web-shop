@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useDropzone } from "react-dropzone";
-
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";
 import { detectFormat } from "../_utils/detect-format";
 

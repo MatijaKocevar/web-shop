@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/pricing";

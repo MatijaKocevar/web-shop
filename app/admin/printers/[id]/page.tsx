@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import { getPrinterById } from "@/queries/printers";
 import { PrinterForm } from "../_components/printer-form";
 

@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/app/(store)/cart/_actions/add-to-cart";
 

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import { Badge } from "@/components/ui/badge";
 import { getProductBySlug } from "@/queries/products";
 import { AddToCartForm } from "./_components/add-to-cart-form";

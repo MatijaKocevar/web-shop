@@ -1,5 +1,4 @@
 import { Loader2 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency, formatDuration } from "@/lib/pricing";

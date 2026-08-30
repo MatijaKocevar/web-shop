@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { buttonVariants } from "@/components/ui/button";
 import { getHydratedCart } from "@/queries/cart";
 import { CartItems } from "./_components/cart-items";

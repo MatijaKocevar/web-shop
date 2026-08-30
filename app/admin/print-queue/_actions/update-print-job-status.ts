@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
 import { db } from "@/lib/db";
 import type { PrintJobStatus } from "@/generated/prisma/enums";
 

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { savePrinter } from "../_actions/save-printer";
 import { deletePrinter } from "../_actions/delete-printer";

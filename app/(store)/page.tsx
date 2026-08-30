@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { ArrowRight, Upload } from "lucide-react";
-
 import { buttonVariants } from "@/components/ui/button";
 import { listProducts } from "@/queries/products";
 import { ProductCard } from "./products/_components/product-card";

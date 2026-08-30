@@ -1,6 +1,5 @@
 import { notFound } from "next/navigation";
 import { Trash2 } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { listCategories } from "@/queries/categories";

@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Trash2 } from "lucide-react";
-
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveProfile } from "../_actions/save-profile";
 import { deleteProfile } from "../_actions/delete-profile";

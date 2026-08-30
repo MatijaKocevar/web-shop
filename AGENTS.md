@@ -70,13 +70,17 @@ Formatting is enforced by **Prettier** (`.prettierrc.json`: 4-space indent, widt
 
 Treat code like prose: group statements that belong together into **blocks**, and separate blocks with **one blank line**. Don't run everything together, and never use two blank lines.
 
-- Blank line after the import block, and between top-level declarations (types, helpers, functions).
+- **Imports are one contiguous block** — no blank lines between them. The only blank line is after the `"use client"` / `"use server"` directive, and after the last import (before the first declaration).
+- Blank line between top-level declarations (types, helpers, functions).
 - Inside a function, blank lines between the major paragraphs: state/hook setup → the operation (setup → work → result) → the `return`.
 - Statements that do one thing stay together with no blank lines (e.g. a group of `useState` calls, or a run of `data.append(...)` lines).
 - `try {` / `} finally {` / `} catch {` stay tight to their content; blank lines go _inside_ the block between its paragraphs, not right after `{`.
 
 ```ts
+"use client";
+
 import { useState } from "react";
+import { doThing } from "@/lib/thing";
 
 type Args = { id: string };
 
@@ -92,7 +96,7 @@ export function useSomething() {
 
             data.append("id", args.id);
 
-            await someAction(data);
+            await doThing(data);
 
             setDone(true);
         } finally {

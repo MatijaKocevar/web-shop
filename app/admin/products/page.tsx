@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { listProducts } from "@/queries/products";

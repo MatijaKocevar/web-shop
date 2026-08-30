@@ -1,7 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-
 import { getCart, setCart } from "@/lib/cart";
 
 export async function updateQuantity(id: string, quantity: number) {

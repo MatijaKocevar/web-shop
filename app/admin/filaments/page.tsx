@@ -1,5 +1,4 @@
 import Link from "next/link";
-
 import { buttonVariants } from "@/components/ui/button";
 import { listFilaments } from "@/queries/filaments";
 

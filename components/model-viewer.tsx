@@ -3,7 +3,6 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { ContactShadows, OrbitControls } from "@react-three/drei";
-
 import { useModel, type ModelFormat, type ModelStats } from "@/hooks/use-model";
 
 type ModelViewerProps = {

@@ -1,5 +1,4 @@
 import { X } from "lucide-react";
-
 import { Button } from "@/components/ui/button";
 import { ModelViewer } from "@/components/model-viewer";
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";

@@ -1,5 +1,4 @@
 import { notFound } from "next/navigation";
-
 import { getProfileById, listPrinters } from "@/queries/printers";
 import { ProfileForm } from "../../_components/profile-form";
 

@@ -1,5 +1,4 @@
 import { useMemo } from "react";
-
 import type { ModelStats } from "@/hooks/use-model";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice } from "@/lib/pricing";

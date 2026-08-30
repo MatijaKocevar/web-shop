@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 import type { Filament, Profile } from "../_utils/types";
 
 export function usePrintSettings(profiles: Profile[], filaments: Filament[]) {

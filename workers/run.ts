@@ -1,5 +1,4 @@
 import "dotenv/config";
-
 import { db } from "@/lib/db";
 import { processPrintJobs } from "./print-jobs";
 

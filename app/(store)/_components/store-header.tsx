@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Box, ShoppingCart } from "lucide-react";
-
 import { auth } from "@/lib/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
