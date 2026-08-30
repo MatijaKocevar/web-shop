@@ -1,0 +1,6 @@
+.next
+out
+build
+generated
+.playwright-mcp
+pnpm-lock.yaml
