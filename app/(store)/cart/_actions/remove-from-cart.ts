@@ -1,12 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getCart, setCart } from "@/lib/cart";
+import { getCart, setCart, type CartItem } from "@/lib/cart";
 
-export async function removeFromCart(id: string) {
+export async function removeFromCart(id: string): Promise<CartItem[]> {
     const items = await getCart();
 
-    await setCart(items.filter((item) => item.id !== id));
+    const next = items.filter((item) => item.id !== id);
+    await setCart(next);
 
     revalidatePath("/", "layout");
+
+    return next;
 }

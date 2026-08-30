@@ -1,5 +1,6 @@
 import { useState } from "react";
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";
+import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
 import { addCustomPrintToCart } from "../_actions/add-custom-print-to-cart";
 import type { Filament, Profile } from "../_utils/types";
 
@@ -34,7 +35,9 @@ export function useAddCustomPrint() {
             data.append("height", String(args.stats.height));
             data.append("volume", String(args.stats.volume));
 
-            await addCustomPrintToCart(data);
+            const items = await addCustomPrintToCart(data);
+
+            useCartStore.setState({ items });
 
             setAdded(true);
         } finally {

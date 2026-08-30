@@ -1,8 +1,9 @@
 import Link from "next/link";
-import { Box, ShoppingCart } from "lucide-react";
+import { Box } from "lucide-react";
 import { auth } from "@/lib/auth";
 import { buttonVariants } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { CartButton } from "./cart-button";
 import { UserMenu } from "./user-menu";
 
 export async function StoreHeader() {
@@ -33,13 +34,7 @@ export async function StoreHeader() {
 
                 <div className="flex items-center gap-1">
                     <ThemeToggle />
-                    <Link
-                        href="/cart"
-                        className={buttonVariants({ variant: "ghost", size: "icon" })}
-                    >
-                        <ShoppingCart className="size-4" />
-                        <span className="sr-only">Cart</span>
-                    </Link>
+                    <CartButton />
                     <UserMenu session={session} />
                 </div>
             </div>

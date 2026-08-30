@@ -1,8 +1,13 @@
+import { getCart } from "@/lib/cart";
+import { CartHydrator } from "./_components/cart-hydrator";
 import { StoreHeader } from "./_components/store-header";
 
-export default function StoreLayout({ children }: { children: React.ReactNode }) {
+export default async function StoreLayout({ children }: { children: React.ReactNode }) {
+    const items = await getCart();
+
     return (
         <div className="flex min-h-dvh flex-col">
+            <CartHydrator items={items} />
             <StoreHeader />
             <main className="flex-1">{children}</main>
             <footer className="border-t py-10">

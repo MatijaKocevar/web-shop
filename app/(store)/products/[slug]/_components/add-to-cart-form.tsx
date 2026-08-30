@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Loader2, ShoppingCart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/app/(store)/cart/_actions/add-to-cart";
+import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
 
 type Variant = {
     id: string;
@@ -33,7 +34,7 @@ export function AddToCartForm({
         setPending(true);
 
         try {
-            await addToCart(
+            const items = await addToCart(
                 {
                     type: "READY_MADE",
                     name: selectedVariant
@@ -45,6 +46,8 @@ export function AddToCartForm({
                 },
                 quantity,
             );
+
+            useCartStore.setState({ items });
         } finally {
             setPending(false);
         }

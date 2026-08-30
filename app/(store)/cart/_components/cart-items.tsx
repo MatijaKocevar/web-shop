@@ -6,9 +6,22 @@ import { formatCurrency } from "@/lib/pricing";
 import { publicUrl } from "@/lib/storage";
 import { removeFromCart } from "../_actions/remove-from-cart";
 import { updateQuantity } from "../_actions/update-quantity";
+import { useCartStore } from "../_stores/cart-store";
 import type { HydratedCartItem } from "@/queries/cart";
 
 export function CartItems({ items }: { items: HydratedCartItem[] }) {
+    async function handleUpdateQuantity(id: string, quantity: number) {
+        const next = await updateQuantity(id, quantity);
+
+        useCartStore.setState({ items: next });
+    }
+
+    async function handleRemove(id: string) {
+        const next = await removeFromCart(id);
+
+        useCartStore.setState({ items: next });
+    }
+
     return (
         <ul className="flex flex-col divide-y">
             {items.map((item) => (
@@ -46,7 +59,7 @@ export function CartItems({ items }: { items: HydratedCartItem[] }) {
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity - 1)}
                         >
                             −
                         </Button>
@@ -54,7 +67,7 @@ export function CartItems({ items }: { items: HydratedCartItem[] }) {
                         <Button
                             variant="outline"
                             size="sm"
-                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                            onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                         >
                             +
                         </Button>
@@ -64,7 +77,7 @@ export function CartItems({ items }: { items: HydratedCartItem[] }) {
                         {formatCurrency(item.unitPrice * item.quantity)}
                     </div>
 
-                    <Button variant="ghost" size="icon" onClick={() => removeFromCart(item.id)}>
+                    <Button variant="ghost" size="icon" onClick={() => handleRemove(item.id)}>
                         <Trash2 className="size-4" />
                         <span className="sr-only">Remove</span>
                     </Button>

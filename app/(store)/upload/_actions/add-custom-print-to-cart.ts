@@ -6,13 +6,13 @@ import { db } from "@/lib/db";
 import { uploadObject } from "@/lib/storage";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice, round2 } from "@/lib/pricing";
-import { setCart, getCart } from "@/lib/cart";
+import { setCart, getCart, type CartItem } from "@/lib/cart";
 
 function extFor(format: string): string {
     return format === "3mf" ? "3mf" : "stl";
 }
 
-export async function addCustomPrintToCart(formData: FormData) {
+export async function addCustomPrintToCart(formData: FormData): Promise<CartItem[]> {
     const file = formData.get("file") as File | null;
     const format = (formData.get("format") as string) ?? "stl";
     const profileId = (formData.get("profileId") as string) ?? "";
@@ -96,4 +96,6 @@ export async function addCustomPrintToCart(formData: FormData) {
     await setCart(items);
 
     revalidatePath("/", "layout");
+
+    return items;
 }

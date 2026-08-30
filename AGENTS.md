@@ -63,7 +63,7 @@ instrumentation.ts      # optional auto-processing of the print queue
 - **Components are the entry point.** Read a feature by reading its component, which calls a named query (read) or a server action (write). No repository/service layers beyond that.
 - **Prisma is touched only by `queries/` and `lib/db.ts`** (and server-action files for writes). Never import `db` into a component.
 - **Reads** live in `queries/*.ts`. **Writes** are server actions (`"use server"`) colocated in an `_actions/` folder inside the route folder that uses them — one file per action, named after the action (e.g. `products/_actions/save-product.ts`).
-- **Route folders keep one file per concern and never mix kinds**: `_components/` (components only, one component per file), `_hooks/` (feature hooks), `_utils/` (types/helpers), `_actions/` (server actions). No multi-component files; components with heavy logic move that logic into a hook.
+- **Route folders keep one file per concern and never mix kinds**: `_components/` (components only, one component per file), `_hooks/` (feature hooks), `_utils/` (types/helpers), `_actions/` (server actions), `_stores/` (client state, e.g. Zustand). No multi-component files; components with heavy logic move that logic into a hook.
 - **Cart** is cookie-backed (`lib/cart.ts`), mutated via `app/(store)/cart/_actions/*.ts`.
 
 ## Code style
