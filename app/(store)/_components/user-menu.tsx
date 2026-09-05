@@ -10,6 +10,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import {
     DropdownMenu,
     DropdownMenuContent,
+    DropdownMenuGroup,
     DropdownMenuItem,
     DropdownMenuLabel,
     DropdownMenuSeparator,
@@ -49,17 +50,21 @@ export function UserMenu({ session }: { session: Session | null }) {
                 </Avatar>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-56">
-                <DropdownMenuLabel className="flex items-center gap-2">
-                    <UserIcon className="size-4" />
-                    <div className="flex flex-col">
-                        <span className="truncate">{session.user.name ?? session.user.email}</span>
-                        {session.user.email && (
-                            <span className="truncate text-xs font-normal text-muted-foreground">
-                                {session.user.email}
+                <DropdownMenuGroup>
+                    <DropdownMenuLabel className="flex items-center gap-2">
+                        <UserIcon className="size-4" />
+                        <div className="flex flex-col">
+                            <span className="truncate">
+                                {session.user.name ?? session.user.email}
                             </span>
-                        )}
-                    </div>
-                </DropdownMenuLabel>
+                            {session.user.email && (
+                                <span className="truncate text-xs font-normal text-muted-foreground">
+                                    {session.user.email}
+                                </span>
+                            )}
+                        </div>
+                    </DropdownMenuLabel>
+                </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem render={<Link href="/orders" />}>
                     <Settings className="size-4" />
