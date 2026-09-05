@@ -4,6 +4,7 @@ import {
     PutObjectCommand,
     S3Client,
 } from "@aws-sdk/client-s3";
+import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 const endpoint = process.env.S3_ENDPOINT;
 const bucket = process.env.S3_BUCKET ?? "files";
@@ -40,4 +41,20 @@ export async function deleteObject(key: string) {
 
 export function publicUrl(key: string): string {
     return `${process.env.NEXT_PUBLIC_S3_PUBLIC_URL}/${key}`;
+}
+
+export async function presignedDownloadUrl(
+    key: string,
+    filename: string,
+    expiresSeconds = 600,
+): Promise<string> {
+    const safeName = filename.replace(/["\\]/g, "_");
+
+    const command = new GetObjectCommand({
+        Bucket: bucket,
+        Key: key,
+        ResponseContentDisposition: `attachment; filename="${safeName}"`,
+    });
+
+    return getSignedUrl(s3, command, { expiresIn: expiresSeconds });
 }

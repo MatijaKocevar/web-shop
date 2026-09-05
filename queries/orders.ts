@@ -22,7 +22,7 @@ export async function getOrderById(id: string) {
     const order = await db.order.findUnique({
         where: { id },
         include: {
-            items: { include: { printJob: true, profile: true, file: true } },
+            items: { include: { file: true } },
             payments: true,
         },
     });
@@ -111,27 +111,6 @@ export async function createOrderFromCheckout(session: Stripe.Checkout.Session) 
             },
         },
     });
-
-    // Create print jobs for custom-print line items.
-    for (const item of items) {
-        if (item.type !== "CUSTOM_PRINT" || !item.fileId) continue;
-
-        const orderItem = await db.orderItem.findFirst({
-            where: { orderId: order.id, fileId: item.fileId },
-        });
-
-        if (orderItem) {
-            await db.printJob.create({
-                data: {
-                    status: "QUEUED",
-                    orderItemId: orderItem.id,
-                    fileId: item.fileId,
-                    profileId: item.profileId,
-                    filamentId: item.filamentId,
-                },
-            });
-        }
-    }
 
     const paymentIntent =
         typeof session.payment_intent === "string"

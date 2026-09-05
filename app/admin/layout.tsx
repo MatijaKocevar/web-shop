@@ -1,14 +1,6 @@
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import {
-    LayoutDashboard,
-    Package,
-    Printer,
-    Layers,
-    Receipt,
-    ListOrdered,
-    Users,
-} from "lucide-react";
+import { LayoutDashboard, Package, Printer, Layers, Receipt, Users } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 
 import { auth } from "@/lib/auth";
@@ -28,7 +20,6 @@ export default async function AdminLayout({ children }: { children: React.ReactN
         { href: "/admin/filaments", label: t("filaments"), icon: Layers },
         { href: "/admin/printers", label: t("printers"), icon: Printer },
         { href: "/admin/orders", label: t("orders"), icon: Receipt },
-        { href: "/admin/print-queue", label: t("printQueue"), icon: ListOrdered },
         { href: "/admin/users", label: t("users"), icon: Users },
     ];
 

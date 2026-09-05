@@ -10,7 +10,6 @@
         "typecheck": "tsc --noEmit",
         "format": "prettier --write .",
         "format:check": "prettier --check .",
-        "slicer": "tsx workers/run.ts",
         "db:migrate": "prisma migrate dev",
         "db:seed": "prisma db seed",
         "db:admin": "tsx workers/promote.ts"

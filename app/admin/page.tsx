@@ -9,14 +9,13 @@ export default async function AdminDashboardPage() {
     const stats = [
         { label: t("products"), value: data.products },
         { label: t("orders"), value: data.orders },
-        { label: t("printJobs"), value: data.printJobs },
         { label: t("users"), value: data.users },
     ];
 
     return (
         <div>
             <h1 className="mb-6 text-2xl font-semibold">{t("title")}</h1>
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {stats.map((stat) => (
                     <Card key={stat.label}>
                         <CardHeader>

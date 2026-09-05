@@ -133,14 +133,6 @@
             "DELIVERED": "Delivered",
             "CANCELLED": "Cancelled",
             "REFUNDED": "Refunded"
-        },
-        "printJob": {
-            "QUEUED": "Queued",
-            "SLICING": "Slicing",
-            "SLICED": "Sliced",
-            "PRINTING": "Printing",
-            "DONE": "Done",
-            "FAILED": "Failed"
         }
     },
     "role": {
@@ -165,14 +157,12 @@
             "filaments": "Filaments",
             "printers": "Printers",
             "orders": "Orders",
-            "printQueue": "Print queue",
             "users": "Users"
         },
         "dashboard": {
             "title": "Dashboard",
             "products": "Products",
             "orders": "Orders",
-            "printJobs": "Print jobs",
             "users": "Users"
         },
         "common": {
@@ -260,21 +250,7 @@
             "stripeSession": "Stripe session: {id}",
             "updateStatus": "Update status",
             "backToOrders": "← Back to orders",
-            "printJobStatus": "print job {status}"
-        },
-        "printQueue": {
-            "title": "Print queue",
-            "slicerNotAvailable": "OrcaSlicer is not available on this machine. Install it (or set {code}) to slice jobs.",
-            "noJobs": "No print jobs yet.",
-            "item": "Item",
-            "profile": "Profile",
-            "estTime": "Est. time",
-            "material": "Material",
-            "price": "Price",
-            "status": "Status",
-            "update": "Update",
-            "processQueue": "Process queue",
-            "slicedFailed": "Sliced: {sliced}, failed: {failed}"
+            "download": "Download file"
         },
         "users": {
             "title": "Users",

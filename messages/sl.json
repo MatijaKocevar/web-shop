@@ -133,14 +133,6 @@
             "DELIVERED": "Dostavljeno",
             "CANCELLED": "Preklicano",
             "REFUNDED": "Vrnjeno"
-        },
-        "printJob": {
-            "QUEUED": "V vrsti",
-            "SLICING": "Rezanje",
-            "SLICED": "Odrezano",
-            "PRINTING": "Tiskanje",
-            "DONE": "Končano",
-            "FAILED": "Neuspešno"
         }
     },
     "role": {
@@ -165,14 +157,12 @@
             "filaments": "Filamenti",
             "printers": "Tiskalniki",
             "orders": "Naročila",
-            "printQueue": "Čakalna vrsta",
             "users": "Uporabniki"
         },
         "dashboard": {
             "title": "Nadzorna plošča",
             "products": "Izdelki",
             "orders": "Naročila",
-            "printJobs": "Tiskalna opravila",
             "users": "Uporabniki"
         },
         "common": {
@@ -260,21 +250,7 @@
             "stripeSession": "Stripe seja: {id}",
             "updateStatus": "Posodobi status",
             "backToOrders": "← Nazaj na naročila",
-            "printJobStatus": "tiskalno opravilo {status}"
-        },
-        "printQueue": {
-            "title": "Čakalna vrsta",
-            "slicerNotAvailable": "OrcaSlicer ni na voljo na tem računalniku. Namestite ga (ali nastavite {code}) za rezanje opravil.",
-            "noJobs": "Še ni tiskalnih opravil.",
-            "item": "Izdelek",
-            "profile": "Profil",
-            "estTime": "Ocenjen čas",
-            "material": "Material",
-            "price": "Cena",
-            "status": "Status",
-            "update": "Posodobi",
-            "processQueue": "Obdelaj vrsto",
-            "slicedFailed": "Odrezano: {sliced}, neuspešno: {failed}"
+            "download": "Prenesi datoteko"
         },
         "users": {
             "title": "Uporabniki",

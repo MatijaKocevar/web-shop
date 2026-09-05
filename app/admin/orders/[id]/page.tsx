@@ -1,11 +1,13 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Download } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/pricing";
 import { getOrderById } from "@/queries/orders";
+import { downloadFile } from "../_actions/download-file";
 import { updateOrderStatus } from "../_actions/update-order-status";
 
 const inputClass =
@@ -33,7 +35,6 @@ export default async function AdminOrderDetailPage({
     const t = await getTranslations("admin.orders");
     const tStatus = await getTranslations("status.order");
     const tType = await getTranslations("productType");
-    const tJob = await getTranslations("status.printJob");
 
     if (!order) notFound();
 
@@ -56,20 +57,28 @@ export default async function AdminOrderDetailPage({
                     {order.items.map((item) => (
                         <li
                             key={item.id}
-                            className="flex items-center justify-between px-4 py-3 text-sm"
+                            className="flex items-center justify-between gap-3 px-4 py-3 text-sm"
                         >
-                            <div>
+                            <div className="min-w-0">
                                 <p className="font-medium">{item.name}</p>
                                 <p className="text-xs text-muted-foreground">
                                     {tType(item.type)} × {item.quantity}
-                                    {item.printJob
-                                        ? ` · ${t("printJobStatus", { status: tJob(item.printJob.status) })}`
-                                        : ""}
                                 </p>
                             </div>
-                            <span>
-                                {formatCurrency(item.unitPrice * item.quantity, "EUR", locale)}
-                            </span>
+                            <div className="flex items-center gap-3">
+                                {item.file && (
+                                    <form action={downloadFile}>
+                                        <input type="hidden" name="fileId" value={item.file.id} />
+                                        <Button type="submit" variant="outline" size="sm">
+                                            <Download className="size-4" />
+                                            {t("download")}
+                                        </Button>
+                                    </form>
+                                )}
+                                <span>
+                                    {formatCurrency(item.unitPrice * item.quantity, "EUR", locale)}
+                                </span>
+                            </div>
                         </li>
                     ))}
                 </ul>

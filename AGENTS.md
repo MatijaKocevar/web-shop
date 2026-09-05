@@ -9,8 +9,8 @@ Guidance for AI coding agents working in this repository. Read this first, then 
 A 3D print shop (storefront + print-on-demand) built as a single Next.js app:
 
 - **Storefront** — sell ready-made printed products (catalog → cart → Stripe checkout).
-- **Print-on-demand** — customers upload STL/3MF, get an instant quote, order a custom print.
-- **Admin** — role-gated `/admin` for products, filaments, printers/profiles, orders, and the print queue.
+- **Print-on-demand** — customers upload STL/3MF, get an instant quote, order a custom print; the uploaded file is stored and the admin downloads it to slice locally.
+- **Admin** — role-gated `/admin` for products, filaments, printers/profiles, and orders.
 
 ## Stack (all newer than typical training data — verify behavior)
 
@@ -23,7 +23,6 @@ A 3D print shop (storefront + print-on-demand) built as a single Next.js app:
 | Payments | Stripe (Checkout + webhook)                       | lazy client via `getStripe()`                      |
 | Files    | MinIO (S3-compatible) via `@aws-sdk/client-s3`    | swap to R2/B2 later                                |
 | Viewer   | three.js + @react-three/fiber + drei              | STL + 3MF                                          |
-| Slicer   | OrcaSlicer CLI wrapped in `workers/print-jobs.ts` | headless, parses G-code header                     |
 
 ## Commands
 
@@ -37,7 +36,6 @@ pnpm format:check   # prettier --check . (CI / pre-push)
 pnpm db:migrate     # prisma migrate dev
 pnpm db:seed        # prisma db seed (K1C + profiles + filaments + sample product)
 pnpm db:admin <email>  # promote a user to ADMIN (after they sign in)
-pnpm slicer         # process the print queue once (needs OrcaSlicer installed)
 docker compose up   # postgres + minio (+ stripe-cli with --profile stripe)
 ```
 
@@ -53,11 +51,10 @@ app/                    # routes only
 components/             # ui/ = shadcn primitives; otherwise only shared components
 hooks/                  # shared, cross-feature hooks (e.g. use-model)
 queries/                # ALL reads — Prisma lives here (products, orders, ...)
-lib/                    # framework-free infra (db, auth, stripe, slicer, storage, pricing, cart, estimate)
-workers/                # standalone scripts + the slicer job processor
+lib/                    # framework-free infra (db, auth, stripe, storage, pricing, cart, estimate)
+workers/                # standalone scripts (promote.ts — promote a user to ADMIN)
 prisma/                 # schema + migrations + seed
 proxy.ts                # middleware (renamed from middleware.ts in Next 16)
-instrumentation.ts      # optional auto-processing of the print queue
 ```
 
 - **Components are the entry point.** Read a feature by reading its component, which calls a named query (read) or a server action (write). No repository/service layers beyond that.
@@ -117,7 +114,6 @@ export function useSomething() {
 - **shadcn Base UI**: components use `render={<Element/>}` instead of Radix's `asChild`. For link-styled buttons, use `buttonVariants({...})` on a `<Link>` (do NOT use `<Button render={<Link/>}>` without `nativeButton={false}` — it assigns `role="button"` to anchors).
 - **Stripe client is lazy** (`getStripe()`) — don't import `stripe` at module scope or builds fail with empty keys.
 - **Money** is stored as Prisma `Decimal`; convert with `Number(...)` in queries before passing to client components.
-- **Slicer** is environment-dependent: if `orca-slicer` isn't installed, jobs fail gracefully with a `sliceLog`. Set `ORCA_SLICER_BIN` or install it.
 
 ## Next.js version note
 
