@@ -1,4 +1,4 @@
-import type { ModelFormat, ModelStats } from "@/hooks/use-model";
+import type { ModelFormat, ModelStats } from "@/lib/model";
 import type { Filament } from "./filament";
 import type { Profile } from "./profile";
 

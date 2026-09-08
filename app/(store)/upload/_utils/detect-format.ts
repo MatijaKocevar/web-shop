@@ -1,4 +1,4 @@
-import type { ModelFormat } from "@/hooks/use-model";
+import type { ModelFormat } from "@/lib/model";
 
 const ACCEPTED = {
     "model/stl": "stl",
