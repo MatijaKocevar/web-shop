@@ -7,7 +7,11 @@ import { auth } from "@/lib/auth";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSwitcher } from "@/components/language-switcher";
 
-export default async function AdminLayout({ children }: { children: React.ReactNode }) {
+type AdminLayoutProps = {
+    children: React.ReactNode;
+};
+
+export default async function AdminLayout({ children }: AdminLayoutProps) {
     const session = await auth();
     if (session?.user.role !== "ADMIN") redirect("/signin");
 

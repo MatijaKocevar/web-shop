@@ -3,7 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { getPrinterById } from "@/queries/printers";
 import { PrinterForm } from "../_components/printer-form";
 
-export default async function EditPrinterPage({ params }: { params: Promise<{ id: string }> }) {
+type EditPrinterPageProps = {
+    params: Promise<{ id: string }>;
+};
+
+export default async function EditPrinterPage({ params }: EditPrinterPageProps) {
     const { id } = await params;
     const printer = await getPrinterById(id);
     const t = await getTranslations("admin.printers");

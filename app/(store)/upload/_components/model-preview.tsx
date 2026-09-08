@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ModelViewer } from "@/components/model-viewer";
 import type { ModelFormat, ModelStats } from "@/hooks/use-model";
 
-type Props = {
+type ModelPreviewProps = {
     objectUrl: string;
     format: ModelFormat;
     stats: ModelStats | null;
@@ -22,7 +22,7 @@ export function ModelPreview({
     printerName,
     onStats,
     onReset,
-}: Props) {
+}: ModelPreviewProps) {
     const t = useTranslations("upload");
 
     return (

@@ -6,24 +6,16 @@ import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { addToCart } from "@/app/(store)/cart/_actions/add-to-cart";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
+import type { Variant } from "../_types/variant";
 
-type Variant = {
-    id: string;
-    name: string;
-    priceDelta: number | null;
-};
-
-export function AddToCartForm({
-    productId,
-    productName,
-    basePrice,
-    variants,
-}: {
+type AddToCartFormProps = {
     productId: string;
     productName: string;
     basePrice: number | null;
     variants: Variant[];
-}) {
+};
+
+export function AddToCartForm({ productId, productName, basePrice, variants }: AddToCartFormProps) {
     const t = useTranslations("products");
     const [variantId, setVariantId] = useState(variants[0]?.id ?? "");
     const [quantity, setQuantity] = useState(1);

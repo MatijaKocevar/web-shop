@@ -6,7 +6,11 @@ import { AddToCartForm } from "./_components/add-to-cart-form";
 import { publicUrl } from "@/lib/storage";
 import { ModelViewer } from "@/components/model-viewer";
 
-export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+type ProductDetailPageProps = {
+    params: Promise<{ slug: string }>;
+};
+
+export default async function ProductDetailPage({ params }: ProductDetailPageProps) {
     const { slug } = await params;
     const product = await getProductBySlug(slug);
     const locale = await getLocale();

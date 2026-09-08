@@ -10,7 +10,11 @@ import { updateQuantity } from "../_actions/update-quantity";
 import { useCartStore } from "../_stores/cart-store";
 import type { HydratedCartItem } from "@/queries/cart";
 
-export function CartItems({ items }: { items: HydratedCartItem[] }) {
+type CartItemsProps = {
+    items: HydratedCartItem[];
+};
+
+export function CartItems({ items }: CartItemsProps) {
     const locale = useLocale();
     const t = useTranslations("cart");
 

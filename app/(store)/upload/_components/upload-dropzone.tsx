@@ -2,9 +2,9 @@ import { Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { DropzoneState } from "react-dropzone";
 
-type Props = Pick<DropzoneState, "getRootProps" | "getInputProps" | "isDragActive">;
+type UploadDropzoneProps = Pick<DropzoneState, "getRootProps" | "getInputProps" | "isDragActive">;
 
-export function UploadDropzone({ getRootProps, getInputProps, isDragActive }: Props) {
+export function UploadDropzone({ getRootProps, getInputProps, isDragActive }: UploadDropzoneProps) {
     const t = useTranslations("upload");
 
     return (

@@ -4,32 +4,18 @@ import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveProfile } from "../_actions/save-profile";
 import { deleteProfile } from "../_actions/delete-profile";
+import type { PrinterOption } from "../_types/printer-option";
+import type { Profile } from "../_types/profile";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-type Printer = { id: string; name: string };
-type Profile = {
-    id: string;
-    printerId: string;
-    name: string;
-    nozzle: number;
-    layerHeight: number;
-    infill: number;
-    speed: number | null;
-    machineHourRate: number;
-    setupFee: number;
-    supports: boolean;
-    active: boolean;
+type ProfileFormProps = {
+    profile?: Profile;
+    printers: PrinterOption[];
 };
 
-export async function ProfileForm({
-    profile,
-    printers,
-}: {
-    profile?: Profile;
-    printers: Printer[];
-}) {
+export async function ProfileForm({ profile, printers }: ProfileFormProps) {
     const t = await getTranslations("admin.printers");
     const tCommon = await getTranslations("admin.common");
 

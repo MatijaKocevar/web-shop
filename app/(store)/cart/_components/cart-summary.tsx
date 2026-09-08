@@ -4,7 +4,11 @@ import { buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency } from "@/lib/pricing";
 
-export async function CartSummary({ subtotal }: { subtotal: number }) {
+type CartSummaryProps = {
+    subtotal: number;
+};
+
+export async function CartSummary({ subtotal }: CartSummaryProps) {
     const locale = await getLocale();
     const t = await getTranslations("cart");
 

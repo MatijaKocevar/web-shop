@@ -2,27 +2,19 @@ import { useMemo } from "react";
 import type { ModelStats } from "@/hooks/use-model";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice } from "@/lib/pricing";
-import type { Filament, Profile } from "../_utils/types";
+import type { Filament } from "../_types/filament";
+import type { Profile } from "../_types/profile";
+import type { Quote } from "../_types/quote";
 
-export type Quote = {
-    grams: number;
-    timeSeconds: number;
-    price: ReturnType<typeof calculatePrice>;
-} | null;
-
-export function useQuote({
-    stats,
-    profile,
-    filament,
-    infill,
-    supports,
-}: {
+type UseQuoteArgs = {
     stats: ModelStats | null;
     profile: Profile | undefined;
     filament: Filament | undefined;
     infill: number;
     supports: boolean;
-}) {
+};
+
+export function useQuote({ stats, profile, filament, infill, supports }: UseQuoteArgs) {
     const buildVolumeOk = useMemo(() => {
         if (!stats || !profile) return true;
         const { buildX, buildY, buildZ } = profile.printer;

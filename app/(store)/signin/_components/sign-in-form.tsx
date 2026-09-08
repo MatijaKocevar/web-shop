@@ -10,13 +10,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 
-export function SignInForm({
-    callbackUrl,
-    testLogin,
-}: {
+type SignInFormProps = {
     callbackUrl?: string;
     testLogin?: boolean;
-}) {
+};
+
+export function SignInForm({ callbackUrl, testLogin }: SignInFormProps) {
     const t = useTranslations("signin");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

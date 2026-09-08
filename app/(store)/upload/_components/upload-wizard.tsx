@@ -10,15 +10,15 @@ import { useAddCustomPrint } from "../_hooks/use-add-custom-print";
 import { usePrintSettings } from "../_hooks/use-print-settings";
 import { useQuote } from "../_hooks/use-quote";
 import { useUpload } from "../_hooks/use-upload";
-import type { Filament, Profile } from "../_utils/types";
+import type { Filament } from "../_types/filament";
+import type { Profile } from "../_types/profile";
 
-export function UploadWizard({
-    profiles,
-    filaments,
-}: {
+type UploadWizardProps = {
     profiles: Profile[];
     filaments: Filament[];
-}) {
+};
+
+export function UploadWizard({ profiles, filaments }: UploadWizardProps) {
     const t = useTranslations("upload");
     const upload = useUpload();
     const settings = usePrintSettings(profiles, filaments);

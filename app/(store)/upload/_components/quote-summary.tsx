@@ -3,9 +3,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { formatCurrency, formatDuration } from "@/lib/pricing";
-import type { Quote } from "../_hooks/use-quote";
+import type { Quote } from "../_types/quote";
 
-type Props = {
+type QuoteSummaryProps = {
     quote: Quote;
     buildVolumeOk: boolean;
     adding: boolean;
@@ -13,7 +13,7 @@ type Props = {
     onAdd: () => void;
 };
 
-export function QuoteSummary({ quote, buildVolumeOk, adding, added, onAdd }: Props) {
+export function QuoteSummary({ quote, buildVolumeOk, adding, added, onAdd }: QuoteSummaryProps) {
     const locale = useLocale();
     const t = useTranslations("upload");
 

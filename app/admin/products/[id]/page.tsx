@@ -15,7 +15,11 @@ import { uploadProductModel } from "../_actions/upload-product-model";
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-export default async function EditProductPage({ params }: { params: Promise<{ id: string }> }) {
+type EditProductPageProps = {
+    params: Promise<{ id: string }>;
+};
+
+export default async function EditProductPage({ params }: EditProductPageProps) {
     const { id } = await params;
     const [product, categories] = await Promise.all([getProductById(id), listCategories()]);
     const t = await getTranslations("admin.products");

@@ -1,11 +1,14 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-
 import type { CartItem } from "@/lib/cart";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
 
-export function CartHydrator({ items }: { items: CartItem[] }) {
+type CartHydratorProps = {
+    items: CartItem[];
+};
+
+export function CartHydrator({ items }: CartHydratorProps) {
     const hydrated = useRef(false);
 
     useEffect(() => {

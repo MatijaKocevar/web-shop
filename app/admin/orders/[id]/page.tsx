@@ -24,11 +24,11 @@ const orderStatuses = [
     "REFUNDED",
 ];
 
-export default async function AdminOrderDetailPage({
-    params,
-}: {
+type AdminOrderDetailPageProps = {
     params: Promise<{ id: string }>;
-}) {
+};
+
+export default async function AdminOrderDetailPage({ params }: AdminOrderDetailPageProps) {
     const { id } = await params;
     const order = await getOrderById(id);
     const locale = await getLocale();

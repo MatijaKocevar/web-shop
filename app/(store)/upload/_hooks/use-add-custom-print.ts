@@ -1,24 +1,13 @@
 import { useState } from "react";
-import type { ModelFormat, ModelStats } from "@/hooks/use-model";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
 import { addCustomPrintToCart } from "../_actions/add-custom-print-to-cart";
-import type { Filament, Profile } from "../_utils/types";
-
-type AddArgs = {
-    file: File;
-    format: ModelFormat;
-    stats: ModelStats;
-    profile: Profile;
-    filament: Filament;
-    infill: number;
-    supports: boolean;
-};
+import type { AddCustomPrintArgs } from "../_types/add-custom-print";
 
 export function useAddCustomPrint() {
     const [adding, setAdding] = useState(false);
     const [added, setAdded] = useState(false);
 
-    async function add(args: AddArgs) {
+    async function add(args: AddCustomPrintArgs) {
         setAdding(true);
 
         try {

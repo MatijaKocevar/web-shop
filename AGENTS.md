@@ -60,7 +60,8 @@ proxy.ts                # middleware (renamed from middleware.ts in Next 16)
 - **Components are the entry point.** Read a feature by reading its component, which calls a named query (read) or a server action (write). No repository/service layers beyond that.
 - **Prisma is touched only by `queries/` and `lib/db.ts`** (and server-action files for writes). Never import `db` into a component.
 - **Reads** live in `queries/*.ts`. **Writes** are server actions (`"use server"`) colocated in an `_actions/` folder inside the route folder that uses them — one file per action, named after the action (e.g. `products/_actions/save-product.ts`).
-- **Route folders keep one file per concern and never mix kinds**: `_components/` (components only, one component per file), `_hooks/` (feature hooks), `_utils/` (types/helpers), `_actions/` (server actions), `_stores/` (client state, e.g. Zustand). No multi-component files; components with heavy logic move that logic into a hook.
+- **Route folders keep one file per concern and never mix kinds**: `_components/` (components only, one component per file), `_hooks/` (feature hooks), `_types/` (feature data types, one type per file), `_utils/` (helpers), `_actions/` (server actions), `_stores/` (client state, e.g. Zustand). No multi-component files; components with heavy logic move that logic into a hook.
+- **Props are always a named type declared above the component** (`type SignInFormProps = {...}` right before the function), and the component destructures with that type — never inline. Pages and layouts follow the same rule for `params`/`searchParams`/`children`. This is the only type allowed to live in a component file; all other data types live in the route's `_types/` folder.
 - **Cart** is cookie-backed (`lib/cart.ts`), mutated via `app/(store)/cart/_actions/*.ts`.
 
 ## Code style
@@ -68,6 +69,8 @@ proxy.ts                # middleware (renamed from middleware.ts in Next 16)
 Formatting is enforced by **Prettier** (`.prettierrc.json`: 4-space indent, width 100, double quotes, semicolons, trailing commas). Run `pnpm format` before committing; `pnpm format:check` in CI. Don't hand-format — let Prettier own it.
 
 Treat code like prose: group statements that belong together into **blocks**, and separate blocks with **one blank line**. Don't run everything together, and never use two blank lines.
+
+- **Never write comments.** Code must be self-explanatory through clear names and structure — describe what it does by doing it, not with prose. If you feel the need to explain, improve the naming or structure instead.
 
 - **Imports are one contiguous block** — no blank lines between them. The only blank line is after the `"use client"` / `"use server"` directive, and after the last import (before the first declaration).
 - Blank line between top-level declarations (types, helpers, functions).

@@ -4,21 +4,16 @@ import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { savePrinter } from "../_actions/save-printer";
 import { deletePrinter } from "../_actions/delete-printer";
+import type { Printer } from "../_types/printer";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-type Printer = {
-    id: string;
-    name: string;
-    make: string;
-    buildX: number;
-    buildY: number;
-    buildZ: number;
-    active: boolean;
+type PrinterFormProps = {
+    printer?: Printer;
 };
 
-export async function PrinterForm({ printer }: { printer?: Printer }) {
+export async function PrinterForm({ printer }: PrinterFormProps) {
     const t = await getTranslations("admin.printers");
     const tCommon = await getTranslations("admin.common");
 

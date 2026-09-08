@@ -2,18 +2,10 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import type { ProductCardProduct } from "../_types/product-card";
 
 type ProductCardProps = {
-    product: {
-        id: string;
-        name: string;
-        slug: string;
-        price: number | null;
-        currency: string;
-        type: string;
-        category: { name: string } | null;
-        images: { key: string; alt: string | null }[];
-    };
+    product: ProductCardProduct;
 };
 
 export async function ProductCard({ product }: ProductCardProps) {

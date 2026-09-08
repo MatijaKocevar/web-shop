@@ -1,5 +1,6 @@
 import { useState } from "react";
-import type { Filament, Profile } from "../_utils/types";
+import type { Filament } from "../_types/filament";
+import type { Profile } from "../_types/profile";
 
 export function usePrintSettings(profiles: Profile[], filaments: Filament[]) {
     const [profileId, setProfileId] = useState("");
@@ -23,5 +24,3 @@ export function usePrintSettings(profiles: Profile[], filaments: Filament[]) {
         filament,
     };
 }
-
-export type PrintSettings = ReturnType<typeof usePrintSettings>;

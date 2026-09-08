@@ -3,7 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { getFilamentById } from "@/queries/filaments";
 import { FilamentForm } from "../_components/filament-form";
 
-export default async function EditFilamentPage({ params }: { params: Promise<{ id: string }> }) {
+type EditFilamentPageProps = {
+    params: Promise<{ id: string }>;
+};
+
+export default async function EditFilamentPage({ params }: EditFilamentPageProps) {
     const { id } = await params;
     const filament = await getFilamentById(id);
     const t = await getTranslations("admin.filaments");

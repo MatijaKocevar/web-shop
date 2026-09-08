@@ -17,7 +17,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 
-export function UserMenu({ session }: { session: Session | null }) {
+type UserMenuProps = {
+    session: Session | null;
+};
+
+export function UserMenu({ session }: UserMenuProps) {
     const t = useTranslations("common");
 
     if (!session?.user) {

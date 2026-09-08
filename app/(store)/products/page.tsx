@@ -2,11 +2,11 @@ import { getTranslations } from "next-intl/server";
 import { listProducts } from "@/queries/products";
 import { ProductCard } from "./_components/product-card";
 
-export default async function ProductsPage({
-    searchParams,
-}: {
+type ProductsPageProps = {
     searchParams: Promise<{ category?: string; q?: string }>;
-}) {
+};
+
+export default async function ProductsPage({ searchParams }: ProductsPageProps) {
     const { category, q } = await searchParams;
     const products = await listProducts({ category, query: q });
     const t = await getTranslations("products");

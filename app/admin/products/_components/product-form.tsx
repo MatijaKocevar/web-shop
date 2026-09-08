@@ -2,29 +2,18 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveProduct } from "../_actions/save-product";
+import type { Category } from "../_types/category";
+import type { Product } from "../_types/product";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-type Category = { id: string; name: string };
-type Product = {
-    id: string;
-    name: string;
-    slug: string;
-    description: string | null;
-    price: number | null;
-    type: string;
-    active: boolean;
-    categoryId: string | null;
-};
-
-export async function ProductForm({
-    product,
-    categories,
-}: {
+type ProductFormProps = {
     product?: Product;
     categories: Category[];
-}) {
+};
+
+export async function ProductForm({ product, categories }: ProductFormProps) {
     const t = await getTranslations("admin.products");
     const tCommon = await getTranslations("admin.common");
     const tType = await getTranslations("productType");

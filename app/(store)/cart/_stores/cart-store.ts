@@ -2,12 +2,7 @@
 
 import { create } from "zustand";
 
-import type { CartItem } from "@/lib/cart";
-
-type CartState = {
-    items: CartItem[];
-    setItems: (items: CartItem[]) => void;
-};
+import type { CartState } from "../_types/cart-state";
 
 export const useCartStore = create<CartState>((set) => ({
     items: [],

@@ -4,21 +4,16 @@ import { getTranslations } from "next-intl/server";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { saveFilament } from "../_actions/save-filament";
 import { deleteFilament } from "../_actions/delete-filament";
+import type { Filament } from "../_types/filament";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-type Filament = {
-    id: string;
-    name: string;
-    material: string;
-    color: string;
-    density: number;
-    costPerGram: number;
-    active: boolean;
+type FilamentFormProps = {
+    filament?: Filament;
 };
 
-export async function FilamentForm({ filament }: { filament?: Filament }) {
+export async function FilamentForm({ filament }: FilamentFormProps) {
     const t = await getTranslations("admin.filaments");
     const tCommon = await getTranslations("admin.common");
 

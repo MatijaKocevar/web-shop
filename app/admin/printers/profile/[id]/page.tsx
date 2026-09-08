@@ -3,7 +3,11 @@ import { getTranslations } from "next-intl/server";
 import { getProfileById, listPrinters } from "@/queries/printers";
 import { ProfileForm } from "../../_components/profile-form";
 
-export default async function EditProfilePage({ params }: { params: Promise<{ id: string }> }) {
+type EditProfilePageProps = {
+    params: Promise<{ id: string }>;
+};
+
+export default async function EditProfilePage({ params }: EditProfilePageProps) {
     const { id } = await params;
     const [profile, printers] = await Promise.all([getProfileById(id), listPrinters()]);
     const t = await getTranslations("admin.printers");

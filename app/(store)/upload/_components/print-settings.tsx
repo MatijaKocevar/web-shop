@@ -1,14 +1,15 @@
 import { useTranslations } from "next-intl";
-import type { Filament, Profile } from "../_utils/types";
-import type { PrintSettings } from "../_hooks/use-print-settings";
+import type { Filament } from "../_types/filament";
+import type { PrintSettings } from "../_types/print-settings";
+import type { Profile } from "../_types/profile";
 
-type Props = {
+type PrintSettingsProps = {
     profiles: Profile[];
     filaments: Filament[];
     settings: PrintSettings;
 };
 
-export function PrintSettings({ profiles, filaments, settings }: Props) {
+export function PrintSettings({ profiles, filaments, settings }: PrintSettingsProps) {
     const t = useTranslations("upload");
 
     return (

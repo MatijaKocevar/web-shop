@@ -3,7 +3,11 @@ import { getCart } from "@/lib/cart";
 import { CartHydrator } from "./_components/cart-hydrator";
 import { StoreHeader } from "./_components/store-header";
 
-export default async function StoreLayout({ children }: { children: React.ReactNode }) {
+type StoreLayoutProps = {
+    children: React.ReactNode;
+};
+
+export default async function StoreLayout({ children }: StoreLayoutProps) {
     const items = await getCart();
     const t = await getTranslations("nav");
 
