@@ -30,7 +30,6 @@ export async function addCustomPrintToCart(formData: FormData): Promise<CartItem
     const hash = createHash("sha256").update(bytes).digest("hex");
     const key = `uploads/${hash}.${extFor(format)}`;
 
-    // Persist the file record (deduplicated by hash+format).
     const [fileRecord] = await Promise.all([
         db.file.upsert({
             where: { hash_format: { hash, format: format === "3mf" ? "THREE_MF" : "STL" } },
@@ -50,7 +49,6 @@ export async function addCustomPrintToCart(formData: FormData): Promise<CartItem
         uploadObject(key, bytes, format === "3mf" ? "model/3mf" : "model/stl"),
     ]);
 
-    // Authoritative estimate (recomputed server-side).
     const [profile, filament, marginSetting] = await Promise.all([
         db.printerProfile.findUnique({ where: { id: profileId } }),
         db.filament.findUnique({ where: { id: filamentId } }),
