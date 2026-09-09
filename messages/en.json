@@ -91,16 +91,12 @@
     },
     "signin": {
         "title": "Sign in",
-        "subtitle": "Sign in to track orders and upload models.",
-        "continueGoogle": "Continue with Google",
-        "or": "or",
+        "subtitle": "Sign in to track orders and manage the shop.",
         "email": "Email",
         "emailPlaceholder": "you@example.com",
-        "emailMeLink": "Email me a sign-in link",
-        "testLogin": "test login",
         "password": "Password",
-        "testLoginButton": "Test login",
-        "testHint": "admin@test.com (admin) · customer@test.com (customer)"
+        "signInButton": "Sign in",
+        "invalidCredentials": "Invalid email or password."
     },
     "about": {
         "title": "About",

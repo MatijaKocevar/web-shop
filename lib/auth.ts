@@ -1,16 +1,16 @@
 import { PrismaAdapter } from "@auth/prisma-adapter";
-import NextAuth, { type NextAuthConfig } from "next-auth";
+import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import { db } from "@/lib/db";
 import { authConfig } from "@/lib/auth.config";
+import { verifyPassword } from "@/lib/password";
 
-const providers: NextAuthConfig["providers"] = [...authConfig.providers];
-
-if (process.env.AUTH_TEST_PASSWORD) {
-    providers.push(
+export const { handlers, auth, signIn, signOut } = NextAuth({
+    ...authConfig,
+    providers: [
         Credentials({
             id: "credentials",
-            name: "Test login",
+            name: "Email and password",
             credentials: {
                 email: { label: "Email", type: "email" },
                 password: { label: "Password", type: "password" },
@@ -20,10 +20,12 @@ if (process.env.AUTH_TEST_PASSWORD) {
                 const password = credentials?.password as string | undefined;
 
                 if (!email || !password) return null;
-                if (password !== process.env.AUTH_TEST_PASSWORD) return null;
 
                 const user = await db.user.findUnique({ where: { email } });
-                if (!user) return null;
+                if (!user?.passwordHash) return null;
+
+                const valid = await verifyPassword(password, user.passwordHash);
+                if (!valid) return null;
 
                 return {
                     id: user.id,
@@ -34,11 +36,6 @@ if (process.env.AUTH_TEST_PASSWORD) {
                 };
             },
         }),
-    );
-}
-
-export const { handlers, auth, signIn, signOut } = NextAuth({
-    ...authConfig,
-    providers,
+    ],
     adapter: PrismaAdapter(db),
 });

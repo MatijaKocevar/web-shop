@@ -1,6 +1,4 @@
 import type { NextAuthConfig } from "next-auth";
-import Google from "next-auth/providers/google";
-import Resend from "next-auth/providers/resend";
 import type { Role } from "@/generated/prisma/enums";
 
 export const authConfig = {
@@ -17,16 +15,7 @@ export const authConfig = {
             },
         },
     },
-    providers: [
-        Google({
-            clientId: process.env.AUTH_GOOGLE_ID,
-            clientSecret: process.env.AUTH_GOOGLE_SECRET,
-        }),
-        Resend({
-            apiKey: process.env.AUTH_RESEND_KEY,
-            from: process.env.EMAIL_FROM,
-        }),
-    ],
+    providers: [],
     pages: {
         signIn: "/signin",
     },

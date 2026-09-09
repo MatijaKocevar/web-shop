@@ -91,16 +91,12 @@
     },
     "signin": {
         "title": "Prijava",
-        "subtitle": "Prijavite se za sledenje naročilom in nalaganje modelov.",
-        "continueGoogle": "Nadaljuj z Googlom",
-        "or": "ali",
+        "subtitle": "Prijavite se za sledenje naročilom in upravljanje trgovine.",
         "email": "E-pošta",
         "emailPlaceholder": "vi@primer.si",
-        "emailMeLink": "Pošlji mi povezavo za prijavo",
-        "testLogin": "testna prijava",
         "password": "Geslo",
-        "testLoginButton": "Testna prijava",
-        "testHint": "admin@test.com (admin) · customer@test.com (stranka)"
+        "signInButton": "Prijava",
+        "invalidCredentials": "Napačen e-poštni naslov ali geslo."
     },
     "about": {
         "title": "O nas",

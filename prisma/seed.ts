@@ -1,19 +1,26 @@
 import "dotenv/config";
 import { db } from "../lib/db";
+import { hashPassword } from "../lib/password";
 
 async function main() {
-    // --- Test users (for the dev credentials login) ---
-    const testUsers = [
-        { email: "admin@test.com", name: "Admin Test", role: "ADMIN" as const },
-        { email: "customer@test.com", name: "Customer Test", role: "CUSTOMER" as const },
-    ];
-    for (const u of testUsers) {
-        await db.user.upsert({
-            where: { email: u.email },
-            update: { role: u.role },
-            create: { email: u.email, name: u.name, role: u.role },
-        });
-    }
+    const adminPassword = process.env.AUTH_ADMIN_PASSWORD || "admin123";
+
+    await db.user.upsert({
+        where: { email: "admin@test.com" },
+        update: { role: "ADMIN", passwordHash: await hashPassword(adminPassword) },
+        create: {
+            email: "admin@test.com",
+            name: "Admin Test",
+            role: "ADMIN",
+            passwordHash: await hashPassword(adminPassword),
+        },
+    });
+
+    await db.user.upsert({
+        where: { email: "customer@test.com" },
+        update: { role: "CUSTOMER" },
+        create: { email: "customer@test.com", name: "Customer Test", role: "CUSTOMER" },
+    });
 
     // --- Printer: Creality K1C ---
     const printer = await db.printer.upsert({
