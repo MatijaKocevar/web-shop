@@ -5,15 +5,12 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { listCategories } from "@/queries/categories";
 import { getProductById } from "@/queries/products";
-import { publicUrl } from "@/lib/storage";
+import { publicUrl } from "@/lib/storage-url";
 import { ProductForm } from "../_components/product-form";
+import { ProductImageUploadForm } from "./_components/product-image-upload-form";
+import { ProductModelUploadForm } from "./_components/product-model-upload-form";
 import { deleteProduct } from "../_actions/delete-product";
 import { removeProductImage } from "../_actions/remove-product-image";
-import { uploadProductImage } from "../_actions/upload-product-image";
-import { uploadProductModel } from "../_actions/upload-product-model";
-
-const inputClass =
-    "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
 type EditProductPageProps = {
     params: Promise<{ id: string }>;
@@ -23,7 +20,6 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
     const { id } = await params;
     const [product, categories] = await Promise.all([getProductById(id), listCategories()]);
     const t = await getTranslations("admin.products");
-    const tCommon = await getTranslations("admin.common");
 
     if (!product) notFound();
 
@@ -55,24 +51,12 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
                         ? t("current", { filename: product.modelFile.filename })
                         : t("noModel")}
                 </p>
-                <form action={uploadProductModel} className="flex items-center gap-2">
-                    <input type="hidden" name="productId" value={product.id} />
-                    <input type="file" name="model" accept=".stl,.3mf" className={inputClass} />
-                    <Button type="submit" variant="outline">
-                        {tCommon("upload")}
-                    </Button>
-                </form>
+                <ProductModelUploadForm productId={product.id} />
 
                 <Separator className="my-6" />
 
                 <h2 className="mb-3 font-semibold">{t("images")}</h2>
-                <form action={uploadProductImage} className="mb-4 flex items-center gap-2">
-                    <input type="hidden" name="productId" value={product.id} />
-                    <input type="file" name="image" accept="image/*" className={inputClass} />
-                    <Button type="submit" variant="outline">
-                        {tCommon("upload")}
-                    </Button>
-                </form>
+                <ProductImageUploadForm productId={product.id} />
 
                 {product.images.length > 0 && (
                     <ul className="grid grid-cols-3 gap-3">

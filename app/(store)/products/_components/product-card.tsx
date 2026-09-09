@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { publicUrl } from "@/lib/storage-url";
 import type { ProductCardProduct } from "../_types/product-card";
 
 type ProductCardProps = {
@@ -20,7 +21,7 @@ export async function ProductCard({ product }: ProductCardProps) {
                     {image ? (
                         // eslint-disable-next-line @next/next/no-img-element
                         <img
-                            src={`${process.env.NEXT_PUBLIC_S3_PUBLIC_URL}/${image.key}`}
+                            src={publicUrl(image.key)}
                             alt={image.alt ?? product.name}
                             className="h-full w-full object-cover transition-transform group-hover:scale-105"
                         />

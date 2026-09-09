@@ -3,7 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { getProductBySlug } from "@/queries/products";
 import { AddToCartForm } from "./_components/add-to-cart-form";
-import { publicUrl } from "@/lib/storage";
+import { publicUrl } from "@/lib/storage-url";
 import { ModelViewer } from "@/components/model-viewer";
 
 type ProductDetailPageProps = {

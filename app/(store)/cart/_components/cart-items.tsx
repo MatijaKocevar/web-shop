@@ -4,7 +4,7 @@ import { Trash2 } from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { formatCurrency } from "@/lib/pricing";
-import { publicUrl } from "@/lib/storage";
+import { publicUrl } from "@/lib/storage-url";
 import { removeFromCart } from "../_actions/remove-from-cart";
 import { updateQuantity } from "../_actions/update-quantity";
 import { useCartStore } from "../_stores/cart-store";

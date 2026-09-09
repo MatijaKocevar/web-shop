@@ -1,30 +1,38 @@
 import { useState } from "react";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
+import { usePresignedUpload } from "@/hooks/use-presigned-upload";
 import { addCustomPrintToCart } from "../_actions/add-custom-print-to-cart";
+import { createCustomPrintUpload } from "../_actions/create-custom-print-upload";
 import type { AddCustomPrintArgs } from "../_types/add-custom-print";
 
 export function useAddCustomPrint() {
     const [adding, setAdding] = useState(false);
     const [added, setAdded] = useState(false);
+    const { upload } = usePresignedUpload();
 
     async function add(args: AddCustomPrintArgs) {
         setAdding(true);
 
         try {
-            const data = new FormData();
+            const { key, hash } = await upload(args.file, (fileHash) =>
+                createCustomPrintUpload(fileHash, args.format, args.file.size),
+            );
 
-            data.append("file", args.file);
-            data.append("format", args.format);
-            data.append("profileId", args.profile.id);
-            data.append("filamentId", args.filament.id);
-            data.append("infill", String(args.infill));
-            data.append("supports", String(args.supports));
-            data.append("width", String(args.stats.width));
-            data.append("depth", String(args.stats.depth));
-            data.append("height", String(args.stats.height));
-            data.append("volume", String(args.stats.volume));
-
-            const items = await addCustomPrintToCart(data);
+            const items = await addCustomPrintToCart({
+                key,
+                filename: args.file.name,
+                hash,
+                format: args.format,
+                size: args.file.size,
+                profileId: args.profile.id,
+                filamentId: args.filament.id,
+                infill: args.infill,
+                supports: args.supports,
+                width: args.stats.width,
+                depth: args.stats.depth,
+                height: args.stats.height,
+                volume: args.stats.volume,
+            });
 
             useCartStore.setState({ items });
 

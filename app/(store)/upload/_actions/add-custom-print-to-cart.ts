@@ -1,53 +1,50 @@
 "use server";
 
-import { createHash, randomUUID } from "node:crypto";
+import { randomUUID } from "node:crypto";
 import { revalidatePath } from "next/cache";
 import { db } from "@/lib/db";
-import { uploadObject } from "@/lib/storage";
+import { objectExists } from "@/lib/storage";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice, round2 } from "@/lib/pricing";
 import { setCart, getCart, type CartItem } from "@/lib/cart";
+import type { AddCustomPrintToCartArgs } from "../_types/add-custom-print-to-cart";
 
-function extFor(format: string): string {
-    return format === "3mf" ? "3mf" : "stl";
-}
+export async function addCustomPrintToCart(args: AddCustomPrintToCartArgs): Promise<CartItem[]> {
+    const {
+        key,
+        filename,
+        hash,
+        format,
+        size,
+        profileId,
+        filamentId,
+        infill,
+        supports,
+        width,
+        depth,
+        height,
+        volume,
+    } = args;
 
-export async function addCustomPrintToCart(formData: FormData): Promise<CartItem[]> {
-    const file = formData.get("file") as File | null;
-    const format = (formData.get("format") as string) ?? "stl";
-    const profileId = (formData.get("profileId") as string) ?? "";
-    const filamentId = (formData.get("filamentId") as string) ?? "";
-    const infill = Number(formData.get("infill") ?? 15);
-    const supports = formData.get("supports") === "true";
-    const width = Number(formData.get("width") ?? 0);
-    const depth = Number(formData.get("depth") ?? 0);
-    const height = Number(formData.get("height") ?? 0);
-    const volume = Number(formData.get("volume") ?? 0);
+    if (!(await objectExists(key))) {
+        throw new Error("Upload not found.");
+    }
 
-    if (!file) throw new Error("No file provided.");
-
-    const bytes = Buffer.from(await file.arrayBuffer());
-    const hash = createHash("sha256").update(bytes).digest("hex");
-    const key = `uploads/${hash}.${extFor(format)}`;
-
-    const [fileRecord] = await Promise.all([
-        db.file.upsert({
-            where: { hash_format: { hash, format: format === "3mf" ? "THREE_MF" : "STL" } },
-            update: {},
-            create: {
-                key,
-                filename: file.name,
-                format: format === "3mf" ? "THREE_MF" : "STL",
-                size: bytes.length,
-                hash,
-                volume,
-                width,
-                depth,
-                height,
-            },
-        }),
-        uploadObject(key, bytes, format === "3mf" ? "model/3mf" : "model/stl"),
-    ]);
+    const fileRecord = await db.file.upsert({
+        where: { hash_format: { hash, format: format === "3mf" ? "THREE_MF" : "STL" } },
+        update: {},
+        create: {
+            key,
+            filename,
+            format: format === "3mf" ? "THREE_MF" : "STL",
+            size,
+            hash,
+            volume,
+            width,
+            depth,
+            height,
+        },
+    });
 
     const [profile, filament, marginSetting] = await Promise.all([
         db.printerProfile.findUnique({ where: { id: profileId } }),
@@ -81,7 +78,7 @@ export async function addCustomPrintToCart(formData: FormData): Promise<CartItem
     items.push({
         id: randomUUID(),
         type: "CUSTOM_PRINT",
-        name: file.name,
+        name: filename,
         unitPrice: round2(price.total),
         quantity: 1,
         fileId: fileRecord.id,
