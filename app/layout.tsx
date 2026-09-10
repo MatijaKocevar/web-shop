@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
+import { ThemeColorSync } from "@/components/theme-color-sync";
 import { ThemeProvider } from "@/components/theme-provider";
 import "./globals.css";
 
@@ -57,6 +58,7 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
                         enableSystem
                         disableTransitionOnChange
                     >
+                        <ThemeColorSync />
                         {children}
                     </ThemeProvider>
                 </NextIntlClientProvider>
