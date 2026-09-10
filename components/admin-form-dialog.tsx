@@ -43,7 +43,7 @@ export function AdminFormDialog({
                         {description && <DialogDescription>{description}</DialogDescription>}
                     </DialogHeader>
                 )}
-                {children}
+                <div className="min-w-0">{children}</div>
             </DialogContent>
         </Dialog>
     );

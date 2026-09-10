@@ -32,6 +32,7 @@ export function StockAdjustCell({
     const t = useTranslations("admin.filaments");
     const tReason = useTranslations("stockReason");
     const [open, setOpen] = useState(false);
+    const [mode, setMode] = useState<"set" | "used">("set");
     const [amount, setAmount] = useState(String(stockGrams));
     const [reason, setReason] = useState<StockReason>("RESTOCK");
     const [note, setNote] = useState("");
@@ -40,6 +41,7 @@ export function StockAdjustCell({
 
     function handleOpenChange(next: boolean) {
         if (next) {
+            setMode("set");
             setAmount(String(stockGrams));
             setReason("RESTOCK");
             setNote("");
@@ -48,13 +50,22 @@ export function StockAdjustCell({
         setOpen(next);
     }
 
+    function switchMode(nextMode: "set" | "used") {
+        setMode(nextMode);
+        setAmount("");
+        setReason(nextMode === "used" ? "STOCK_PRINT" : "RESTOCK");
+    }
+
     function apply() {
+        if (amount === "") return;
+
         const grams = Number(amount);
 
-        if (Number.isFinite(grams) && grams >= 0) {
-            onChange(filamentId, grams, reason, note);
-        }
+        if (!Number.isFinite(grams) || grams < 0) return;
 
+        const next = mode === "used" ? Math.max(0, stockGrams - grams) : grams;
+
+        onChange(filamentId, next, reason, note);
         setOpen(false);
     }
 
@@ -71,6 +82,28 @@ export function StockAdjustCell({
                     <SlidersHorizontal className="size-3.5" />
                 </PopoverTrigger>
                 <PopoverContent className="w-56 gap-2 p-3" side="bottom" align="start">
+                    <div className="flex rounded-md border p-0.5">
+                        <button
+                            type="button"
+                            className={cn(
+                                "flex-1 rounded px-2 py-1 text-xs",
+                                mode === "set" && "bg-muted font-medium",
+                            )}
+                            onClick={() => switchMode("set")}
+                        >
+                            {t("setMode")}
+                        </button>
+                        <button
+                            type="button"
+                            className={cn(
+                                "flex-1 rounded px-2 py-1 text-xs",
+                                mode === "used" && "bg-muted font-medium",
+                            )}
+                            onClick={() => switchMode("used")}
+                        >
+                            {t("usedMode")}
+                        </button>
+                    </div>
                     <input
                         className={inputClass}
                         type="number"
@@ -78,7 +111,8 @@ export function StockAdjustCell({
                         min="0"
                         value={amount}
                         onChange={(event) => setAmount(event.target.value)}
-                        title={t("setStockTitle")}
+                        placeholder={mode === "used" ? t("gramsUsed") : String(stockGrams)}
+                        title={mode === "used" ? t("gramsUsed") : t("setStockTitle")}
                     />
                     <select
                         className={inputClass}

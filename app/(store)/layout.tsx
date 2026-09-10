@@ -2,7 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { auth } from "@/lib/auth";
 import { getCart } from "@/lib/cart";
 import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar";
 import { CartHydrator } from "./_components/cart-hydrator";
 import { StoreHeader } from "./_components/store-header";
 
@@ -44,12 +44,7 @@ export default async function StoreLayout({ children }: StoreLayoutProps) {
         return (
             <SidebarProvider className="min-h-dvh">
                 <AppSidebar email={session.user.email} />
-                <SidebarInset>
-                    <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
-                        <SidebarTrigger />
-                    </header>
-                    {content}
-                </SidebarInset>
+                <SidebarInset>{content}</SidebarInset>
             </SidebarProvider>
         );
     }
