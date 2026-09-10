@@ -148,12 +148,15 @@
     "admin": {
         "printShopAdmin": "Print Shop Admin",
         "nav": {
+            "store": "Store",
             "dashboard": "Dashboard",
             "products": "Products",
             "filaments": "Filaments",
             "printers": "Printers",
             "orders": "Orders",
-            "users": "Users"
+            "users": "Users",
+            "collapse": "Collapse sidebar",
+            "expand": "Expand sidebar"
         },
         "dashboard": {
             "title": "Dashboard",
@@ -172,7 +175,9 @@
             "status": "Status",
             "upload": "Upload",
             "active": "Active",
-            "none": "None"
+            "none": "None",
+            "save": "Save",
+            "cancel": "Cancel"
         },
         "products": {
             "title": "Products",

@@ -148,12 +148,15 @@
     "admin": {
         "printShopAdmin": "Print Shop Admin",
         "nav": {
+            "store": "Trgovina",
             "dashboard": "Nadzorna plošča",
             "products": "Izdelki",
             "filaments": "Filamenti",
             "printers": "Tiskalniki",
             "orders": "Naročila",
-            "users": "Uporabniki"
+            "users": "Uporabniki",
+            "collapse": "Strni stransko vrstico",
+            "expand": "Razširi stransko vrstico"
         },
         "dashboard": {
             "title": "Nadzorna plošča",
@@ -172,7 +175,9 @@
             "status": "Status",
             "upload": "Naloži",
             "active": "Aktivno",
-            "none": "Brez"
+            "none": "Brez",
+            "save": "Shrani",
+            "cancel": "Prekliči"
         },
         "products": {
             "title": "Izdelki",
