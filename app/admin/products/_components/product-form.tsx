@@ -110,11 +110,11 @@ export async function ProductForm({ product, categories }: ProductFormProps) {
                 <span>{tCommon("active")}</span>
             </label>
 
-            <div className="flex items-center gap-2">
-                <Button type="submit">{product ? tCommon("save") : t("createProduct")}</Button>
+            <div className="flex items-center justify-end gap-2">
                 <Link href="/admin/products" className={buttonVariants({ variant: "ghost" })}>
                     {tCommon("cancel")}
                 </Link>
+                <Button type="submit">{product ? tCommon("save") : t("createProduct")}</Button>
             </div>
         </form>
     );

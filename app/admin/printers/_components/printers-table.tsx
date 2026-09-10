@@ -46,7 +46,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
         const printerRow: AdminTableRow = {
             key: printer.id,
             className: "bg-muted/40",
-            href: `/admin/printers/${printer.id}`,
+            href: `/admin/printers?id=${printer.id}`,
             cells: [
                 {
                     content: (
@@ -64,7 +64,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
                                 )}
                             </button>
                             <Link
-                                href={`/admin/printers/${printer.id}`}
+                                href={`/admin/printers?id=${printer.id}`}
                                 className="font-medium hover:underline"
                             >
                                 {printer.name}
@@ -81,13 +81,13 @@ export function PrintersTable({ printers }: PrintersTableProps) {
                     content: (
                         <div className="flex justify-end gap-2">
                             <Link
-                                href={`/admin/printers/profile/new?printer=${printer.id}`}
+                                href={`/admin/printers?newProfile=1&printer=${printer.id}`}
                                 className={buttonVariants({ size: "sm" })}
                             >
                                 {t("newProfile")}
                             </Link>
                             <Link
-                                href={`/admin/printers/${printer.id}`}
+                                href={`/admin/printers?id=${printer.id}`}
                                 className={buttonVariants({ variant: "outline", size: "sm" })}
                             >
                                 {t("editPrinterLink")}
@@ -102,14 +102,14 @@ export function PrintersTable({ printers }: PrintersTableProps) {
 
         const profileRows: AdminTableRow[] = printer.profiles.map((profile) => ({
             key: profile.id,
-            href: `/admin/printers/profile/${profile.id}`,
+            href: `/admin/printers?profileId=${profile.id}`,
             cells: [
                 {
                     content: (
                         <div className="flex items-center gap-1.5 pl-7">
                             <CornerDownRight className="size-3.5 shrink-0 text-muted-foreground" />
                             <Link
-                                href={`/admin/printers/profile/${profile.id}`}
+                                href={`/admin/printers?profileId=${profile.id}`}
                                 className="font-medium hover:underline"
                             >
                                 {profile.name}
@@ -132,7 +132,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
                     content: (
                         <div className="flex justify-end gap-2">
                             <Link
-                                href={`/admin/printers/profile/${profile.id}`}
+                                href={`/admin/printers?profileId=${profile.id}`}
                                 className={buttonVariants({ variant: "outline", size: "sm" })}
                             >
                                 {t("editProfile")}
@@ -175,7 +175,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
                 </span>
             }
             toolbarActions={
-                <Link href="/admin/printers/new" className={buttonVariants({ size: "sm" })}>
+                <Link href="/admin/printers?new=1" className={buttonVariants({ size: "sm" })}>
                     {t("newPrinter")}
                 </Link>
             }

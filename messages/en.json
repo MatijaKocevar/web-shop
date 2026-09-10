@@ -321,7 +321,12 @@
             "orders": "Orders",
             "joined": "Joined",
             "actions": "Actions",
-            "deleteUser": "Delete user"
+            "deleteUser": "Delete user",
+            "edit": "Edit user",
+            "password": "New password",
+            "passwordConfirm": "Retype password",
+            "passwordMismatch": "Passwords do not match.",
+            "passwordHint": "Leave blank to keep the current password"
         }
     }
 }

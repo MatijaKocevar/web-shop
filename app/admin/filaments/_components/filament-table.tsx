@@ -65,13 +65,13 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
 
         return {
             key: f.id,
-            href: `/admin/filaments/${f.id}`,
+            href: `/admin/filaments?id=${f.id}`,
             filterValues: { material: f.material },
             cells: [
                 {
                     content: (
                         <Link
-                            href={`/admin/filaments/${f.id}`}
+                            href={`/admin/filaments?id=${f.id}`}
                             className="font-medium hover:underline"
                         >
                             {f.name}
@@ -110,7 +110,7 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
                 {
                     content: (
                         <Link
-                            href={`/admin/filaments/${f.id}`}
+                            href={`/admin/filaments?id=${f.id}`}
                             className={buttonVariants({ variant: "outline", size: "sm" })}
                         >
                             <Pencil className="size-4" />

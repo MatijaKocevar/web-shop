@@ -7,3 +7,10 @@ export async function listUsers() {
         take: 200,
     });
 }
+
+export async function getUserById(id: string) {
+    return db.user.findUnique({
+        where: { id },
+        include: { _count: { select: { orders: true, files: true } } },
+    });
+}

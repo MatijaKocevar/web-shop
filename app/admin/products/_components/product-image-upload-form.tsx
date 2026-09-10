@@ -5,8 +5,8 @@ import type { FormEvent } from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { usePresignedUpload } from "@/hooks/use-presigned-upload";
-import { createProductImageUpload } from "../../_actions/create-product-image-upload";
-import { uploadProductImage } from "../../_actions/upload-product-image";
+import { createProductImageUpload } from "../_actions/create-product-image-upload";
+import { uploadProductImage } from "../_actions/upload-product-image";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";

@@ -321,7 +321,12 @@
             "orders": "Naročila",
             "joined": "Pridružen",
             "actions": "Dejanja",
-            "deleteUser": "Izbriši uporabnika"
+            "deleteUser": "Izbriši uporabnika",
+            "password": "Novo geslo",
+            "passwordHint": "Pusti prazno, da obdržiš trenutno geslo",
+            "passwordConfirm": "Ponovi geslo",
+            "passwordMismatch": "Gesli se ne ujemata.",
+            "edit": "Uredi uporabnika"
         }
     }
 }

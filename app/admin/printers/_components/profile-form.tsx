@@ -143,23 +143,33 @@ export async function ProfileForm({ profile, printers, defaultPrinterId }: Profi
                     </label>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <Button type="submit">{profile ? tCommon("save") : t("createProfile")}</Button>
-                    <Link href="/admin/printers" className={buttonVariants({ variant: "ghost" })}>
-                        {tCommon("cancel")}
-                    </Link>
+                <div className="mt-6 flex items-center justify-between gap-2">
+                    {profile ? (
+                        <Button
+                            type="submit"
+                            variant="destructive"
+                            size="sm"
+                            formAction={deleteProfile}
+                        >
+                            <Trash2 className="size-4" />
+                            {t("deleteProfile")}
+                        </Button>
+                    ) : (
+                        <span />
+                    )}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/admin/printers"
+                            className={buttonVariants({ variant: "ghost" })}
+                        >
+                            {tCommon("cancel")}
+                        </Link>
+                        <Button type="submit">
+                            {profile ? tCommon("save") : t("createProfile")}
+                        </Button>
+                    </div>
                 </div>
             </form>
-
-            {profile && (
-                <form action={deleteProfile} className="mt-6">
-                    <input type="hidden" name="id" value={profile.id} />
-                    <Button type="submit" variant="destructive">
-                        <Trash2 className="size-4" />
-                        {t("deleteProfile")}
-                    </Button>
-                </form>
-            )}
         </div>
     );
 }
