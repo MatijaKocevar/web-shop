@@ -139,6 +139,13 @@
         "READY_MADE": "Ready made",
         "CUSTOM_PRINT": "Custom print"
     },
+    "stockReason": {
+        "ORDER": "Order",
+        "STOCK_PRINT": "Stock print",
+        "FAILURE": "Failure",
+        "RESTOCK": "Restock",
+        "CORRECTION": "Correction"
+    },
     "theme": {
         "toggle": "Toggle theme",
         "light": "Light",
@@ -163,6 +170,17 @@
             "products": "Products",
             "orders": "Orders",
             "users": "Users"
+        },
+        "strategy": {
+            "title": "Playbook",
+            "subtitle": "Sales strategy for one K1C — the rules that keep the queue honest.",
+            "openOrders": "Open orders",
+            "printing": "Printing now",
+            "lowStock": "Low stock",
+            "filamentOnHand": "Filament on hand",
+            "filamentStock": "Filament stock",
+            "filamentStockHint": "Live stock per color — buy more when a bar turns red.",
+            "threshold": "reorder at {grams} g"
         },
         "common": {
             "name": "Name",
@@ -212,8 +230,26 @@
             "density": "Density (g/cm³)",
             "costPerGram": "Cost per gram (€)",
             "costPerGramShort": "Cost/g",
+            "stock": "Stock",
+            "lowStock": "Low",
+            "stockGrams": "Stock (g)",
+            "lowStockThreshold": "Low-stock threshold (g)",
+            "lowStockThresholdShort": "reorder at {grams} g",
+            "inStock": "{grams} g in stock",
             "createFilament": "Create filament",
-            "deleteFilament": "Delete filament"
+            "deleteFilament": "Delete filament",
+            "adjustStock": "Adjust stock",
+            "deltaGrams": "Amount (g, negative = used)",
+            "reason": "Reason",
+            "note": "Note",
+            "notePlaceholder": "e.g. failed print, new spool",
+            "applyAdjustment": "Apply",
+            "setStock": "Set",
+            "setStockTitle": "How many grams of this filament do you have?",
+            "saveStock": "Save stock",
+            "doubleClickHint": "Double-click to edit",
+            "date": "Date",
+            "noLogEntries": "No stock changes logged yet."
         },
         "printers": {
             "title": "Printers & profiles",
@@ -258,7 +294,15 @@
             "stripeSession": "Stripe session: {id}",
             "updateStatus": "Update status",
             "backToOrders": "← Back to orders",
-            "download": "Download file"
+            "download": "Download file",
+            "recordPrint": "Record print",
+            "recordPrintHint": "Enter the grams your slicer reports, then save — stock is deducted automatically.",
+            "recordPrintSubmit": "Save print",
+            "gramsUsed": "Grams used",
+            "keepStatus": "Keep status",
+            "noFilamentItems": "No items with filament.",
+            "note": "Note",
+            "notePlaceholder": "e.g. printed with 0.20 profile"
         },
         "users": {
             "title": "Users",

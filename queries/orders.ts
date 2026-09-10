@@ -23,7 +23,9 @@ export async function getOrderById(id: string) {
     const order = await db.order.findUnique({
         where: { id },
         include: {
-            items: { include: { file: true } },
+            items: {
+                include: { file: true, filament: true, profile: true, variant: true },
+            },
             payments: true,
         },
     });
@@ -35,7 +37,11 @@ export async function getOrderById(id: string) {
         subtotal: Number(order.subtotal),
         shipping: Number(order.shipping),
         total: Number(order.total),
-        items: order.items.map((i) => ({ ...i, unitPrice: Number(i.unitPrice) })),
+        items: order.items.map((i) => ({
+            ...i,
+            unitPrice: Number(i.unitPrice),
+            filament: i.filament ? { ...i.filament, density: Number(i.filament.density) } : null,
+        })),
         payments: order.payments.map((p) => ({ ...p, amount: Number(p.amount) })),
     };
 }

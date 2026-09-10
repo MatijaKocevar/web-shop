@@ -24,3 +24,13 @@ export async function getFilamentById(id: string) {
         costPerGram: Number(filament.costPerGram),
     };
 }
+
+export async function listFilamentStockLog(filamentId: string) {
+    const logs = await db.filamentStockLog.findMany({
+        where: { filamentId },
+        orderBy: { createdAt: "desc" },
+        take: 50,
+    });
+
+    return logs;
+}

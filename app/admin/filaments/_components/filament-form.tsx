@@ -18,7 +18,7 @@ export async function FilamentForm({ filament }: FilamentFormProps) {
     const tCommon = await getTranslations("admin.common");
 
     return (
-        <div className="max-w-xl">
+        <div>
             <form action={saveFilament} className="flex flex-col gap-4">
                 {filament && <input type="hidden" name="id" value={filament.id} />}
 
@@ -82,6 +82,34 @@ export async function FilamentForm({ filament }: FilamentFormProps) {
                             step="0.0001"
                             min="0"
                             defaultValue={filament?.costPerGram ?? 0.02}
+                            required
+                        />
+                    </label>
+                </div>
+
+                <div className="grid grid-cols-2 gap-4">
+                    <label className="flex flex-col gap-1.5 text-sm">
+                        <span className="font-medium">{t("stockGrams")}</span>
+                        <input
+                            className={inputClass}
+                            name="stockGrams"
+                            type="number"
+                            step="1"
+                            min="0"
+                            defaultValue={filament?.stockGrams ?? 0}
+                            required
+                        />
+                    </label>
+
+                    <label className="flex flex-col gap-1.5 text-sm">
+                        <span className="font-medium">{t("lowStockThreshold")}</span>
+                        <input
+                            className={inputClass}
+                            name="lowStockThresholdGrams"
+                            type="number"
+                            step="1"
+                            min="0"
+                            defaultValue={filament?.lowStockThresholdGrams ?? 500}
                             required
                         />
                     </label>

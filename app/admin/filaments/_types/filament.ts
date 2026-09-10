@@ -5,5 +5,7 @@ export type Filament = {
     color: string;
     density: number;
     costPerGram: number;
+    stockGrams: number;
+    lowStockThresholdGrams: number;
     active: boolean;
 };

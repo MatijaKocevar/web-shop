@@ -33,6 +33,14 @@ enum FileFormat {
   THREE_MF
 }
 
+enum StockReason {
+  ORDER
+  STOCK_PRINT
+  FAILURE
+  RESTOCK
+  CORRECTION
+}
+
 // ---- Auth (Auth.js) ----
 
 model User {
@@ -136,6 +144,7 @@ model ProductVariant {
   stock       Int     @default(0)
   priceDelta  Decimal? @db.Decimal(12, 2)
   filamentId  String?
+  grams       Float?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -166,12 +175,29 @@ model Filament {
   color       String
   density     Decimal @db.Decimal(8, 4)
   costPerGram Decimal @db.Decimal(10, 4)
+  stockGrams  Int     @default(0)
+  lowStockThresholdGrams Int @default(500)
   active      Boolean @default(true)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   variants ProductVariant[]
   orderItems OrderItem[]
+  stockLogs FilamentStockLog[]
+}
+
+model FilamentStockLog {
+  id          String      @id @default(cuid())
+  deltaGrams  Int
+  reason      StockReason
+  note        String?
+  orderItemId String?
+  createdAt   DateTime    @default(now())
+
+  filamentId String
+  filament   Filament @relation(fields: [filamentId], references: [id], onDelete: Cascade)
+
+  orderItem OrderItem? @relation(fields: [orderItemId], references: [id], onDelete: SetNull)
 }
 
 model Printer {
@@ -274,6 +300,8 @@ model OrderItem {
   profile   PrinterProfile? @relation(fields: [profileId], references: [id], onDelete: SetNull)
   filamentId String?
   filament  Filament? @relation(fields: [filamentId], references: [id], onDelete: SetNull)
+
+  stockLogs FilamentStockLog[]
 }
 
 model Payment {
