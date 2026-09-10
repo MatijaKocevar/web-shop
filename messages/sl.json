@@ -139,6 +139,13 @@
         "READY_MADE": "Izdelano",
         "CUSTOM_PRINT": "Prilagojen natis"
     },
+    "stockReason": {
+        "ORDER": "Naročilo",
+        "STOCK_PRINT": "Tiskanje zaloge",
+        "FAILURE": "Neuspel tisk",
+        "RESTOCK": "Dopolnitev",
+        "CORRECTION": "Popravek"
+    },
     "theme": {
         "toggle": "Preklopi temo",
         "light": "Svetla",
@@ -163,6 +170,17 @@
             "products": "Izdelki",
             "orders": "Naročila",
             "users": "Uporabniki"
+        },
+        "strategy": {
+            "title": "Načrt prodaje",
+            "subtitle": "Prodajna strategija za en K1C — pravila, ki držijo vrsto pošteno.",
+            "openOrders": "Odprta naročila",
+            "printing": "V tiskanju",
+            "lowStock": "Nizka zaloga",
+            "filamentOnHand": "Filament na zalogi",
+            "filamentStock": "Zaloga filamenta",
+            "filamentStockHint": "Živa zaloga po barvah — dokupi, ko vrstica postane rdeča.",
+            "threshold": "naroči pri {grams} g"
         },
         "common": {
             "name": "Ime",
@@ -212,8 +230,26 @@
             "density": "Gostota (g/cm³)",
             "costPerGram": "Cena na gram (€)",
             "costPerGramShort": "Cena/g",
+            "stock": "Zaloga",
+            "lowStock": "Nizka",
+            "stockGrams": "Zaloga (g)",
+            "lowStockThreshold": "Prag nizke zaloge (g)",
+            "lowStockThresholdShort": "naroči pri {grams} g",
+            "inStock": "{grams} g na zalogi",
             "createFilament": "Ustvari filament",
-            "deleteFilament": "Izbriši filament"
+            "deleteFilament": "Izbriši filament",
+            "adjustStock": "Popravi zalogo",
+            "deltaGrams": "Količina (g, negativno = porabljeno)",
+            "reason": "Razlog",
+            "note": "Opomba",
+            "notePlaceholder": "npr. neuspel tisk, nova špula",
+            "applyAdjustment": "Uporabi",
+            "setStock": "Nastavi",
+            "setStockTitle": "Koliko gramov tega filamenta imaš?",
+            "saveStock": "Shrani zalogo",
+            "doubleClickHint": "Dvoklik za urejanje",
+            "date": "Datum",
+            "noLogEntries": "Še ni sprememb zaloge."
         },
         "printers": {
             "title": "Tiskalniki in profili",
@@ -258,7 +294,15 @@
             "stripeSession": "Stripe seja: {id}",
             "updateStatus": "Posodobi status",
             "backToOrders": "← Nazaj na naročila",
-            "download": "Prenesi datoteko"
+            "download": "Prenesi datoteko",
+            "recordPrint": "Zabeleži tisk",
+            "recordPrintHint": "Vnesite grame, ki jih pokaže slicer, in shranite — zaloga se samodejno odšteje.",
+            "recordPrintSubmit": "Shrani tisk",
+            "gramsUsed": "Porabljeni grami",
+            "keepStatus": "Ohrani status",
+            "noFilamentItems": "Ni artiklov s filamentom.",
+            "note": "Opomba",
+            "notePlaceholder": "npr. tiskano z 0.20 profilom"
         },
         "users": {
             "title": "Uporabniki",
