@@ -20,7 +20,6 @@ export default async function EditFilamentPage({ params }: EditFilamentPageProps
 
     return (
         <div className="min-h-0 flex-1 overflow-y-auto">
-            <h1 className="mb-1 text-2xl font-semibold">{t("edit")}</h1>
             <p className="mb-6 text-sm text-muted-foreground">
                 {filament.name} ·{" "}
                 <span className={lowStock ? "font-medium text-destructive" : undefined}>

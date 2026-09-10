@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
+import { AdminBreadcrumbs } from "@/components/admin-breadcrumbs";
 import { AppSidebar } from "@/components/app-sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
@@ -17,6 +18,7 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
             <SidebarInset>
                 <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
                     <SidebarTrigger />
+                    <AdminBreadcrumbs />
                 </header>
                 <div className="flex min-h-0 flex-1 flex-col p-4 lg:p-6">{children}</div>
             </SidebarInset>

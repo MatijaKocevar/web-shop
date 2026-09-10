@@ -28,6 +28,8 @@ type AdminTableProps = {
     className?: string;
     toolbar?: boolean;
     toolbarActions?: React.ReactNode;
+    counter?: boolean | React.ReactNode;
+    layout?: "auto" | "fixed";
     fill?: boolean;
 };
 
@@ -57,6 +59,8 @@ export function AdminTable({
     className,
     toolbar = true,
     toolbarActions,
+    counter = true,
+    layout = "auto",
     fill = false,
 }: AdminTableProps) {
     const t = useTranslations("admin.table");
@@ -185,7 +189,7 @@ export function AdminTable({
     }
 
     const table = (
-        <Table className={className}>
+        <Table className={cn(layout === "fixed" && "table-fixed", className)}>
             {columns.length > 0 && (
                 <TableHeader className="bg-muted/50 text-left">
                     <TableRow className="hover:bg-transparent">
@@ -314,7 +318,7 @@ export function AdminTable({
             <div className="relative">
                 <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
-                    className="w-56 rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
+                    className="w-72 rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder={t("search")}
@@ -323,9 +327,12 @@ export function AdminTable({
 
             <div className="ml-auto flex items-center gap-2">
                 {toolbarActions}
-                <span className="text-xs text-muted-foreground">
-                    {t("results", { visible: visibleRows.length, total: rows.length })}
-                </span>
+                {counter === true && (
+                    <span className="text-xs text-muted-foreground">
+                        {t("results", { visible: visibleRows.length, total: rows.length })}
+                    </span>
+                )}
+                {counter && counter !== true && counter}
             </div>
         </div>
     );

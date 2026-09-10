@@ -164,14 +164,17 @@
             "users": "Users",
             "collapse": "Collapse sidebar",
             "expand": "Expand sidebar",
-            "menu": "Menu",
-            "main": "Main"
+            "menu": "Menu"
         },
         "dashboard": {
             "title": "Dashboard",
             "products": "Products",
             "orders": "Orders",
             "users": "Users"
+        },
+        "breadcrumb": {
+            "new": "New",
+            "profile": "Profiles"
         },
         "strategy": {
             "title": "Playbook",
@@ -273,6 +276,9 @@
             "infill": "Infill",
             "speed": "Speed",
             "machineRate": "Machine rate",
+            "actions": "Actions",
+            "toggleProfiles": "Show/hide profiles",
+            "count": "{count, plural, one {# printer} other {# printers}}",
             "noProfiles": "No profiles yet.",
             "editPrinterLink": "Edit printer",
             "nozzle": "Nozzle (mm)",

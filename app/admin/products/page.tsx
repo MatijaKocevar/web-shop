@@ -63,15 +63,17 @@ export default async function AdminProductsPage() {
     }));
 
     return (
-        <div className="flex min-h-0 flex-1 flex-col gap-6">
-            <div className="flex shrink-0 items-center justify-between">
-                <h1 className="text-2xl font-semibold">{t("title")}</h1>
-                <Link href="/admin/products/new" className={buttonVariants()}>
-                    {t("new")}
-                </Link>
-            </div>
-
-            <AdminTable columns={columns} rows={rows} fill />
+        <div className="flex min-h-0 flex-1 flex-col">
+            <AdminTable
+                columns={columns}
+                rows={rows}
+                toolbarActions={
+                    <Link href="/admin/products/new" className={buttonVariants({ size: "sm" })}>
+                        {t("new")}
+                    </Link>
+                }
+                fill
+            />
         </div>
     );
 }

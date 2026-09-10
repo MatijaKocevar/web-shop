@@ -164,14 +164,17 @@
             "users": "Uporabniki",
             "collapse": "Strni stransko vrstico",
             "expand": "Razširi stransko vrstico",
-            "menu": "Meni",
-            "main": "Glavno"
+            "menu": "Meni"
         },
         "dashboard": {
             "title": "Nadzorna plošča",
             "products": "Izdelki",
             "orders": "Naročila",
             "users": "Uporabniki"
+        },
+        "breadcrumb": {
+            "new": "Novo",
+            "profile": "Profili"
         },
         "strategy": {
             "title": "Načrt prodaje",
@@ -283,7 +286,10 @@
             "setupFee": "Strošek priprave (€)",
             "supportsEnabled": "Podpore omogočene",
             "createProfile": "Ustvari profil",
-            "deleteProfile": "Izbriši profil"
+            "deleteProfile": "Izbriši profil",
+            "actions": "Dejanja",
+            "toggleProfiles": "Pokaži/skrij profile",
+            "count": "{count, plural, one {# tiskalnik} few {# tiskalniki} other {# tiskalnikov}}"
         },
         "orders": {
             "title": "Naročila",

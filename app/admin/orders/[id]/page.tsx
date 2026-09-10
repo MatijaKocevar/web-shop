@@ -63,8 +63,7 @@ export default async function AdminOrderDetailPage({ params }: AdminOrderDetailP
     return (
         <div className="min-h-0 flex-1 overflow-y-auto">
             <div className="max-w-3xl">
-                <div className="mb-6 flex items-center justify-between">
-                    <h1 className="text-2xl font-semibold">{t("order")}</h1>
+                <div className="mb-6 flex items-center justify-end">
                     <Badge variant="secondary">{tStatus(order.status)}</Badge>
                 </div>
 

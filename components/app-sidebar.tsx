@@ -10,7 +10,6 @@ import {
     SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel,
     SidebarHeader,
     SidebarMenu,
     SidebarMenuButton,
@@ -68,7 +67,6 @@ export function AppSidebar({ email }: AppSidebarProps) {
 
             <SidebarContent>
                 <SidebarGroup>
-                    <SidebarGroupLabel>{t("main")}</SidebarGroupLabel>
                     <SidebarGroupContent>
                         <SidebarMenu>
                             {nav.map((item) => (

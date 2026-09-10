@@ -14,9 +14,10 @@ import type { Filament } from "../_types/filament";
 
 type FilamentTableProps = {
     filaments: Filament[];
+    toolbarActions?: React.ReactNode;
 };
 
-export function FilamentTable({ filaments }: FilamentTableProps) {
+export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps) {
     const router = useRouter();
     const t = useTranslations("admin.filaments");
     const tCommon = useTranslations("admin.common");
@@ -138,19 +139,22 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
             columns={columns}
             rows={rows}
             toolbarActions={
-                <Button
-                    type="button"
-                    size="sm"
-                    onClick={saveStocks}
-                    disabled={pending || changed.length === 0}
-                >
-                    {pending ? (
-                        <Loader2 className="size-4 animate-spin" />
-                    ) : (
-                        <Save className="size-4" />
-                    )}
-                    {t("saveStock")}
-                </Button>
+                <div className="flex items-center gap-2">
+                    {toolbarActions}
+                    <Button
+                        type="button"
+                        size="sm"
+                        onClick={saveStocks}
+                        disabled={pending || changed.length === 0}
+                    >
+                        {pending ? (
+                            <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                            <Save className="size-4" />
+                        )}
+                        {t("saveStock")}
+                    </Button>
+                </div>
             }
             fill
         />

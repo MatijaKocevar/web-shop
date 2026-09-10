@@ -75,7 +75,6 @@ export default async function AdminOrdersPage() {
 
     return (
         <div className="flex min-h-0 flex-1 flex-col gap-6">
-            <h1 className="shrink-0 text-2xl font-semibold">{t("title")}</h1>
             <AdminTable columns={columns} rows={rows} fill />
         </div>
     );

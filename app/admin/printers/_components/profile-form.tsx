@@ -13,9 +13,10 @@ const inputClass =
 type ProfileFormProps = {
     profile?: Profile;
     printers: PrinterOption[];
+    defaultPrinterId?: string;
 };
 
-export async function ProfileForm({ profile, printers }: ProfileFormProps) {
+export async function ProfileForm({ profile, printers, defaultPrinterId }: ProfileFormProps) {
     const t = await getTranslations("admin.printers");
     const tCommon = await getTranslations("admin.common");
 
@@ -29,7 +30,7 @@ export async function ProfileForm({ profile, printers }: ProfileFormProps) {
                     <select
                         className={inputClass}
                         name="printerId"
-                        defaultValue={profile?.printerId ?? printers[0]?.id}
+                        defaultValue={profile?.printerId ?? defaultPrinterId ?? printers[0]?.id}
                         required
                     >
                         {printers.map((p) => (
