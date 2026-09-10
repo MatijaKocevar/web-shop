@@ -124,25 +124,33 @@ export async function FilamentForm({ filament }: FilamentFormProps) {
                     <span>{tCommon("active")}</span>
                 </label>
 
-                <div className="flex items-center gap-2">
-                    <Button type="submit">
-                        {filament ? tCommon("save") : t("createFilament")}
-                    </Button>
-                    <Link href="/admin/filaments" className={buttonVariants({ variant: "ghost" })}>
-                        {tCommon("cancel")}
-                    </Link>
+                <div className="mt-6 flex items-center justify-between gap-2">
+                    {filament ? (
+                        <Button
+                            type="submit"
+                            variant="destructive"
+                            size="sm"
+                            formAction={deleteFilament}
+                        >
+                            <Trash2 className="size-4" />
+                            {t("deleteFilament")}
+                        </Button>
+                    ) : (
+                        <span />
+                    )}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/admin/filaments"
+                            className={buttonVariants({ variant: "ghost" })}
+                        >
+                            {tCommon("cancel")}
+                        </Link>
+                        <Button type="submit">
+                            {filament ? tCommon("save") : t("createFilament")}
+                        </Button>
+                    </div>
                 </div>
             </form>
-
-            {filament && (
-                <form action={deleteFilament} className="mt-6">
-                    <input type="hidden" name="id" value={filament.id} />
-                    <Button type="submit" variant="destructive">
-                        <Trash2 className="size-4" />
-                        {t("deleteFilament")}
-                    </Button>
-                </form>
-            )}
         </div>
     );
 }

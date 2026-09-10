@@ -165,13 +165,17 @@
             "collapse": "Collapse sidebar",
             "expand": "Expand sidebar",
             "menu": "Menu",
-            "main": "Main"
+            "stock": "Stock"
         },
         "dashboard": {
             "title": "Dashboard",
             "products": "Products",
             "orders": "Orders",
             "users": "Users"
+        },
+        "breadcrumb": {
+            "new": "New",
+            "profile": "Profiles"
         },
         "strategy": {
             "title": "Playbook",
@@ -204,7 +208,8 @@
             "filter": "Filter…",
             "filterAll": "All",
             "noResults": "No matching rows.",
-            "results": "{visible} of {total}"
+            "results": "{visible} of {total}",
+            "doubleClick": "Double-click to open"
         },
         "products": {
             "title": "Products",
@@ -248,6 +253,9 @@
             "applyAdjustment": "Apply",
             "setStock": "Set",
             "setStockTitle": "How many grams of this filament do you have?",
+            "setMode": "Set stock",
+            "usedMode": "Record usage",
+            "gramsUsed": "Grams used",
             "saveStock": "Save stock",
             "doubleClickHint": "Double-click to edit",
             "date": "Date",
@@ -273,6 +281,9 @@
             "infill": "Infill",
             "speed": "Speed",
             "machineRate": "Machine rate",
+            "actions": "Actions",
+            "toggleProfiles": "Show/hide profiles",
+            "count": "{count, plural, one {# printer} other {# printers}}",
             "noProfiles": "No profiles yet.",
             "editPrinterLink": "Edit printer",
             "nozzle": "Nozzle (mm)",
@@ -314,7 +325,37 @@
             "orders": "Orders",
             "joined": "Joined",
             "actions": "Actions",
-            "deleteUser": "Delete user"
+            "deleteUser": "Delete user",
+            "edit": "Edit user",
+            "password": "New password",
+            "passwordConfirm": "Retype password",
+            "passwordMismatch": "Passwords do not match.",
+            "passwordHint": "Leave blank to keep the current password"
+        },
+        "stock": {
+            "product": "Product",
+            "filament": "Filament",
+            "gramsPerUnit": "Grams/unit",
+            "stock": "Stock",
+            "actions": "Actions",
+            "toggleVariants": "Show/hide variants",
+            "count": "{count, plural, one {# product} other {# products}}",
+            "newVariant": "Add variant",
+            "editVariant": "Edit variant",
+            "deleteVariant": "Delete variant",
+            "noVariants": "No variants yet",
+            "adjustStock": "Adjust stock",
+            "setMode": "Set stock",
+            "madeMode": "Made",
+            "madePlaceholder": "How many did you print?",
+            "applyAdjustment": "Apply",
+            "filamentUsedTitle": "Filament used",
+            "filamentUsedHint": "How many grams of {filament} did {count} × {name} use?",
+            "gramsUsed": "Grams used",
+            "cancel": "Cancel",
+            "confirm": "Save",
+            "priceDelta": "Price delta (€)",
+            "variant": "Variant"
         }
     }
 }

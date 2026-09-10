@@ -1,18 +1,26 @@
+import Link from "next/link";
 import { Trash2 } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
+import { AdminFormDialog } from "@/components/admin-form-dialog";
 import { AdminTable } from "@/components/admin-table";
 import type { AdminTableColumn } from "@/components/admin-table.types";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { listUsers } from "@/queries/users";
+import { getUserById, listUsers } from "@/queries/users";
 import { updateUserRole } from "./_actions/update-user-role";
 import { deleteUser } from "./_actions/delete-user";
+import { UserForm } from "./_components/user-form";
 
 const selectClass =
     "rounded-md border bg-background px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
-export default async function AdminUsersPage() {
-    const users = await listUsers();
+type AdminUsersPageProps = {
+    searchParams: Promise<{ id?: string }>;
+};
+
+export default async function AdminUsersPage({ searchParams }: AdminUsersPageProps) {
+    const { id } = await searchParams;
+    const [users, editing] = await Promise.all([listUsers(), id ? getUserById(id) : null]);
     const locale = await getLocale();
     const t = await getTranslations("admin.users");
     const tCommon = await getTranslations("common");
@@ -40,10 +48,18 @@ export default async function AdminUsersPage() {
 
     const rows = users.map((user) => ({
         key: user.id,
+        href: `/admin/users?id=${user.id}`,
         filterValues: { role: user.role },
         cells: [
             {
-                content: <span className="font-medium">{user.name ?? "—"}</span>,
+                content: (
+                    <Link
+                        href={`/admin/users?id=${user.id}`}
+                        className="font-medium hover:underline"
+                    >
+                        {user.name ?? "—"}
+                    </Link>
+                ),
                 search: user.name ?? "",
             },
             {
@@ -94,9 +110,26 @@ export default async function AdminUsersPage() {
     }));
 
     return (
-        <div className="flex min-h-0 flex-1 flex-col gap-6">
-            <h1 className="shrink-0 text-2xl font-semibold">{t("title")}</h1>
+        <div className="flex min-h-0 flex-1 flex-col">
             <AdminTable columns={columns} rows={rows} fill />
+
+            <AdminFormDialog
+                open={Boolean(editing)}
+                onCloseHref="/admin/users"
+                title={t("edit")}
+                className="sm:max-w-xl"
+            >
+                {editing && (
+                    <UserForm
+                        user={{
+                            id: editing.id,
+                            name: editing.name,
+                            email: editing.email,
+                            role: editing.role,
+                        }}
+                    />
+                )}
+            </AdminFormDialog>
         </div>
     );
 }

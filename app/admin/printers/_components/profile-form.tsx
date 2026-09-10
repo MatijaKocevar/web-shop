@@ -13,9 +13,10 @@ const inputClass =
 type ProfileFormProps = {
     profile?: Profile;
     printers: PrinterOption[];
+    defaultPrinterId?: string;
 };
 
-export async function ProfileForm({ profile, printers }: ProfileFormProps) {
+export async function ProfileForm({ profile, printers, defaultPrinterId }: ProfileFormProps) {
     const t = await getTranslations("admin.printers");
     const tCommon = await getTranslations("admin.common");
 
@@ -29,7 +30,7 @@ export async function ProfileForm({ profile, printers }: ProfileFormProps) {
                     <select
                         className={inputClass}
                         name="printerId"
-                        defaultValue={profile?.printerId ?? printers[0]?.id}
+                        defaultValue={profile?.printerId ?? defaultPrinterId ?? printers[0]?.id}
                         required
                     >
                         {printers.map((p) => (
@@ -142,23 +143,33 @@ export async function ProfileForm({ profile, printers }: ProfileFormProps) {
                     </label>
                 </div>
 
-                <div className="flex items-center gap-2">
-                    <Button type="submit">{profile ? tCommon("save") : t("createProfile")}</Button>
-                    <Link href="/admin/printers" className={buttonVariants({ variant: "ghost" })}>
-                        {tCommon("cancel")}
-                    </Link>
+                <div className="mt-6 flex items-center justify-between gap-2">
+                    {profile ? (
+                        <Button
+                            type="submit"
+                            variant="destructive"
+                            size="sm"
+                            formAction={deleteProfile}
+                        >
+                            <Trash2 className="size-4" />
+                            {t("deleteProfile")}
+                        </Button>
+                    ) : (
+                        <span />
+                    )}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/admin/printers"
+                            className={buttonVariants({ variant: "ghost" })}
+                        >
+                            {tCommon("cancel")}
+                        </Link>
+                        <Button type="submit">
+                            {profile ? tCommon("save") : t("createProfile")}
+                        </Button>
+                    </div>
                 </div>
             </form>
-
-            {profile && (
-                <form action={deleteProfile} className="mt-6">
-                    <input type="hidden" name="id" value={profile.id} />
-                    <Button type="submit" variant="destructive">
-                        <Trash2 className="size-4" />
-                        {t("deleteProfile")}
-                    </Button>
-                </form>
-            )}
         </div>
     );
 }

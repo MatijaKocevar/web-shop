@@ -1,6 +1,5 @@
 import { db } from "@/lib/db";
 import type { ProductCard } from "@/queries/products.types";
-
 export async function listProducts(params?: {
     category?: string;
     tag?: string;
@@ -91,5 +90,50 @@ export async function getProductBySlug(slug: string) {
                   }
                 : null,
         })),
+    };
+}
+
+export async function listProductsWithVariants() {
+    const products = await db.product.findMany({
+        include: {
+            variants: {
+                include: { filament: true },
+                orderBy: { createdAt: "asc" },
+            },
+        },
+        orderBy: { name: "asc" },
+    });
+
+    return products.map((product) => ({
+        id: product.id,
+        name: product.name,
+        type: product.type,
+        variants: product.variants.map((variant) => ({
+            id: variant.id,
+            name: variant.name,
+            stock: variant.stock,
+            grams: variant.grams,
+            filament: variant.filament
+                ? { id: variant.filament.id, name: variant.filament.name }
+                : null,
+        })),
+    }));
+}
+
+export async function getVariantById(id: string) {
+    const variant = await db.productVariant.findUnique({
+        where: { id },
+        include: { filament: true },
+    });
+
+    if (!variant) return null;
+
+    return {
+        id: variant.id,
+        name: variant.name,
+        productId: variant.productId,
+        filamentId: variant.filamentId,
+        grams: variant.grams,
+        priceDelta: variant.priceDelta ? Number(variant.priceDelta) : null,
     };
 }

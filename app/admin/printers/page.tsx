@@ -1,92 +1,108 @@
-import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { AdminTable } from "@/components/admin-table";
-import { buttonVariants } from "@/components/ui/button";
-import { listPrintersWithProfiles } from "@/queries/printers";
+import { AdminFormDialog } from "@/components/admin-form-dialog";
+import { getPrinterById, getProfileById, listPrintersWithProfiles } from "@/queries/printers";
+import { PrinterForm } from "./_components/printer-form";
+import { PrintersTable } from "./_components/printers-table";
+import { ProfileForm } from "./_components/profile-form";
 
-export default async function AdminPrintersPage() {
-    const printers = await listPrintersWithProfiles();
+type AdminPrintersPageProps = {
+    searchParams: Promise<{
+        id?: string;
+        profileId?: string;
+        new?: string;
+        newProfile?: string;
+        printer?: string;
+    }>;
+};
+
+export default async function AdminPrintersPage({ searchParams }: AdminPrintersPageProps) {
+    const {
+        id,
+        profileId,
+        new: isNew,
+        newProfile,
+        printer: newProfilePrinterId,
+    } = await searchParams;
+    const [printersRaw, editingPrinter, editingProfile] = await Promise.all([
+        listPrintersWithProfiles(),
+        id ? getPrinterById(id) : null,
+        profileId ? getProfileById(profileId) : null,
+    ]);
     const t = await getTranslations("admin.printers");
 
-    const columns = [
-        { label: t("profile") },
-        { label: t("layer") },
-        { label: t("infill") },
-        { label: t("speed") },
-        { label: t("machineRate") },
-    ];
+    const printers = printersRaw.map((printer) => ({
+        id: printer.id,
+        name: printer.name,
+        buildX: printer.buildX,
+        buildY: printer.buildY,
+        buildZ: printer.buildZ,
+        profiles: printer.profiles.map((profile) => ({
+            id: profile.id,
+            name: profile.name,
+            layerHeight: profile.layerHeight,
+            infill: profile.infill,
+            speed: profile.speed,
+            machineHourRate: Number(profile.machineHourRate),
+        })),
+    }));
+
+    const printerOptions = printersRaw.map((printer) => ({ id: printer.id, name: printer.name }));
 
     return (
-        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto">
-            <div className="flex shrink-0 items-center justify-between">
-                <h1 className="text-2xl font-semibold">{t("title")}</h1>
-                <div className="flex gap-2">
-                    <Link
-                        href="/admin/printers/profile/new"
-                        className={buttonVariants({ variant: "outline" })}
-                    >
-                        {t("newProfile")}
-                    </Link>
-                    <Link href="/admin/printers/new" className={buttonVariants()}>
-                        {t("newPrinter")}
-                    </Link>
-                </div>
-            </div>
+        <div className="flex min-h-0 flex-1 flex-col">
+            <PrintersTable printers={printers} />
 
-            <div className="flex flex-col gap-6">
-                {printers.map((printer) => {
-                    const rows = printer.profiles.map((profile) => ({
-                        key: profile.id,
-                        cells: [
-                            {
-                                content: (
-                                    <Link
-                                        href={`/admin/printers/profile/${profile.id}`}
-                                        className="font-medium hover:underline"
-                                    >
-                                        {profile.name}
-                                    </Link>
-                                ),
-                            },
-                            { content: `${profile.layerHeight} mm` },
-                            { content: `${profile.infill}%` },
-                            { content: `${profile.speed ?? "—"} mm/s` },
-                            { content: `€${Number(profile.machineHourRate).toFixed(2)}/h` },
-                        ],
-                    }));
+            <AdminFormDialog
+                open={Boolean(isNew)}
+                onCloseHref="/admin/printers"
+                title={t("newPrinterTitle")}
+                className="sm:max-w-xl"
+            >
+                {isNew && <PrinterForm />}
+            </AdminFormDialog>
 
-                    return (
-                        <div key={printer.id} className="overflow-hidden rounded-lg border">
-                            <div className="flex items-center justify-between border-b px-4 py-3">
-                                <div className="flex items-center gap-3">
-                                    <Link
-                                        href={`/admin/printers/${printer.id}`}
-                                        className="font-semibold hover:underline"
-                                    >
-                                        {printer.name}
-                                    </Link>
-                                    <span className="text-sm text-muted-foreground">
-                                        {printer.buildX}×{printer.buildY}×{printer.buildZ} mm
-                                    </span>
-                                </div>
-                                <Link
-                                    href={`/admin/printers/${printer.id}`}
-                                    className="text-sm text-muted-foreground hover:underline"
-                                >
-                                    {t("editPrinterLink")}
-                                </Link>
-                            </div>
-                            <AdminTable
-                                columns={columns}
-                                rows={rows}
-                                empty={t("noProfiles")}
-                                frameless
-                                toolbar={false}
-                            />
-                        </div>
-                    );
-                })}
-            </div>
+            <AdminFormDialog
+                open={Boolean(editingPrinter)}
+                onCloseHref="/admin/printers"
+                title={t("editPrinter")}
+                className="sm:max-w-xl"
+            >
+                {editingPrinter && (
+                    <PrinterForm
+                        printer={{
+                            id: editingPrinter.id,
+                            name: editingPrinter.name,
+                            make: editingPrinter.make,
+                            buildX: editingPrinter.buildX,
+                            buildY: editingPrinter.buildY,
+                            buildZ: editingPrinter.buildZ,
+                            active: editingPrinter.active,
+                        }}
+                    />
+                )}
+            </AdminFormDialog>
+
+            <AdminFormDialog
+                open={Boolean(newProfile)}
+                onCloseHref="/admin/printers"
+                title={t("newProfileTitle")}
+                className="sm:max-w-xl"
+            >
+                {newProfile && (
+                    <ProfileForm printers={printerOptions} defaultPrinterId={newProfilePrinterId} />
+                )}
+            </AdminFormDialog>
+
+            <AdminFormDialog
+                open={Boolean(editingProfile)}
+                onCloseHref="/admin/printers"
+                title={t("editProfile")}
+                className="sm:max-w-xl"
+            >
+                {editingProfile && (
+                    <ProfileForm profile={editingProfile} printers={printerOptions} />
+                )}
+            </AdminFormDialog>
         </div>
     );
 }

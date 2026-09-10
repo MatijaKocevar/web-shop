@@ -65,5 +65,5 @@ export async function StockLogList({ logs }: StockLogListProps) {
         ],
     }));
 
-    return <AdminTable columns={columns} rows={rows} />;
+    return <AdminTable columns={columns} rows={rows} maxHeight="16rem" />;
 }

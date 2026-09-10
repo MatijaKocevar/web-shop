@@ -65,11 +65,6 @@ export default async function AdminDashboardPage() {
 
     return (
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
-            <div className="mb-6">
-                <h1 className="text-2xl font-semibold">{t("title")}</h1>
-                <p className="text-sm text-muted-foreground">{tStrategy("subtitle")}</p>
-            </div>
-
             <div className="mb-4">
                 <StatCards cards={cards} />
             </div>

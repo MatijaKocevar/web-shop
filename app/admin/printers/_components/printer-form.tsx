@@ -83,23 +83,33 @@ export async function PrinterForm({ printer }: PrinterFormProps) {
                     <span>{tCommon("active")}</span>
                 </label>
 
-                <div className="flex items-center gap-2">
-                    <Button type="submit">{printer ? tCommon("save") : t("createPrinter")}</Button>
-                    <Link href="/admin/printers" className={buttonVariants({ variant: "ghost" })}>
-                        {tCommon("cancel")}
-                    </Link>
+                <div className="mt-6 flex items-center justify-between gap-2">
+                    {printer ? (
+                        <Button
+                            type="submit"
+                            variant="destructive"
+                            size="sm"
+                            formAction={deletePrinter}
+                        >
+                            <Trash2 className="size-4" />
+                            {t("deletePrinter")}
+                        </Button>
+                    ) : (
+                        <span />
+                    )}
+                    <div className="flex items-center gap-2">
+                        <Link
+                            href="/admin/printers"
+                            className={buttonVariants({ variant: "ghost" })}
+                        >
+                            {tCommon("cancel")}
+                        </Link>
+                        <Button type="submit">
+                            {printer ? tCommon("save") : t("createPrinter")}
+                        </Button>
+                    </div>
                 </div>
             </form>
-
-            {printer && (
-                <form action={deletePrinter} className="mt-6">
-                    <input type="hidden" name="id" value={printer.id} />
-                    <Button type="submit" variant="destructive">
-                        <Trash2 className="size-4" />
-                        {t("deletePrinter")}
-                    </Button>
-                </form>
-            )}
         </div>
     );
 }

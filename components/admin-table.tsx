@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -28,6 +29,9 @@ type AdminTableProps = {
     className?: string;
     toolbar?: boolean;
     toolbarActions?: React.ReactNode;
+    counter?: boolean | React.ReactNode;
+    layout?: "auto" | "fixed";
+    maxHeight?: string;
     fill?: boolean;
 };
 
@@ -57,9 +61,13 @@ export function AdminTable({
     className,
     toolbar = true,
     toolbarActions,
+    counter = true,
+    layout = "auto",
+    maxHeight,
     fill = false,
 }: AdminTableProps) {
     const t = useTranslations("admin.table");
+    const router = useRouter();
     const [query, setQuery] = useState("");
     const [sort, setSort] = useState<SortState>(null);
     const [filters, setFilters] = useState<Record<string, string>>({});
@@ -185,7 +193,7 @@ export function AdminTable({
     }
 
     const table = (
-        <Table className={className}>
+        <Table className={cn(layout === "fixed" && "table-fixed", className)}>
             {columns.length > 0 && (
                 <TableHeader className="bg-muted/50 text-left">
                     <TableRow className="hover:bg-transparent">
@@ -277,24 +285,40 @@ export function AdminTable({
                 </TableHeader>
             )}
             <TableBody className="divide-y">
-                {visibleRows.map((row, index) => (
-                    <TableRow
-                        key={row.key ?? index}
-                        className={cn("hover:bg-muted/30", row.className)}
-                        title={row.title}
-                        onDoubleClick={row.onDoubleClick}
-                    >
-                        {row.cells.map((cell, cellIndex) => (
-                            <TableCell
-                                key={cellIndex}
-                                className={cn("px-4 py-2", cell.className)}
-                                colSpan={cell.colSpan}
-                            >
-                                {cell.content}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))}
+                {visibleRows.map((row, index) => {
+                    const interactive = Boolean(row.href);
+
+                    return (
+                        <TableRow
+                            key={row.key ?? index}
+                            className={cn(
+                                "hover:bg-muted/30",
+                                row.className,
+                                interactive && "cursor-pointer select-none",
+                            )}
+                            title={row.title ?? (interactive ? t("doubleClick") : undefined)}
+                            onDoubleClick={(event) => {
+                                if (row.onDoubleClick) return row.onDoubleClick(event);
+                                if (!row.href) return;
+
+                                const target = event.target as HTMLElement;
+                                if (target.closest("a, button, input, select, form")) return;
+
+                                router.push(row.href);
+                            }}
+                        >
+                            {row.cells.map((cell, cellIndex) => (
+                                <TableCell
+                                    key={cellIndex}
+                                    className={cn("px-4 py-2", cell.className)}
+                                    colSpan={cell.colSpan}
+                                >
+                                    {cell.content}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    );
+                })}
                 {visibleRows.length === 0 && (
                     <TableRow className="hover:bg-transparent">
                         <TableCell
@@ -314,7 +338,7 @@ export function AdminTable({
             <div className="relative">
                 <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
-                    className="w-56 rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
+                    className="w-72 rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder={t("search")}
@@ -323,9 +347,12 @@ export function AdminTable({
 
             <div className="ml-auto flex items-center gap-2">
                 {toolbarActions}
-                <span className="text-xs text-muted-foreground">
-                    {t("results", { visible: visibleRows.length, total: rows.length })}
-                </span>
+                {counter === true && (
+                    <span className="text-xs text-muted-foreground">
+                        {t("results", { visible: visibleRows.length, total: rows.length })}
+                    </span>
+                )}
+                {counter && counter !== true && counter}
             </div>
         </div>
     );
@@ -333,7 +360,12 @@ export function AdminTable({
     const content = (
         <>
             {toolbarNode}
-            <div className="min-h-0 flex-1 overflow-auto">{table}</div>
+            <div
+                className="min-h-0 flex-1 overflow-auto"
+                style={maxHeight ? { maxHeight } : undefined}
+            >
+                {table}
+            </div>
         </>
     );
 

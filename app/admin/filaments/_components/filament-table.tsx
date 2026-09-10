@@ -2,35 +2,46 @@
 
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Loader2, Pencil, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
+import type { StockReason } from "@/generated/prisma/enums";
 import { AdminTable } from "@/components/admin-table";
 import type { AdminTableColumn } from "@/components/admin-table.types";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { setFilamentStocks } from "../_actions/set-filament-stocks";
 import type { Filament } from "../_types/filament";
+import { StockAdjustCell } from "./stock-adjust-cell";
 
 type FilamentTableProps = {
     filaments: Filament[];
+    toolbarActions?: React.ReactNode;
 };
 
-export function FilamentTable({ filaments }: FilamentTableProps) {
-    const router = useRouter();
+export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps) {
     const t = useTranslations("admin.filaments");
     const tCommon = useTranslations("admin.common");
     const [pending, startTransition] = useTransition();
     const [stocks, setStocks] = useState<Record<string, number>>(() =>
         Object.fromEntries(filaments.map((f) => [f.id, f.stockGrams])),
     );
+    const [stockReasons, setStockReasons] = useState<Record<string, StockReason>>(() =>
+        Object.fromEntries(filaments.map((f) => [f.id, "RESTOCK"])),
+    );
+    const [stockNotes, setStockNotes] = useState<Record<string, string>>(() =>
+        Object.fromEntries(filaments.map((f) => [f.id, ""])),
+    );
 
     const changed = useMemo(
         () =>
             filaments
                 .filter((f) => (stocks[f.id] ?? f.stockGrams) !== f.stockGrams)
-                .map((f) => ({ filamentId: f.id, stockGrams: stocks[f.id] ?? 0 })),
-        [filaments, stocks],
+                .map((f) => ({
+                    filamentId: f.id,
+                    stockGrams: stocks[f.id] ?? 0,
+                    reason: stockReasons[f.id] ?? "RESTOCK",
+                    note: stockNotes[f.id] ?? "",
+                })),
+        [filaments, stocks, stockReasons, stockNotes],
     );
 
     function saveStocks() {
@@ -41,18 +52,15 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
         });
     }
 
-    function setStock(id: string, value: string) {
-        const grams = Number(value);
-
-        setStocks((current) => ({ ...current, [id]: Number.isFinite(grams) ? grams : 0 }));
-    }
-
-    function openRow(event: React.MouseEvent<HTMLTableRowElement>, id: string) {
-        const target = event.target as HTMLElement;
-
-        if (target.closest("a, button, input, select, form")) return;
-
-        router.push(`/admin/filaments/${id}`);
+    function handleChange(
+        filamentId: string,
+        stockGrams: number,
+        reason: StockReason,
+        note: string,
+    ) {
+        setStocks((current) => ({ ...current, [filamentId]: stockGrams }));
+        setStockReasons((current) => ({ ...current, [filamentId]: reason }));
+        setStockNotes((current) => ({ ...current, [filamentId]: note }));
     }
 
     const columns: AdminTableColumn[] = [
@@ -74,15 +82,13 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
 
         return {
             key: f.id,
-            className: "cursor-pointer select-none",
-            title: t("doubleClickHint"),
-            onDoubleClick: (event: React.MouseEvent<HTMLTableRowElement>) => openRow(event, f.id),
+            href: `/admin/filaments?id=${f.id}`,
             filterValues: { material: f.material },
             cells: [
                 {
                     content: (
                         <Link
-                            href={`/admin/filaments/${f.id}`}
+                            href={`/admin/filaments?id=${f.id}`}
                             className="font-medium hover:underline"
                         >
                             {f.name}
@@ -94,20 +100,13 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
                 { content: f.color, search: f.color },
                 {
                     content: (
-                        <div className="flex items-center gap-2">
-                            {stock < f.lowStockThresholdGrams && (
-                                <Badge variant="destructive">{t("lowStock")}</Badge>
-                            )}
-                            <input
-                                className="w-20 rounded-md border bg-background px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
-                                type="number"
-                                step="1"
-                                min="0"
-                                value={stock}
-                                onChange={(event) => setStock(f.id, event.target.value)}
-                                title={t("setStockTitle")}
-                            />
-                        </div>
+                        <StockAdjustCell
+                            filamentId={f.id}
+                            stockGrams={stock}
+                            lowStockThresholdGrams={f.lowStockThresholdGrams}
+                            pending={stock !== f.stockGrams}
+                            onChange={handleChange}
+                        />
                     ),
                     search: String(stock),
                     sort: stock,
@@ -121,7 +120,7 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
                 {
                     content: (
                         <Link
-                            href={`/admin/filaments/${f.id}`}
+                            href={`/admin/filaments?id=${f.id}`}
                             className={buttonVariants({ variant: "outline", size: "sm" })}
                         >
                             <Pencil className="size-4" />
@@ -138,19 +137,22 @@ export function FilamentTable({ filaments }: FilamentTableProps) {
             columns={columns}
             rows={rows}
             toolbarActions={
-                <Button
-                    type="button"
-                    size="sm"
-                    onClick={saveStocks}
-                    disabled={pending || changed.length === 0}
-                >
-                    {pending ? (
-                        <Loader2 className="size-4 animate-spin" />
-                    ) : (
-                        <Save className="size-4" />
-                    )}
-                    {t("saveStock")}
-                </Button>
+                <div className="flex items-center gap-2">
+                    {toolbarActions}
+                    <Button
+                        type="button"
+                        size="sm"
+                        onClick={saveStocks}
+                        disabled={pending || changed.length === 0}
+                    >
+                        {pending ? (
+                            <Loader2 className="size-4 animate-spin" />
+                        ) : (
+                            <Save className="size-4" />
+                        )}
+                        {t("saveStock")}
+                    </Button>
+                </div>
             }
             fill
         />

@@ -25,6 +25,7 @@ export type AdminTableRow = {
     cells: AdminTableCell[];
     className?: string;
     title?: string;
+    href?: string;
     onDoubleClick?: MouseEventHandler<HTMLTableRowElement>;
     filterValues?: Record<string, string>;
 };

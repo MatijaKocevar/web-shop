@@ -165,13 +165,17 @@
             "collapse": "Strni stransko vrstico",
             "expand": "Razširi stransko vrstico",
             "menu": "Meni",
-            "main": "Glavno"
+            "stock": "Zaloga"
         },
         "dashboard": {
             "title": "Nadzorna plošča",
             "products": "Izdelki",
             "orders": "Naročila",
             "users": "Uporabniki"
+        },
+        "breadcrumb": {
+            "new": "Novo",
+            "profile": "Profili"
         },
         "strategy": {
             "title": "Načrt prodaje",
@@ -204,7 +208,8 @@
             "filter": "Filtriraj…",
             "filterAll": "Vsi",
             "noResults": "Ni ustreznih vrstic.",
-            "results": "{visible} od {total}"
+            "results": "{visible} od {total}",
+            "doubleClick": "Dvoklik za odprtje"
         },
         "products": {
             "title": "Izdelki",
@@ -251,7 +256,10 @@
             "saveStock": "Shrani zalogo",
             "doubleClickHint": "Dvoklik za urejanje",
             "date": "Datum",
-            "noLogEntries": "Še ni sprememb zaloge."
+            "noLogEntries": "Še ni sprememb zaloge.",
+            "setMode": "Nastavi zalogo",
+            "usedMode": "Zabeleži porabo",
+            "gramsUsed": "Porabljeni grami"
         },
         "printers": {
             "title": "Tiskalniki in profili",
@@ -283,7 +291,10 @@
             "setupFee": "Strošek priprave (€)",
             "supportsEnabled": "Podpore omogočene",
             "createProfile": "Ustvari profil",
-            "deleteProfile": "Izbriši profil"
+            "deleteProfile": "Izbriši profil",
+            "actions": "Dejanja",
+            "toggleProfiles": "Pokaži/skrij profile",
+            "count": "{count, plural, one {# tiskalnik} few {# tiskalniki} other {# tiskalnikov}}"
         },
         "orders": {
             "title": "Naročila",
@@ -314,7 +325,37 @@
             "orders": "Naročila",
             "joined": "Pridružen",
             "actions": "Dejanja",
-            "deleteUser": "Izbriši uporabnika"
+            "deleteUser": "Izbriši uporabnika",
+            "password": "Novo geslo",
+            "passwordHint": "Pusti prazno, da obdržiš trenutno geslo",
+            "passwordConfirm": "Ponovi geslo",
+            "passwordMismatch": "Gesli se ne ujemata.",
+            "edit": "Uredi uporabnika"
+        },
+        "stock": {
+            "product": "Izdelek",
+            "filament": "Filament",
+            "gramsPerUnit": "Grami/kos",
+            "stock": "Zaloga",
+            "actions": "Dejanja",
+            "toggleVariants": "Pokaži/skrij variante",
+            "count": "{count, plural, one {# izdelek} few {# izdelka} other {# izdelkov}}",
+            "newVariant": "Dodaj varianto",
+            "editVariant": "Uredi varianto",
+            "deleteVariant": "Izbriši varianto",
+            "noVariants": "Še ni variant",
+            "adjustStock": "Popravi zalogo",
+            "setMode": "Nastavi zalogo",
+            "madeMode": "Narejeno",
+            "madePlaceholder": "Koliko si natisnil?",
+            "applyAdjustment": "Uporabi",
+            "filamentUsedTitle": "Porabljen filament",
+            "filamentUsedHint": "Koliko gramov filamenta {filament} je porabilo {count} × {name}?",
+            "gramsUsed": "Porabljeni grami",
+            "cancel": "Prekliči",
+            "confirm": "Shrani",
+            "priceDelta": "Pribitek na ceno (€)",
+            "variant": "Varianta"
         }
     }
 }
