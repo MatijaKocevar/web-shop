@@ -14,7 +14,7 @@ export default async function EditPrinterPage({ params }: EditPrinterPageProps) 
     if (!printer) notFound();
 
     return (
-        <div>
+        <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
             <h1 className="mb-6 text-2xl font-semibold">{t("editPrinter")}</h1>
             <PrinterForm printer={printer} />
         </div>

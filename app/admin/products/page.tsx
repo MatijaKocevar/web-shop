@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { AdminTable } from "@/components/admin-table";
+import type { AdminTableColumn } from "@/components/admin-table.types";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { listProducts } from "@/queries/products";
@@ -10,50 +12,66 @@ export default async function AdminProductsPage() {
     const tCommon = await getTranslations("admin.common");
     const tType = await getTranslations("productType");
 
+    const columns: AdminTableColumn[] = [
+        { label: tCommon("name"), sortable: true, filter: { type: "text" } },
+        {
+            label: tCommon("type"),
+            sortable: true,
+            filter: {
+                type: "select",
+                key: "type",
+                options: [
+                    { value: "READY_MADE", label: tType("READY_MADE") },
+                    { value: "CUSTOM_PRINT", label: tType("CUSTOM_PRINT") },
+                ],
+            },
+        },
+        { label: tCommon("price"), sortable: true },
+        { label: tCommon("category"), sortable: true, filter: { type: "text" } },
+    ];
+
+    const rows = products.map((product) => ({
+        key: product.id,
+        filterValues: { type: product.type },
+        cells: [
+            {
+                content: (
+                    <Link
+                        href={`/admin/products/${product.id}`}
+                        className="font-medium hover:underline"
+                    >
+                        {product.name}
+                    </Link>
+                ),
+                search: product.name,
+            },
+            {
+                content: <Badge variant="secondary">{tType(product.type)}</Badge>,
+                search: tType(product.type),
+                sort: product.type,
+            },
+            {
+                content: product.price != null ? `€${product.price.toFixed(2)}` : "—",
+                sort: product.price ?? -1,
+            },
+            {
+                content: product.category?.name ?? "—",
+                className: "text-muted-foreground",
+                search: product.category?.name ?? "",
+            },
+        ],
+    }));
+
     return (
-        <div>
-            <div className="mb-6 flex items-center justify-between">
+        <div className="flex min-h-0 flex-1 flex-col gap-6">
+            <div className="flex shrink-0 items-center justify-between">
                 <h1 className="text-2xl font-semibold">{t("title")}</h1>
                 <Link href="/admin/products/new" className={buttonVariants()}>
                     {t("new")}
                 </Link>
             </div>
 
-            <div className="overflow-hidden rounded-lg border">
-                <table className="w-full text-sm">
-                    <thead className="bg-muted/50 text-left">
-                        <tr>
-                            <th className="px-4 py-2 font-medium">{tCommon("name")}</th>
-                            <th className="px-4 py-2 font-medium">{tCommon("type")}</th>
-                            <th className="px-4 py-2 font-medium">{tCommon("price")}</th>
-                            <th className="px-4 py-2 font-medium">{tCommon("category")}</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        {products.map((p) => (
-                            <tr key={p.id} className="hover:bg-muted/30">
-                                <td className="px-4 py-2">
-                                    <Link
-                                        href={`/admin/products/${p.id}`}
-                                        className="font-medium hover:underline"
-                                    >
-                                        {p.name}
-                                    </Link>
-                                </td>
-                                <td className="px-4 py-2">
-                                    <Badge variant="secondary">{tType(p.type)}</Badge>
-                                </td>
-                                <td className="px-4 py-2">
-                                    {p.price != null ? `€${p.price.toFixed(2)}` : "—"}
-                                </td>
-                                <td className="px-4 py-2 text-muted-foreground">
-                                    {p.category?.name ?? "—"}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+            <AdminTable columns={columns} rows={rows} fill />
         </div>
     );
 }

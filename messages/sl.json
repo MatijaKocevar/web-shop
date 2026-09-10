@@ -179,6 +179,13 @@
             "save": "Shrani",
             "cancel": "Prekliči"
         },
+        "table": {
+            "search": "Išči…",
+            "filter": "Filtriraj…",
+            "filterAll": "Vsi",
+            "noResults": "Ni ustreznih vrstic.",
+            "results": "{visible} od {total}"
+        },
         "products": {
             "title": "Izdelki",
             "new": "Nov izdelek",

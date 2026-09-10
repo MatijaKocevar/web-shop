@@ -1,8 +1,21 @@
 import Link from "next/link";
 import { getLocale, getTranslations } from "next-intl/server";
+import { AdminTable } from "@/components/admin-table";
+import type { AdminTableColumn } from "@/components/admin-table.types";
 import { Badge } from "@/components/ui/badge";
 import { listOrders } from "@/queries/orders";
 import { formatCurrency } from "@/lib/pricing";
+
+const orderStatuses = [
+    "PENDING",
+    "PAID",
+    "PROCESSING",
+    "PRINTING",
+    "SHIPPED",
+    "DELIVERED",
+    "CANCELLED",
+    "REFUNDED",
+] as const;
 
 export default async function AdminOrdersPage() {
     const orders = await listOrders();
@@ -10,46 +23,60 @@ export default async function AdminOrdersPage() {
     const t = await getTranslations("admin.orders");
     const tStatus = await getTranslations("status.order");
 
+    const columns: AdminTableColumn[] = [
+        { label: t("date"), sortable: true, filter: { type: "text" } },
+        { label: t("email"), sortable: true, filter: { type: "text" } },
+        { label: t("items"), sortable: true },
+        { label: t("total"), sortable: true },
+        {
+            label: t("status"),
+            sortable: true,
+            filter: {
+                type: "select",
+                key: "status",
+                options: orderStatuses.map((status) => ({
+                    value: status,
+                    label: tStatus(status),
+                })),
+            },
+        },
+    ];
+
+    const rows = orders.map((order) => ({
+        key: order.id,
+        filterValues: { status: order.status },
+        cells: [
+            {
+                content: order.createdAt.toLocaleDateString(locale),
+                className: "text-muted-foreground",
+                search: order.createdAt.toLocaleDateString(locale),
+                sort: order.createdAt.getTime(),
+            },
+            {
+                content: (
+                    <Link
+                        href={`/admin/orders/${order.id}`}
+                        className="font-medium hover:underline"
+                    >
+                        {order.email}
+                    </Link>
+                ),
+                search: order.email,
+            },
+            { content: order.items.length, sort: order.items.length },
+            { content: formatCurrency(order.total, "EUR", locale), sort: order.total },
+            {
+                content: <Badge variant="secondary">{tStatus(order.status)}</Badge>,
+                search: tStatus(order.status),
+                sort: order.status,
+            },
+        ],
+    }));
+
     return (
-        <div>
-            <h1 className="mb-6 text-2xl font-semibold">{t("title")}</h1>
-            <div className="overflow-hidden rounded-lg border">
-                <table className="w-full text-sm">
-                    <thead className="bg-muted/50 text-left">
-                        <tr>
-                            <th className="px-4 py-2 font-medium">{t("date")}</th>
-                            <th className="px-4 py-2 font-medium">{t("email")}</th>
-                            <th className="px-4 py-2 font-medium">{t("items")}</th>
-                            <th className="px-4 py-2 font-medium">{t("total")}</th>
-                            <th className="px-4 py-2 font-medium">{t("status")}</th>
-                        </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                        {orders.map((o) => (
-                            <tr key={o.id} className="hover:bg-muted/30">
-                                <td className="px-4 py-2 text-muted-foreground">
-                                    {o.createdAt.toLocaleDateString(locale)}
-                                </td>
-                                <td className="px-4 py-2">
-                                    <Link
-                                        href={`/admin/orders/${o.id}`}
-                                        className="font-medium hover:underline"
-                                    >
-                                        {o.email}
-                                    </Link>
-                                </td>
-                                <td className="px-4 py-2">{o.items.length}</td>
-                                <td className="px-4 py-2">
-                                    {formatCurrency(o.total, "EUR", locale)}
-                                </td>
-                                <td className="px-4 py-2">
-                                    <Badge variant="secondary">{tStatus(o.status)}</Badge>
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
+        <div className="flex min-h-0 flex-1 flex-col gap-6">
+            <h1 className="shrink-0 text-2xl font-semibold">{t("title")}</h1>
+            <AdminTable columns={columns} rows={rows} fill />
         </div>
     );
 }
