@@ -1,11 +1,6 @@
 import { db } from "@/lib/db";
-import { getCart, type CartItem } from "@/lib/cart";
-
-export type HydratedCartItem = CartItem & {
-    imageKey?: string;
-    filamentName?: string;
-    profileName?: string;
-};
+import { getCart } from "@/lib/cart";
+import type { HydratedCartItem } from "@/queries/cart.types";
 
 export async function getHydratedCart(): Promise<{
     items: HydratedCartItem[];

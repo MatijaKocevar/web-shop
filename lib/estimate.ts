@@ -1,11 +1,4 @@
-export type EstimateInput = {
-    volumeMm3: number;
-    densityGcm3: number;
-    infillPct: number;
-    nozzleMm: number;
-    layerHeightMm: number;
-    speedMmS: number;
-};
+import type { EstimateInput } from "@/lib/estimate.types";
 
 /** Fraction of the bounding solid actually filled (walls + infill). */
 export function solidity(infillPct: number): number {

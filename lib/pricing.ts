@@ -1,19 +1,4 @@
-export type PriceBreakdown = {
-    materialCost: number;
-    machineCost: number;
-    setupFee: number;
-    margin: number;
-    total: number;
-};
-
-type PricingInput = {
-    grams: number;
-    costPerGram: number;
-    timeSeconds: number;
-    machineHourRate: number;
-    setupFee: number;
-    marginPct: number;
-};
+import type { PriceBreakdown, PricingInput } from "@/lib/pricing.types";
 
 export function calculatePrice(input: PricingInput): PriceBreakdown {
     const materialCost = input.grams * input.costPerGram;

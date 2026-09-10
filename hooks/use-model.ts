@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { loadModel, type LoadedModel, type ModelFormat, type ModelStats } from "@/lib/model";
+import { loadModel } from "@/lib/model";
+import type { LoadedModel, ModelFormat, ModelStats } from "@/lib/model.types";
 
 type LoadState = {
     src: string;

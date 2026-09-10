@@ -8,7 +8,7 @@ import { publicUrl } from "@/lib/storage-url";
 import { removeFromCart } from "../_actions/remove-from-cart";
 import { updateQuantity } from "../_actions/update-quantity";
 import { useCartStore } from "../_stores/cart-store";
-import type { HydratedCartItem } from "@/queries/cart";
+import type { HydratedCartItem } from "@/queries/cart.types";
 
 type CartItemsProps = {
     items: HydratedCartItem[];

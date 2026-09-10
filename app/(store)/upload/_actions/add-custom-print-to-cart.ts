@@ -6,7 +6,8 @@ import { db } from "@/lib/db";
 import { objectExists } from "@/lib/storage";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice, round2 } from "@/lib/pricing";
-import { setCart, getCart, type CartItem } from "@/lib/cart";
+import { setCart, getCart } from "@/lib/cart";
+import type { CartItem } from "@/lib/cart.types";
 import type { AddCustomPrintToCartArgs } from "../_types/add-custom-print-to-cart";
 
 export async function addCustomPrintToCart(args: AddCustomPrintToCartArgs): Promise<CartItem[]> {

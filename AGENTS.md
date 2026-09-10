@@ -35,7 +35,6 @@ pnpm format         # prettier --write . (do this before committing)
 pnpm format:check   # prettier --check . (CI / pre-push)
 pnpm db:migrate     # prisma migrate dev
 pnpm db:seed        # prisma db seed (K1C + profiles + filaments + sample product)
-pnpm db:admin <email>  # promote a user to ADMIN (after they sign in)
 docker compose up   # postgres + minio (+ stripe-cli with --profile stripe)
 ```
 
@@ -52,7 +51,6 @@ components/             # ui/ = shadcn primitives; otherwise only shared compone
 hooks/                  # shared, cross-feature hooks (e.g. use-model)
 queries/                # ALL reads — Prisma lives here (products, orders, ...)
 lib/                    # framework-free infra (db, auth, stripe, storage, pricing, cart, estimate)
-workers/                # standalone scripts (promote.ts — promote a user to ADMIN)
 prisma/                 # schema + migrations + seed
 proxy.ts                # middleware (renamed from middleware.ts in Next 16)
 ```
@@ -61,7 +59,8 @@ proxy.ts                # middleware (renamed from middleware.ts in Next 16)
 - **Prisma is touched only by `queries/` and `lib/db.ts`** (and server-action files for writes). Never import `db` into a component.
 - **Reads** live in `queries/*.ts`. **Writes** are server actions (`"use server"`) colocated in an `_actions/` folder inside the route folder that uses them — one file per action, named after the action (e.g. `products/_actions/save-product.ts`).
 - **Route folders keep one file per concern and never mix kinds**: `_components/` (components only, one component per file), `_hooks/` (feature hooks), `_types/` (feature data types, one type per file), `_utils/` (helpers), `_actions/` (server actions), `_stores/` (client state, e.g. Zustand). No multi-component files; components with heavy logic move that logic into a hook.
-- **Props are always a named type declared above the component** (`type SignInFormProps = {...}` right before the function), and the component destructures with that type — never inline. Pages and layouts follow the same rule for `params`/`searchParams`/`children`. This is the only type allowed to live in a component file; all other data types live in the route's `_types/` folder.
+- **Shared types live in a `*.types.ts` sibling of their owning module** (`lib/cart.types.ts`, `queries/products.types.ts`) — one `.types` file per module holding all its types, never declared inline in the module. Route `_types/` folders are only for genuinely feature-local shapes (e.g. action args); never redeclare a query/lib type there — import it instead.
+- **Props are always a named type declared above the component** (`type SignInFormProps = {...}` right before the function), and the component destructures with that type — never inline. Pages and layouts follow the same rule for `params`/`searchParams`/`children`. This is the only type allowed to live in a component file; feature-local data types live in the route's `_types/` folder, shared ones in the owning module's `*.types.ts`.
 - **Cart** is cookie-backed (`lib/cart.ts`), mutated via `app/(store)/cart/_actions/*.ts`.
 
 ## Code style
@@ -73,8 +72,10 @@ Treat code like prose: group statements that belong together into **blocks**, an
 - **Never write comments.** Code must be self-explanatory through clear names and structure — describe what it does by doing it, not with prose. If you feel the need to explain, improve the naming or structure instead.
 
 - **Imports are one contiguous block** — no blank lines between them. The only blank line is after the `"use client"` / `"use server"` directive, and after the last import (before the first declaration).
+- **Types are imported with `import type` on their own line** — never inline `type` modifiers inside value imports: `import { loadModel } from "@/lib/model";` then `import type { LoadedModel, ModelFormat } from "@/lib/model.types";`.
 - Blank line between top-level declarations (types, helpers, functions).
 - Inside a function, blank lines between the major paragraphs: state/hook setup → the operation (setup → work → result) → the `return`.
+- Blank line after guard clauses and early returns (`if (...) return;`), and before a block's final `return` — guards, work, and result are separate paragraphs.
 - Statements that do one thing stay together with no blank lines (e.g. a group of `useState` calls, or a run of `data.append(...)` lines).
 - `try {` / `} finally {` / `} catch {` stay tight to their content; blank lines go _inside_ the block between its paragraphs, not right after `{`.
 
@@ -91,6 +92,8 @@ export function useSomething() {
     const [done, setDone] = useState(false);
 
     async function run(args: Args) {
+        if (pending) return;
+
         setPending(true);
 
         try {

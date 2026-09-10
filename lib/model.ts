@@ -1,21 +1,7 @@
 import * as THREE from "three";
 import { STLLoader } from "three/addons/loaders/STLLoader.js";
 import { ThreeMFLoader } from "three/addons/loaders/3MFLoader.js";
-
-export type ModelFormat = "stl" | "3mf";
-
-export type ModelStats = {
-    width: number;
-    height: number;
-    depth: number;
-    volume: number;
-    triangleCount: number;
-};
-
-export type LoadedModel = {
-    object: THREE.Object3D;
-    stats: ModelStats;
-};
+import type { LoadedModel, ModelFormat, ModelStats } from "@/lib/model.types";
 
 function computeVolume(geo: THREE.BufferGeometry, matrix: THREE.Matrix4): number {
     const pos = geo.attributes.position;

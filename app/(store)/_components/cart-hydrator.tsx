@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import type { CartItem } from "@/lib/cart";
+import type { CartItem } from "@/lib/cart.types";
 import { useCartStore } from "@/app/(store)/cart/_stores/cart-store";
 
 type CartHydratorProps = {
@@ -13,6 +13,7 @@ export function CartHydrator({ items }: CartHydratorProps) {
 
     useEffect(() => {
         if (hydrated.current) return;
+
         hydrated.current = true;
         useCartStore.setState({ items });
     }, [items]);

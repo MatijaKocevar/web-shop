@@ -2,7 +2,7 @@ import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { ModelViewer } from "@/components/model-viewer";
-import type { ModelFormat, ModelStats } from "@/lib/model";
+import type { ModelFormat, ModelStats } from "@/lib/model.types";
 
 type ModelPreviewProps = {
     objectUrl: string;

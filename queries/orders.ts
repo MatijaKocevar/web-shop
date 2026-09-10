@@ -1,6 +1,7 @@
 import type Stripe from "stripe";
 import { db } from "@/lib/db";
 import { round2 } from "@/lib/pricing";
+import type { CheckoutItem } from "@/queries/orders.types";
 
 export async function listOrders() {
     const orders = await db.order.findMany({
@@ -54,20 +55,6 @@ export async function listOrdersForUser(userId: string) {
         items: o.items.map((i) => ({ ...i, unitPrice: Number(i.unitPrice) })),
     }));
 }
-
-type CheckoutItem = {
-    type: string;
-    name: string;
-    quantity: number;
-    unitPrice: number;
-    productId: string | null;
-    variantId: string | null;
-    fileId: string | null;
-    profileId: string | null;
-    filamentId: string | null;
-    infill: number | null;
-    supports: boolean | null;
-};
 
 export async function createOrderFromCheckout(session: Stripe.Checkout.Session) {
     const rawItems = session.metadata?.items;

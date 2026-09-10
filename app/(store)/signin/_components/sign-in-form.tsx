@@ -33,6 +33,7 @@ export function SignInForm({ callbackUrl }: SignInFormProps) {
         if (result?.error) {
             setError(true);
             setLoading(false);
+
             return;
         }
 

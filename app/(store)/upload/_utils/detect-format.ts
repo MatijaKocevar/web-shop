@@ -1,4 +1,4 @@
-import type { ModelFormat } from "@/lib/model";
+import type { ModelFormat } from "@/lib/model.types";
 
 const ACCEPTED = {
     "model/stl": "stl",

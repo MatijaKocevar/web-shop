@@ -1,7 +1,8 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getCart, setCart, type CartItem } from "@/lib/cart";
+import { getCart, setCart } from "@/lib/cart";
+import type { CartItem } from "@/lib/cart.types";
 
 export async function updateQuantity(id: string, quantity: number): Promise<CartItem[]> {
     const items = await getCart();

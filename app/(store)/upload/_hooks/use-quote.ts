@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import type { ModelStats } from "@/lib/model";
+import type { ModelStats } from "@/lib/model.types";
 import { estimateGrams, estimateTimeSeconds } from "@/lib/estimate";
 import { calculatePrice } from "@/lib/pricing";
 import type { Filament } from "../_types/filament";
@@ -17,7 +17,9 @@ type UseQuoteArgs = {
 export function useQuote({ stats, profile, filament, infill, supports }: UseQuoteArgs) {
     const buildVolumeOk = useMemo(() => {
         if (!stats || !profile) return true;
+
         const { buildX, buildY, buildZ } = profile.printer;
+
         return stats.width <= buildX && stats.depth <= buildY && stats.height <= buildZ;
     }, [stats, profile]);
 

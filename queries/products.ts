@@ -1,15 +1,5 @@
 import { db } from "@/lib/db";
-
-export type ProductCard = {
-    id: string;
-    name: string;
-    slug: string;
-    price: number | null;
-    currency: string;
-    type: string;
-    category: { name: string } | null;
-    images: { key: string; alt: string | null }[];
-};
+import type { ProductCard } from "@/queries/products.types";
 
 export async function listProducts(params?: {
     category?: string;

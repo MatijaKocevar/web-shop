@@ -59,7 +59,6 @@ pnpm format           # prettier --write .
 pnpm format:check     # prettier --check .
 pnpm db:migrate       # prisma migrate dev
 pnpm db:seed          # prisma db seed
-pnpm db:admin <email> # promote a user to ADMIN (after they sign in)
 ```
 
 ## Project structure
@@ -73,7 +72,6 @@ components/             # ui/ = shadcn primitives; otherwise shared components
 hooks/                  # shared, cross-feature hooks
 queries/                # ALL reads — Prisma lives here
 lib/                    # framework-free infra (db, auth, stripe, storage, pricing, cart, estimate)
-workers/                # standalone scripts (e.g. promote.ts)
 prisma/                 # schema + migrations + seed
 proxy.ts                # middleware (renamed from middleware.ts in Next 16)
 ```

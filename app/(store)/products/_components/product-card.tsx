@@ -3,10 +3,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { publicUrl } from "@/lib/storage-url";
-import type { ProductCardProduct } from "../_types/product-card";
+import type { ProductCard as ProductCardData } from "@/queries/products.types";
 
 type ProductCardProps = {
-    product: ProductCardProduct;
+    product: ProductCardData;
 };
 
 export async function ProductCard({ product }: ProductCardProps) {
