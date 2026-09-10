@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages, getTranslations } from "next-intl/server";
@@ -14,6 +14,13 @@ const geistMono = Geist_Mono({
     variable: "--font-geist-mono",
     subsets: ["latin"],
 });
+
+export const viewport: Viewport = {
+    themeColor: [
+        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+        { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
+    ],
+};
 
 export async function generateMetadata(): Promise<Metadata> {
     const t = await getTranslations("metadata");
@@ -38,6 +45,16 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
             <body className="flex min-h-full flex-col">
+                <link
+                    rel="manifest"
+                    href="/manifest-light.webmanifest"
+                    media="(prefers-color-scheme: light)"
+                />
+                <link
+                    rel="manifest"
+                    href="/manifest-dark.webmanifest"
+                    media="(prefers-color-scheme: dark)"
+                />
                 <NextIntlClientProvider messages={messages}>
                     <ThemeProvider
                         attribute="class"

@@ -1,0 +1,19 @@
+{
+    "name": "3D Print Shop",
+    "short_name": "Print Shop",
+    "description": "Buy 3D printed products or upload your own model to print.",
+    "id": "/",
+    "start_url": "/",
+    "scope": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#ffffff",
+    "icons": [
+        {
+            "src": "/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml",
+            "purpose": "any"
+        }
+    ]
+}
