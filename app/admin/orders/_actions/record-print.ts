@@ -81,5 +81,5 @@ export async function recordPrint(formData: FormData) {
     revalidatePath(`/admin/orders/${orderId}`);
     revalidatePath("/admin/filaments");
     revalidatePath("/admin");
-    redirect(`/admin/orders/${orderId}`);
+    redirect(`/admin/orders?id=${orderId}`);
 }
