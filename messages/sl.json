@@ -163,7 +163,9 @@
             "orders": "Naročila",
             "users": "Uporabniki",
             "collapse": "Strni stransko vrstico",
-            "expand": "Razširi stransko vrstico"
+            "expand": "Razširi stransko vrstico",
+            "menu": "Meni",
+            "main": "Glavno"
         },
         "dashboard": {
             "title": "Nadzorna plošča",

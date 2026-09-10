@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation";
 import { auth } from "@/lib/auth";
-import { AdminSidebar } from "@/components/admin-sidebar";
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 
 type AdminLayoutProps = {
     children: React.ReactNode;
@@ -11,9 +12,14 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
     if (session?.user.role !== "ADMIN") redirect("/signin");
 
     return (
-        <div className="flex h-dvh">
-            <AdminSidebar email={session.user.email} />
-            <main className="flex min-h-0 flex-1 flex-col p-6">{children}</main>
-        </div>
+        <SidebarProvider className="h-svh">
+            <AppSidebar email={session.user.email} />
+            <SidebarInset>
+                <header className="flex h-14 shrink-0 items-center gap-2 border-b px-4">
+                    <SidebarTrigger />
+                </header>
+                <div className="flex min-h-0 flex-1 flex-col p-4 lg:p-6">{children}</div>
+            </SidebarInset>
+        </SidebarProvider>
     );
 }

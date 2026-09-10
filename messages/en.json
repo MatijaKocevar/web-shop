@@ -163,7 +163,9 @@
             "orders": "Orders",
             "users": "Users",
             "collapse": "Collapse sidebar",
-            "expand": "Expand sidebar"
+            "expand": "Expand sidebar",
+            "menu": "Menu",
+            "main": "Main"
         },
         "dashboard": {
             "title": "Dashboard",
