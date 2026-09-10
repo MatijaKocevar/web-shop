@@ -4,12 +4,13 @@ import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
 import { Loader2, Pencil, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
+import type { StockReason } from "@/generated/prisma/enums";
 import { AdminTable } from "@/components/admin-table";
 import type { AdminTableColumn } from "@/components/admin-table.types";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { setFilamentStocks } from "../_actions/set-filament-stocks";
 import type { Filament } from "../_types/filament";
+import { StockAdjustCell } from "./stock-adjust-cell";
 
 type FilamentTableProps = {
     filaments: Filament[];
@@ -23,13 +24,24 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
     const [stocks, setStocks] = useState<Record<string, number>>(() =>
         Object.fromEntries(filaments.map((f) => [f.id, f.stockGrams])),
     );
+    const [stockReasons, setStockReasons] = useState<Record<string, StockReason>>(() =>
+        Object.fromEntries(filaments.map((f) => [f.id, "RESTOCK"])),
+    );
+    const [stockNotes, setStockNotes] = useState<Record<string, string>>(() =>
+        Object.fromEntries(filaments.map((f) => [f.id, ""])),
+    );
 
     const changed = useMemo(
         () =>
             filaments
                 .filter((f) => (stocks[f.id] ?? f.stockGrams) !== f.stockGrams)
-                .map((f) => ({ filamentId: f.id, stockGrams: stocks[f.id] ?? 0 })),
-        [filaments, stocks],
+                .map((f) => ({
+                    filamentId: f.id,
+                    stockGrams: stocks[f.id] ?? 0,
+                    reason: stockReasons[f.id] ?? "RESTOCK",
+                    note: stockNotes[f.id] ?? "",
+                })),
+        [filaments, stocks, stockReasons, stockNotes],
     );
 
     function saveStocks() {
@@ -40,10 +52,15 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
         });
     }
 
-    function setStock(id: string, value: string) {
-        const grams = Number(value);
-
-        setStocks((current) => ({ ...current, [id]: Number.isFinite(grams) ? grams : 0 }));
+    function handleChange(
+        filamentId: string,
+        stockGrams: number,
+        reason: StockReason,
+        note: string,
+    ) {
+        setStocks((current) => ({ ...current, [filamentId]: stockGrams }));
+        setStockReasons((current) => ({ ...current, [filamentId]: reason }));
+        setStockNotes((current) => ({ ...current, [filamentId]: note }));
     }
 
     const columns: AdminTableColumn[] = [
@@ -83,20 +100,13 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
                 { content: f.color, search: f.color },
                 {
                     content: (
-                        <div className="flex items-center gap-2">
-                            {stock < f.lowStockThresholdGrams && (
-                                <Badge variant="destructive">{t("lowStock")}</Badge>
-                            )}
-                            <input
-                                className="w-20 rounded-md border bg-background px-2 py-1 text-xs focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
-                                type="number"
-                                step="1"
-                                min="0"
-                                value={stock}
-                                onChange={(event) => setStock(f.id, event.target.value)}
-                                title={t("setStockTitle")}
-                            />
-                        </div>
+                        <StockAdjustCell
+                            filamentId={f.id}
+                            stockGrams={stock}
+                            lowStockThresholdGrams={f.lowStockThresholdGrams}
+                            pending={stock !== f.stockGrams}
+                            onChange={handleChange}
+                        />
                     ),
                     search: String(stock),
                     sort: stock,

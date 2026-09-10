@@ -31,6 +31,7 @@ type AdminTableProps = {
     toolbarActions?: React.ReactNode;
     counter?: boolean | React.ReactNode;
     layout?: "auto" | "fixed";
+    maxHeight?: string;
     fill?: boolean;
 };
 
@@ -62,6 +63,7 @@ export function AdminTable({
     toolbarActions,
     counter = true,
     layout = "auto",
+    maxHeight,
     fill = false,
 }: AdminTableProps) {
     const t = useTranslations("admin.table");
@@ -358,7 +360,12 @@ export function AdminTable({
     const content = (
         <>
             {toolbarNode}
-            <div className="min-h-0 flex-1 overflow-auto">{table}</div>
+            <div
+                className="min-h-0 flex-1 overflow-auto"
+                style={maxHeight ? { maxHeight } : undefined}
+            >
+                {table}
+            </div>
         </>
     );
 

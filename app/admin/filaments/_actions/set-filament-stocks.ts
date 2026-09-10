@@ -2,8 +2,11 @@
 
 import { revalidatePath } from "next/cache";
 import { Prisma } from "@/generated/prisma/client";
+import type { StockReason } from "@/generated/prisma/enums";
 import { db } from "@/lib/db";
 import type { SetFilamentStocksEntry } from "../_types/set-filament-stocks";
+
+const VALID_REASONS: StockReason[] = ["ORDER", "STOCK_PRINT", "FAILURE", "RESTOCK", "CORRECTION"];
 
 export async function setFilamentStocks(entries: SetFilamentStocksEntry[]) {
     const filaments = await db.filament.findMany({
@@ -21,6 +24,12 @@ export async function setFilamentStocks(entries: SetFilamentStocksEntry[]) {
         if (stockGrams === filament.stockGrams) continue;
 
         const deltaGrams = stockGrams - filament.stockGrams;
+        const reason = VALID_REASONS.includes(entry.reason as StockReason)
+            ? (entry.reason as StockReason)
+            : deltaGrams > 0
+              ? "RESTOCK"
+              : "CORRECTION";
+        const note = entry.note?.trim() || null;
 
         operations.push(
             db.filament.update({
@@ -31,7 +40,8 @@ export async function setFilamentStocks(entries: SetFilamentStocksEntry[]) {
                 data: {
                     filamentId: entry.filamentId,
                     deltaGrams,
-                    reason: deltaGrams > 0 ? "RESTOCK" : "CORRECTION",
+                    reason,
+                    note,
                 },
             }),
         );
