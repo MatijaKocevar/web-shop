@@ -11,9 +11,9 @@ export default async function AdminLayout({ children }: AdminLayoutProps) {
     if (session?.user.role !== "ADMIN") redirect("/signin");
 
     return (
-        <div className="flex min-h-dvh">
+        <div className="flex h-dvh">
             <AdminSidebar email={session.user.email} />
-            <main className="flex-1 p-6">{children}</main>
+            <main className="flex min-h-0 flex-1 flex-col p-6">{children}</main>
         </div>
     );
 }

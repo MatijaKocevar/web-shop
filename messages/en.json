@@ -179,6 +179,13 @@
             "save": "Save",
             "cancel": "Cancel"
         },
+        "table": {
+            "search": "Search…",
+            "filter": "Filter…",
+            "filterAll": "All",
+            "noResults": "No matching rows.",
+            "results": "{visible} of {total}"
+        },
         "products": {
             "title": "Products",
             "new": "New product",

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { AdminTable } from "@/components/admin-table";
 import { buttonVariants } from "@/components/ui/button";
 import { listPrintersWithProfiles } from "@/queries/printers";
 
@@ -7,9 +8,17 @@ export default async function AdminPrintersPage() {
     const printers = await listPrintersWithProfiles();
     const t = await getTranslations("admin.printers");
 
+    const columns = [
+        { label: t("profile") },
+        { label: t("layer") },
+        { label: t("infill") },
+        { label: t("speed") },
+        { label: t("machineRate") },
+    ];
+
     return (
-        <div>
-            <div className="mb-6 flex items-center justify-between">
+        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-y-auto">
+            <div className="flex shrink-0 items-center justify-between">
                 <h1 className="text-2xl font-semibold">{t("title")}</h1>
                 <div className="flex gap-2">
                     <Link
@@ -25,67 +34,58 @@ export default async function AdminPrintersPage() {
             </div>
 
             <div className="flex flex-col gap-6">
-                {printers.map((printer) => (
-                    <div key={printer.id} className="rounded-lg border">
-                        <div className="flex items-center justify-between border-b px-4 py-3">
-                            <div className="flex items-center gap-3">
+                {printers.map((printer) => {
+                    const rows = printer.profiles.map((profile) => ({
+                        key: profile.id,
+                        cells: [
+                            {
+                                content: (
+                                    <Link
+                                        href={`/admin/printers/profile/${profile.id}`}
+                                        className="font-medium hover:underline"
+                                    >
+                                        {profile.name}
+                                    </Link>
+                                ),
+                            },
+                            { content: `${profile.layerHeight} mm` },
+                            { content: `${profile.infill}%` },
+                            { content: `${profile.speed ?? "—"} mm/s` },
+                            { content: `€${Number(profile.machineHourRate).toFixed(2)}/h` },
+                        ],
+                    }));
+
+                    return (
+                        <div key={printer.id} className="overflow-hidden rounded-lg border">
+                            <div className="flex items-center justify-between border-b px-4 py-3">
+                                <div className="flex items-center gap-3">
+                                    <Link
+                                        href={`/admin/printers/${printer.id}`}
+                                        className="font-semibold hover:underline"
+                                    >
+                                        {printer.name}
+                                    </Link>
+                                    <span className="text-sm text-muted-foreground">
+                                        {printer.buildX}×{printer.buildY}×{printer.buildZ} mm
+                                    </span>
+                                </div>
                                 <Link
                                     href={`/admin/printers/${printer.id}`}
-                                    className="font-semibold hover:underline"
+                                    className="text-sm text-muted-foreground hover:underline"
                                 >
-                                    {printer.name}
+                                    {t("editPrinterLink")}
                                 </Link>
-                                <span className="text-sm text-muted-foreground">
-                                    {printer.buildX}×{printer.buildY}×{printer.buildZ} mm
-                                </span>
                             </div>
-                            <Link
-                                href={`/admin/printers/${printer.id}`}
-                                className="text-sm text-muted-foreground hover:underline"
-                            >
-                                {t("editPrinterLink")}
-                            </Link>
+                            <AdminTable
+                                columns={columns}
+                                rows={rows}
+                                empty={t("noProfiles")}
+                                frameless
+                                toolbar={false}
+                            />
                         </div>
-                        <table className="w-full text-sm">
-                            <thead className="bg-muted/50 text-left">
-                                <tr>
-                                    <th className="px-4 py-2 font-medium">{t("profile")}</th>
-                                    <th className="px-4 py-2 font-medium">{t("layer")}</th>
-                                    <th className="px-4 py-2 font-medium">{t("infill")}</th>
-                                    <th className="px-4 py-2 font-medium">{t("speed")}</th>
-                                    <th className="px-4 py-2 font-medium">{t("machineRate")}</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y">
-                                {printer.profiles.map((p) => (
-                                    <tr key={p.id} className="hover:bg-muted/30">
-                                        <td className="px-4 py-2">
-                                            <Link
-                                                href={`/admin/printers/profile/${p.id}`}
-                                                className="font-medium hover:underline"
-                                            >
-                                                {p.name}
-                                            </Link>
-                                        </td>
-                                        <td className="px-4 py-2">{p.layerHeight} mm</td>
-                                        <td className="px-4 py-2">{p.infill}%</td>
-                                        <td className="px-4 py-2">{p.speed ?? "—"} mm/s</td>
-                                        <td className="px-4 py-2">
-                                            €{Number(p.machineHourRate).toFixed(2)}/h
-                                        </td>
-                                    </tr>
-                                ))}
-                                {printer.profiles.length === 0 && (
-                                    <tr>
-                                        <td className="px-4 py-2 text-muted-foreground" colSpan={5}>
-                                            {t("noProfiles")}
-                                        </td>
-                                    </tr>
-                                )}
-                            </tbody>
-                        </table>
-                    </div>
-                ))}
+                    );
+                })}
             </div>
         </div>
     );

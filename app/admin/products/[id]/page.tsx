@@ -24,7 +24,7 @@ export default async function EditProductPage({ params }: EditProductPageProps) 
     if (!product) notFound();
 
     return (
-        <div className="flex flex-col gap-8">
+        <div className="flex min-h-0 flex-1 flex-col gap-8 overflow-y-auto">
             <div>
                 <h1 className="mb-6 text-2xl font-semibold">{t("edit")}</h1>
                 <ProductForm
