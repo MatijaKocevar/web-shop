@@ -207,7 +207,8 @@
             "filter": "Filter…",
             "filterAll": "All",
             "noResults": "No matching rows.",
-            "results": "{visible} of {total}"
+            "results": "{visible} of {total}",
+            "doubleClick": "Double-click to open"
         },
         "products": {
             "title": "Products",

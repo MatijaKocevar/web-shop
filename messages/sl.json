@@ -207,7 +207,8 @@
             "filter": "Filtriraj…",
             "filterAll": "Vsi",
             "noResults": "Ni ustreznih vrstic.",
-            "results": "{visible} od {total}"
+            "results": "{visible} od {total}",
+            "doubleClick": "Dvoklik za odprtje"
         },
         "products": {
             "title": "Izdelki",

@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
@@ -64,6 +65,7 @@ export function AdminTable({
     fill = false,
 }: AdminTableProps) {
     const t = useTranslations("admin.table");
+    const router = useRouter();
     const [query, setQuery] = useState("");
     const [sort, setSort] = useState<SortState>(null);
     const [filters, setFilters] = useState<Record<string, string>>({});
@@ -281,24 +283,40 @@ export function AdminTable({
                 </TableHeader>
             )}
             <TableBody className="divide-y">
-                {visibleRows.map((row, index) => (
-                    <TableRow
-                        key={row.key ?? index}
-                        className={cn("hover:bg-muted/30", row.className)}
-                        title={row.title}
-                        onDoubleClick={row.onDoubleClick}
-                    >
-                        {row.cells.map((cell, cellIndex) => (
-                            <TableCell
-                                key={cellIndex}
-                                className={cn("px-4 py-2", cell.className)}
-                                colSpan={cell.colSpan}
-                            >
-                                {cell.content}
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                ))}
+                {visibleRows.map((row, index) => {
+                    const interactive = Boolean(row.href);
+
+                    return (
+                        <TableRow
+                            key={row.key ?? index}
+                            className={cn(
+                                "hover:bg-muted/30",
+                                row.className,
+                                interactive && "cursor-pointer select-none",
+                            )}
+                            title={row.title ?? (interactive ? t("doubleClick") : undefined)}
+                            onDoubleClick={(event) => {
+                                if (row.onDoubleClick) return row.onDoubleClick(event);
+                                if (!row.href) return;
+
+                                const target = event.target as HTMLElement;
+                                if (target.closest("a, button, input, select, form")) return;
+
+                                router.push(row.href);
+                            }}
+                        >
+                            {row.cells.map((cell, cellIndex) => (
+                                <TableCell
+                                    key={cellIndex}
+                                    className={cn("px-4 py-2", cell.className)}
+                                    colSpan={cell.colSpan}
+                                >
+                                    {cell.content}
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    );
+                })}
                 {visibleRows.length === 0 && (
                     <TableRow className="hover:bg-transparent">
                         <TableCell

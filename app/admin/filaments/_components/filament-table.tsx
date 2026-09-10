@@ -2,7 +2,6 @@
 
 import { useMemo, useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { Loader2, Pencil, Save } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { AdminTable } from "@/components/admin-table";
@@ -18,7 +17,6 @@ type FilamentTableProps = {
 };
 
 export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps) {
-    const router = useRouter();
     const t = useTranslations("admin.filaments");
     const tCommon = useTranslations("admin.common");
     const [pending, startTransition] = useTransition();
@@ -48,14 +46,6 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
         setStocks((current) => ({ ...current, [id]: Number.isFinite(grams) ? grams : 0 }));
     }
 
-    function openRow(event: React.MouseEvent<HTMLTableRowElement>, id: string) {
-        const target = event.target as HTMLElement;
-
-        if (target.closest("a, button, input, select, form")) return;
-
-        router.push(`/admin/filaments/${id}`);
-    }
-
     const columns: AdminTableColumn[] = [
         { label: tCommon("name"), sortable: true, filter: { type: "text" } },
         {
@@ -75,9 +65,7 @@ export function FilamentTable({ filaments, toolbarActions }: FilamentTableProps)
 
         return {
             key: f.id,
-            className: "cursor-pointer select-none",
-            title: t("doubleClickHint"),
-            onDoubleClick: (event: React.MouseEvent<HTMLTableRowElement>) => openRow(event, f.id),
+            href: `/admin/filaments/${f.id}`,
             filterValues: { material: f.material },
             cells: [
                 {

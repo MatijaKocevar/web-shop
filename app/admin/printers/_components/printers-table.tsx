@@ -46,6 +46,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
         const printerRow: AdminTableRow = {
             key: printer.id,
             className: "bg-muted/40",
+            href: `/admin/printers/${printer.id}`,
             cells: [
                 {
                     content: (
@@ -101,6 +102,7 @@ export function PrintersTable({ printers }: PrintersTableProps) {
 
         const profileRows: AdminTableRow[] = printer.profiles.map((profile) => ({
             key: profile.id,
+            href: `/admin/printers/profile/${profile.id}`,
             cells: [
                 {
                     content: (

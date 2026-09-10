@@ -44,6 +44,7 @@ export default async function AdminOrdersPage() {
 
     const rows = orders.map((order) => ({
         key: order.id,
+        href: `/admin/orders/${order.id}`,
         filterValues: { status: order.status },
         cells: [
             {

@@ -32,6 +32,7 @@ export default async function AdminProductsPage() {
 
     const rows = products.map((product) => ({
         key: product.id,
+        href: `/admin/products/${product.id}`,
         filterValues: { type: product.type },
         cells: [
             {
