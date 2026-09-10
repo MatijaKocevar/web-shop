@@ -45,15 +45,10 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
             <body className="flex min-h-full flex-col">
-                <link
-                    rel="manifest"
-                    href="/manifest-light.webmanifest"
-                    media="(prefers-color-scheme: light)"
-                />
-                <link
-                    rel="manifest"
-                    href="/manifest-dark.webmanifest"
-                    media="(prefers-color-scheme: dark)"
+                <script
+                    dangerouslySetInnerHTML={{
+                        __html: 'document.head.insertAdjacentHTML("beforeend", \'<link rel="manifest" href="\' + (window.matchMedia("(prefers-color-scheme: dark)").matches ? "/manifest-dark.webmanifest" : "/manifest-light.webmanifest") + \'">\');',
+                    }}
                 />
                 <NextIntlClientProvider messages={messages}>
                     <ThemeProvider
