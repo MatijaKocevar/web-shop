@@ -40,6 +40,8 @@ docker compose up   # postgres + minio (+ stripe-cli with --profile stripe)
 
 Setup: copy `.env.example` → `.env`. Most features run without secrets; auth needs `AUTH_GOOGLE_ID/SECRET` (+ `AUTH_RESEND_KEY`), payments need `STRIPE_*`.
 
+**The dev server is already running** — the user keeps `pnpm dev` going in their code editor. Never start another dev server (no `nohup pnpm dev`, no background Next processes); verify against the existing instance at `http://localhost:10000`.
+
 ## Structure & conventions (the rules this repo follows)
 
 ```
