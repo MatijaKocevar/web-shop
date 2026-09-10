@@ -3,6 +3,8 @@
 Guidance for AI coding agents working in this repository. Read this first, then consult version-matched docs for the tools below before writing code.
 
 > **Rules of engagement** — never `git commit`, `git push`, `pnpm build`, run migrations, or take any other irreversible/destructive action unless the user explicitly asks. Always confirm before doing any of those, even when the change looks "ready". This applies to the repo as a whole, not just the file you're editing.
+>
+> **Git workflow** — never `git rebase`, ever, on any branch. Work happens on feature branches created from `main` and merged back into `main`. To bring a branch up to date with the latest `main`, **merge** `main` into the branch (`git merge origin/main`) — do not rebase.
 
 ## Project
 
