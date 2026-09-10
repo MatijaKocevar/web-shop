@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import { ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 
-const NAVIGABLE_SEGMENTS = ["products", "filaments", "printers", "orders", "users"];
+const NAVIGABLE_SEGMENTS = ["products", "filaments", "printers", "orders", "users", "stock"];
 
 export function AdminBreadcrumbs() {
     const pathname = usePathname();
