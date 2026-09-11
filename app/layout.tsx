@@ -17,10 +17,7 @@ const geistMono = Geist_Mono({
 });
 
 export const viewport: Viewport = {
-    themeColor: [
-        { media: "(prefers-color-scheme: light)", color: "#ffffff" },
-        { media: "(prefers-color-scheme: dark)", color: "#0a0a0a" },
-    ],
+    colorScheme: "light dark",
 };
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -48,7 +45,13 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             <body className="flex min-h-full flex-col">
                 <script
                     dangerouslySetInnerHTML={{
-                        __html: 'document.head.insertAdjacentHTML("beforeend", \'<link rel="manifest" href="\' + (window.matchMedia("(prefers-color-scheme: dark)").matches ? "/manifest-dark.webmanifest" : "/manifest-light.webmanifest") + \'">\');',
+                        __html:
+                            'var d = window.matchMedia("(prefers-color-scheme: dark)").matches;' +
+                            'var m = document.createElement("meta");' +
+                            'm.name = "theme-color";' +
+                            'm.content = d ? "#0a0a0a" : "#ffffff";' +
+                            "document.head.appendChild(m);" +
+                            'document.head.insertAdjacentHTML("beforeend", \'<link rel="manifest" href="\' + (d ? "/manifest-dark.webmanifest" : "/manifest-light.webmanifest") + \'">\');',
                     }}
                 />
                 <NextIntlClientProvider messages={messages}>

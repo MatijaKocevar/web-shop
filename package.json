@@ -3,7 +3,7 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "dev": "next dev -H 0.0.0.0 -p 10000",
+        "dev": "mkcert -key-file \"$HOME/.local/share/mkcert/dev-certs/key.pem\" -cert-file \"$HOME/.local/share/mkcert/dev-certs/cert.pem\" localhost 127.0.0.1 ::1 $(hostname -I) && next dev -H 0.0.0.0 -p 10000 --experimental-https --experimental-https-key \"$HOME/.local/share/mkcert/dev-certs/key.pem\" --experimental-https-cert \"$HOME/.local/share/mkcert/dev-certs/cert.pem\"",
         "build": "next build",
         "start": "next start -H 0.0.0.0 -p 10000",
         "lint": "eslint",
