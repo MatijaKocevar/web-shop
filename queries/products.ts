@@ -1,10 +1,14 @@
 import { db } from "@/lib/db";
-import type { ProductCard } from "@/queries/products.types";
-export async function listProducts(params?: {
-    category?: string;
-    tag?: string;
-    query?: string;
-}): Promise<ProductCard[]> {
+import type { ProductCard, ProductListParams } from "@/queries/products.types";
+
+const PRICE_RANGES: Record<string, { min?: number; max?: number }> = {
+    under10: { max: 10 },
+    from10to25: { min: 10, max: 25 },
+    from25to50: { min: 25, max: 50 },
+    over50: { min: 50 },
+};
+
+export async function listProducts(params?: ProductListParams): Promise<ProductCard[]> {
     const where: Record<string, unknown> = { active: true };
 
     if (params?.category) {
@@ -19,6 +23,25 @@ export async function listProducts(params?: {
             { description: { contains: params.query, mode: "insensitive" } },
         ];
     }
+    if (params?.type) {
+        where.type = params.type;
+    }
+    const range = params?.price ? PRICE_RANGES[params.price] : undefined;
+    if (range) {
+        where.price = {
+            ...(range.min != null ? { gte: range.min } : {}),
+            ...(range.max != null ? { lt: range.max } : {}),
+        };
+    }
+
+    const orderBy =
+        params?.sort === "priceAsc"
+            ? [{ price: "asc" as const }]
+            : params?.sort === "priceDesc"
+              ? [{ price: "desc" as const }]
+              : params?.sort === "name"
+                ? [{ name: "asc" as const }]
+                : [{ createdAt: "desc" as const }];
 
     const products = await db.product.findMany({
         where,
@@ -32,7 +55,7 @@ export async function listProducts(params?: {
             category: { select: { name: true } },
             images: { select: { key: true, alt: true }, orderBy: { sortOrder: "asc" } },
         },
-        orderBy: { createdAt: "desc" },
+        orderBy,
     });
 
     return products.map((p) => ({

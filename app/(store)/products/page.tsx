@@ -1,14 +1,25 @@
 import { getTranslations } from "next-intl/server";
+import { listCategories } from "@/queries/categories";
 import { listProducts } from "@/queries/products";
 import { ProductCard } from "./_components/product-card";
+import { ProductFilters } from "./_components/product-filters";
 
 type ProductsPageProps = {
-    searchParams: Promise<{ category?: string; q?: string }>;
+    searchParams: Promise<{
+        category?: string;
+        type?: string;
+        price?: string;
+        sort?: string;
+        q?: string;
+    }>;
 };
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
-    const { category, q } = await searchParams;
-    const products = await listProducts({ category, query: q });
+    const { category, type, price, sort, q } = await searchParams;
+    const [products, categories] = await Promise.all([
+        listProducts({ category, type, price, sort, query: q }),
+        listCategories(),
+    ]);
     const t = await getTranslations("products");
 
     return (
@@ -20,10 +31,19 @@ export default async function ProductsPage({ searchParams }: ProductsPageProps) 
                 </p>
             </div>
 
+            <ProductFilters
+                categories={categories.map((item) => ({ slug: item.slug, name: item.name }))}
+                category={category ?? ""}
+                type={type ?? ""}
+                price={price ?? ""}
+                sort={sort ?? ""}
+                q={q ?? ""}
+            />
+
             {products.length === 0 ? (
                 <p className="py-20 text-center text-muted-foreground">{t("empty")}</p>
             ) : (
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+                <div className="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
                     {products.map((product) => (
                         <ProductCard key={product.id} product={product} />
                     ))}
