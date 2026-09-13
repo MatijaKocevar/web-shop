@@ -11,7 +11,8 @@
         "format": "prettier --write .",
         "format:check": "prettier --check .",
         "db:migrate": "prisma migrate dev",
-        "db:seed": "prisma db seed"
+        "db:seed": "prisma db seed",
+        "db:images": "tsx scripts/seed-product-images.ts"
     },
     "dependencies": {
         "@auth/prisma-adapter": "^2.11.3",
