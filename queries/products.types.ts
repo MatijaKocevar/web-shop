@@ -8,3 +8,12 @@ export type ProductCard = {
     category: { name: string } | null;
     images: { key: string; alt: string | null }[];
 };
+
+export type ProductListParams = {
+    category?: string;
+    tag?: string;
+    query?: string;
+    type?: string;
+    price?: string;
+    sort?: string;
+};
