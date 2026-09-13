@@ -4,24 +4,30 @@ import { db } from "../lib/db";
 import { hashPassword } from "../lib/password";
 
 async function main() {
-    const adminPassword = process.env.AUTH_ADMIN_PASSWORD || "admin123";
+    const demoData = process.env.SEED_DEMO_DATA !== "false";
 
-    await db.user.upsert({
-        where: { email: "admin@test.com" },
-        update: { role: "ADMIN", passwordHash: await hashPassword(adminPassword) },
-        create: {
-            email: "admin@test.com",
-            name: "Admin Test",
-            role: "ADMIN",
-            passwordHash: await hashPassword(adminPassword),
-        },
-    });
+    if (demoData) {
+        const adminPassword = process.env.AUTH_ADMIN_PASSWORD || "admin123";
 
-    const customer = await db.user.upsert({
-        where: { email: "customer@test.com" },
-        update: { role: "CUSTOMER" },
-        create: { email: "customer@test.com", name: "Customer Test", role: "CUSTOMER" },
-    });
+        await db.user.upsert({
+            where: { email: "admin@test.com" },
+            update: { role: "ADMIN", passwordHash: await hashPassword(adminPassword) },
+            create: {
+                email: "admin@test.com",
+                name: "Admin Test",
+                role: "ADMIN",
+                passwordHash: await hashPassword(adminPassword),
+            },
+        });
+    }
+
+    const customer = demoData
+        ? await db.user.upsert({
+              where: { email: "customer@test.com" },
+              update: { role: "CUSTOMER" },
+              create: { email: "customer@test.com", name: "Customer Test", role: "CUSTOMER" },
+          })
+        : null;
 
     // --- Printer: Creality K1C ---
     const printer = await db.printer.upsert({
@@ -416,6 +422,11 @@ async function main() {
                 },
             });
         }
+    }
+
+    if (!customer) {
+        console.log("Seed complete (catalog only).");
+        return;
     }
 
     // --- Sample orders ---
