@@ -123,6 +123,7 @@ export async function listProductsWithVariants() {
                       name: variant.filament.name,
                       color: variant.filament.color,
                       colorHex: variant.filament.colorHex,
+                      stockGrams: variant.filament.stockGrams,
                   }
                 : null,
         })),

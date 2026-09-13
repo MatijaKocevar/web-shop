@@ -57,14 +57,15 @@ export function ProductsTable({ products, toolbarActions }: ProductsTableProps) 
     }
 
     const columns: AdminTableColumn[] = [
-        { label: tCommon("name"), filter: { type: "text" }, className: "w-[22%]" },
-        { label: tCommon("type"), className: "w-[10%]" },
-        { label: tCommon("price"), className: "w-[9%]" },
-        { label: tCommon("category"), className: "w-[12%]" },
-        { label: tStock("filament"), className: "w-[19%]" },
+        { label: tCommon("name"), filter: { type: "text" }, className: "w-[24%]" },
+        { label: tCommon("type"), className: "w-[9%]" },
+        { label: tCommon("price"), className: "w-[8%]" },
+        { label: tCommon("category"), className: "w-[11%]" },
+        { label: tStock("filament"), className: "w-[17%]" },
         { label: tStock("gramsPerUnit"), className: "w-[9%]" },
-        { label: tStock("stock"), className: "w-[8%]" },
-        { label: tStock("actions"), srOnly: true, className: "w-[11%]" },
+        { label: tStock("stock"), className: "w-[5%] pr-1 [&>div]:justify-end" },
+        { label: tStock("adjustStock"), srOnly: true, className: "w-[4%]" },
+        { label: tStock("actions"), srOnly: true, className: "w-[13%]" },
     ];
 
     const rows = products.flatMap((product) => {
@@ -117,7 +118,7 @@ export function ProductsTable({ products, toolbarActions }: ProductsTableProps) 
                     className: "text-muted-foreground",
                     search: product.category?.name ?? "",
                 },
-                { content: "", colSpan: 3 },
+                { content: "", colSpan: 4 },
                 {
                     content: (
                         <div className="flex justify-end gap-2">
@@ -183,8 +184,15 @@ export function ProductsTable({ products, toolbarActions }: ProductsTableProps) 
                     search: String(variant.grams ?? ""),
                 },
                 {
-                    content: <VariantStockCell variant={variant} />,
+                    content: (
+                        <span className="tabular-nums whitespace-nowrap">{variant.stock}</span>
+                    ),
                     search: String(variant.stock),
+                    className: "pr-1 text-right",
+                },
+                {
+                    content: <VariantStockCell variant={variant} />,
+                    className: "pl-1",
                 },
                 {
                     content: (
@@ -215,7 +223,7 @@ export function ProductsTable({ products, toolbarActions }: ProductsTableProps) 
                             </span>
                         ),
                         className: "text-muted-foreground",
-                        colSpan: 8,
+                        colSpan: 9,
                     },
                 ],
             });

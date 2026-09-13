@@ -4,5 +4,11 @@ export type StockVariant = {
     price: number | null;
     stock: number;
     grams: number | null;
-    filament: { id: string; name: string; color: string; colorHex: string | null } | null;
+    filament: {
+        id: string;
+        name: string;
+        color: string;
+        colorHex: string | null;
+        stockGrams: number;
+    } | null;
 };
