@@ -207,6 +207,7 @@
             "search": "Išči…",
             "filter": "Filtriraj…",
             "filterAll": "Vsi",
+            "reset": "Ponastavi filter",
             "noResults": "Ni ustreznih vrstic.",
             "results": "{visible} od {total}",
             "doubleClick": "Dvoklik za odprtje"
@@ -339,7 +340,12 @@
             "passwordHint": "Pusti prazno, da obdržiš trenutno geslo",
             "passwordConfirm": "Ponovi geslo",
             "passwordMismatch": "Gesli se ne ujemata.",
-            "edit": "Uredi uporabnika"
+            "edit": "Uredi uporabnika",
+            "toggleOrders": "Prikaži/skrij naročila",
+            "expandAll": "Razširi vse",
+            "collapseAll": "Strni vse",
+            "noOrders": "Ni naročil",
+            "viewOrder": "Odpri naročilo"
         },
         "stock": {
             "product": "Izdelek",

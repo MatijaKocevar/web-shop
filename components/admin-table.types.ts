@@ -22,6 +22,7 @@ export type AdminTableCell = {
 
 export type AdminTableRow = {
     key?: Key;
+    parentKey?: Key;
     cells: AdminTableCell[];
     className?: string;
     title?: string;
