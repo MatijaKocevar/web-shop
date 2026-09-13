@@ -45,6 +45,7 @@ export type FilamentMinAggregateOutputType = {
   name: string | null
   material: string | null
   color: string | null
+  colorHex: string | null
   density: runtime.Decimal | null
   costPerGram: runtime.Decimal | null
   stockGrams: number | null
@@ -59,6 +60,7 @@ export type FilamentMaxAggregateOutputType = {
   name: string | null
   material: string | null
   color: string | null
+  colorHex: string | null
   density: runtime.Decimal | null
   costPerGram: runtime.Decimal | null
   stockGrams: number | null
@@ -73,6 +75,7 @@ export type FilamentCountAggregateOutputType = {
   name: number
   material: number
   color: number
+  colorHex: number
   density: number
   costPerGram: number
   stockGrams: number
@@ -103,6 +106,7 @@ export type FilamentMinAggregateInputType = {
   name?: true
   material?: true
   color?: true
+  colorHex?: true
   density?: true
   costPerGram?: true
   stockGrams?: true
@@ -117,6 +121,7 @@ export type FilamentMaxAggregateInputType = {
   name?: true
   material?: true
   color?: true
+  colorHex?: true
   density?: true
   costPerGram?: true
   stockGrams?: true
@@ -131,6 +136,7 @@ export type FilamentCountAggregateInputType = {
   name?: true
   material?: true
   color?: true
+  colorHex?: true
   density?: true
   costPerGram?: true
   stockGrams?: true
@@ -232,6 +238,7 @@ export type FilamentGroupByOutputType = {
   name: string
   material: string
   color: string
+  colorHex: string | null
   density: runtime.Decimal
   costPerGram: runtime.Decimal
   stockGrams: number
@@ -269,6 +276,7 @@ export type FilamentWhereInput = {
   name?: Prisma.StringFilter<"Filament"> | string
   material?: Prisma.StringFilter<"Filament"> | string
   color?: Prisma.StringFilter<"Filament"> | string
+  colorHex?: Prisma.StringNullableFilter<"Filament"> | string | null
   density?: Prisma.DecimalFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFilter<"Filament"> | number
@@ -286,6 +294,7 @@ export type FilamentOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  colorHex?: Prisma.SortOrderInput | Prisma.SortOrder
   density?: Prisma.SortOrder
   costPerGram?: Prisma.SortOrder
   stockGrams?: Prisma.SortOrder
@@ -306,6 +315,7 @@ export type FilamentWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"Filament"> | string
   material?: Prisma.StringFilter<"Filament"> | string
   color?: Prisma.StringFilter<"Filament"> | string
+  colorHex?: Prisma.StringNullableFilter<"Filament"> | string | null
   density?: Prisma.DecimalFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFilter<"Filament"> | number
@@ -323,6 +333,7 @@ export type FilamentOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  colorHex?: Prisma.SortOrderInput | Prisma.SortOrder
   density?: Prisma.SortOrder
   costPerGram?: Prisma.SortOrder
   stockGrams?: Prisma.SortOrder
@@ -345,6 +356,7 @@ export type FilamentScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"Filament"> | string
   material?: Prisma.StringWithAggregatesFilter<"Filament"> | string
   color?: Prisma.StringWithAggregatesFilter<"Filament"> | string
+  colorHex?: Prisma.StringNullableWithAggregatesFilter<"Filament"> | string | null
   density?: Prisma.DecimalWithAggregatesFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalWithAggregatesFilter<"Filament"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntWithAggregatesFilter<"Filament"> | number
@@ -359,6 +371,7 @@ export type FilamentCreateInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -376,6 +389,7 @@ export type FilamentUncheckedCreateInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -393,6 +407,7 @@ export type FilamentUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -410,6 +425,7 @@ export type FilamentUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -427,6 +443,7 @@ export type FilamentCreateManyInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -441,6 +458,7 @@ export type FilamentUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -455,6 +473,7 @@ export type FilamentUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -474,6 +493,7 @@ export type FilamentCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  colorHex?: Prisma.SortOrder
   density?: Prisma.SortOrder
   costPerGram?: Prisma.SortOrder
   stockGrams?: Prisma.SortOrder
@@ -495,6 +515,7 @@ export type FilamentMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  colorHex?: Prisma.SortOrder
   density?: Prisma.SortOrder
   costPerGram?: Prisma.SortOrder
   stockGrams?: Prisma.SortOrder
@@ -509,6 +530,7 @@ export type FilamentMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   material?: Prisma.SortOrder
   color?: Prisma.SortOrder
+  colorHex?: Prisma.SortOrder
   density?: Prisma.SortOrder
   costPerGram?: Prisma.SortOrder
   stockGrams?: Prisma.SortOrder
@@ -589,6 +611,7 @@ export type FilamentCreateWithoutVariantsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -605,6 +628,7 @@ export type FilamentUncheckedCreateWithoutVariantsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -637,6 +661,7 @@ export type FilamentUpdateWithoutVariantsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -653,6 +678,7 @@ export type FilamentUncheckedUpdateWithoutVariantsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -669,6 +695,7 @@ export type FilamentCreateWithoutStockLogsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -685,6 +712,7 @@ export type FilamentUncheckedCreateWithoutStockLogsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -717,6 +745,7 @@ export type FilamentUpdateWithoutStockLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -733,6 +762,7 @@ export type FilamentUncheckedUpdateWithoutStockLogsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -749,6 +779,7 @@ export type FilamentCreateWithoutOrderItemsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -765,6 +796,7 @@ export type FilamentUncheckedCreateWithoutOrderItemsInput = {
   name: string
   material: string
   color: string
+  colorHex?: string | null
   density: runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram: runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: number
@@ -797,6 +829,7 @@ export type FilamentUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -813,6 +846,7 @@ export type FilamentUncheckedUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   material?: Prisma.StringFieldUpdateOperationsInput | string
   color?: Prisma.StringFieldUpdateOperationsInput | string
+  colorHex?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   density?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   costPerGram?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   stockGrams?: Prisma.IntFieldUpdateOperationsInput | number
@@ -878,6 +912,7 @@ export type FilamentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   name?: boolean
   material?: boolean
   color?: boolean
+  colorHex?: boolean
   density?: boolean
   costPerGram?: boolean
   stockGrams?: boolean
@@ -896,6 +931,7 @@ export type FilamentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   material?: boolean
   color?: boolean
+  colorHex?: boolean
   density?: boolean
   costPerGram?: boolean
   stockGrams?: boolean
@@ -910,6 +946,7 @@ export type FilamentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   name?: boolean
   material?: boolean
   color?: boolean
+  colorHex?: boolean
   density?: boolean
   costPerGram?: boolean
   stockGrams?: boolean
@@ -924,6 +961,7 @@ export type FilamentSelectScalar = {
   name?: boolean
   material?: boolean
   color?: boolean
+  colorHex?: boolean
   density?: boolean
   costPerGram?: boolean
   stockGrams?: boolean
@@ -933,7 +971,7 @@ export type FilamentSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FilamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "material" | "color" | "density" | "costPerGram" | "stockGrams" | "lowStockThresholdGrams" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["filament"]>
+export type FilamentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "material" | "color" | "colorHex" | "density" | "costPerGram" | "stockGrams" | "lowStockThresholdGrams" | "active" | "createdAt" | "updatedAt", ExtArgs["result"]["filament"]>
 export type FilamentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   variants?: boolean | Prisma.Filament$variantsArgs<ExtArgs>
   orderItems?: boolean | Prisma.Filament$orderItemsArgs<ExtArgs>
@@ -955,6 +993,7 @@ export type $FilamentPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     name: string
     material: string
     color: string
+    colorHex: string | null
     density: runtime.Decimal
     costPerGram: runtime.Decimal
     stockGrams: number
@@ -1392,6 +1431,7 @@ export interface FilamentFieldRefs {
   readonly name: Prisma.FieldRef<"Filament", 'String'>
   readonly material: Prisma.FieldRef<"Filament", 'String'>
   readonly color: Prisma.FieldRef<"Filament", 'String'>
+  readonly colorHex: Prisma.FieldRef<"Filament", 'String'>
   readonly density: Prisma.FieldRef<"Filament", 'Decimal'>
   readonly costPerGram: Prisma.FieldRef<"Filament", 'Decimal'>
   readonly stockGrams: Prisma.FieldRef<"Filament", 'Int'>

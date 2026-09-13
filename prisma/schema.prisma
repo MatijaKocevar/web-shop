@@ -173,6 +173,7 @@ model Filament {
   name        String
   material    String
   color       String
+  colorHex    String?
   density     Decimal @db.Decimal(8, 4)
   costPerGram Decimal @db.Decimal(10, 4)
   stockGrams  Int     @default(0)

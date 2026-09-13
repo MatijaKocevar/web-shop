@@ -5,15 +5,17 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import { saveFilament } from "../_actions/save-filament";
 import { deleteFilament } from "../_actions/delete-filament";
 import type { Filament } from "../_types/filament";
+import { FilamentColorField } from "./filament-color-field";
 
 const inputClass =
     "rounded-md border bg-background px-3 py-2 text-sm w-full focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
 
 type FilamentFormProps = {
     filament?: Filament;
+    defaultMaterial?: string;
 };
 
-export async function FilamentForm({ filament }: FilamentFormProps) {
+export async function FilamentForm({ filament, defaultMaterial }: FilamentFormProps) {
     const t = await getTranslations("admin.filaments");
     const tCommon = await getTranslations("admin.common");
 
@@ -38,7 +40,7 @@ export async function FilamentForm({ filament }: FilamentFormProps) {
                         <select
                             className={inputClass}
                             name="material"
-                            defaultValue={filament?.material ?? "PLA"}
+                            defaultValue={filament?.material ?? defaultMaterial ?? "PLA"}
                         >
                             {["PLA", "PETG", "ABS", "TPU", "ASA", "PC", "PA"].map((m) => (
                                 <option key={m} value={m}>
@@ -48,15 +50,10 @@ export async function FilamentForm({ filament }: FilamentFormProps) {
                         </select>
                     </label>
 
-                    <label className="flex flex-col gap-1.5 text-sm">
-                        <span className="font-medium">{tCommon("color")}</span>
-                        <input
-                            className={inputClass}
-                            name="color"
-                            defaultValue={filament?.color ?? ""}
-                            required
-                        />
-                    </label>
+                    <FilamentColorField
+                        defaultName={filament?.color}
+                        defaultHex={filament?.colorHex}
+                    />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

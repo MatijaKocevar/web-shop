@@ -168,7 +168,6 @@ export function PrintersTable({ printers }: PrintersTableProps) {
         <AdminTable
             columns={columns}
             rows={rows}
-            layout="fixed"
             counter={
                 <span className="text-xs text-muted-foreground">
                     {t("count", { count: printers.length })}

@@ -334,18 +334,18 @@ export function AdminTable({
     );
 
     const toolbarNode = toolbar && (
-        <div className="flex shrink-0 flex-wrap items-center gap-2 border-b p-2">
-            <div className="relative">
+        <div className="flex shrink-0 items-center gap-2 border-b p-2">
+            <div className="relative min-w-0 flex-1 sm:flex-none">
                 <Search className="pointer-events-none absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
                 <input
-                    className="w-72 rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
+                    className="w-full rounded-md border bg-background py-1.5 pr-3 pl-8 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none sm:w-72"
                     value={query}
                     onChange={(event) => setQuery(event.target.value)}
                     placeholder={t("search")}
                 />
             </div>
 
-            <div className="ml-auto flex items-center gap-2">
+            <div className="ml-auto flex shrink-0 items-center gap-2">
                 {toolbarActions}
                 {counter === true && (
                     <span className="text-xs text-muted-foreground">
@@ -361,7 +361,7 @@ export function AdminTable({
         <>
             {toolbarNode}
             <div
-                className="min-h-0 flex-1 overflow-auto"
+                className="min-h-0 flex-1 overflow-auto [&>[data-slot=table-container]]:overflow-visible"
                 style={maxHeight ? { maxHeight } : undefined}
             >
                 {table}

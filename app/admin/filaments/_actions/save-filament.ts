@@ -9,6 +9,8 @@ export async function saveFilament(formData: FormData) {
     const name = (formData.get("name") as string) ?? "";
     const material = (formData.get("material") as string) ?? "PLA";
     const color = (formData.get("color") as string) ?? "";
+    const colorHexRaw = ((formData.get("colorHex") as string) ?? "").trim();
+    const colorHex = /^#[0-9a-f]{6}$/i.test(colorHexRaw) ? colorHexRaw.toLowerCase() : null;
     const density = Number(formData.get("density") ?? 1.24);
     const costPerGram = Number(formData.get("costPerGram") ?? 0.02);
     const stockGrams = Math.max(0, Math.round(Number(formData.get("stockGrams") ?? 0)));
@@ -22,6 +24,7 @@ export async function saveFilament(formData: FormData) {
         name,
         material,
         color,
+        colorHex,
         density,
         costPerGram,
         stockGrams,

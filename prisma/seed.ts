@@ -91,13 +91,50 @@ async function main() {
     }
 
     // --- Filaments ---
-    const filaments = [
-        { id: "pla-black", material: "PLA", color: "Black", density: 1.24, cost: 0.02 },
-        { id: "pla-white", material: "PLA", color: "White", density: 1.24, cost: 0.02 },
-        { id: "pla-gray", material: "PLA", color: "Gray", density: 1.24, cost: 0.02 },
-        { id: "petg-black", material: "PETG", color: "Black", density: 1.27, cost: 0.025 },
-        { id: "petg-white", material: "PETG", color: "White", density: 1.27, cost: 0.025 },
+    const filamentMaterials = [
+        { material: "PLA", density: 1.24, cost: 0.02 },
+        { material: "PETG", density: 1.27, cost: 0.025 },
+        { material: "ABS", density: 1.04, cost: 0.022 },
+        { material: "TPU", density: 1.21, cost: 0.035 },
+        { material: "ASA", density: 1.07, cost: 0.028 },
+        { material: "PC", density: 1.2, cost: 0.04 },
+        { material: "PA", density: 1.15, cost: 0.045 },
+        { material: "PLA-CF", density: 1.3, cost: 0.038 },
+        { material: "PETG-CF", density: 1.3, cost: 0.042 },
     ];
+
+    const filamentColors = [
+        "Black",
+        "White",
+        "Gray",
+        "Red",
+        "Orange",
+        "Yellow",
+        "Green",
+        "Blue",
+        "Purple",
+        "Pink",
+        "Brown",
+        "Transparent",
+        "Silk Gold",
+        "Silk Silver",
+        "Matte Black",
+        "Black CF",
+    ];
+
+    const stockPattern = [0, 320, 640, 905, 1250, 2000, 3200, 4805];
+
+    const filaments = filamentMaterials.flatMap(({ material, density, cost }, materialIndex) =>
+        filamentColors.map((color, colorIndex) => ({
+            id: `${material.toLowerCase()}-${color.toLowerCase().replace(/\s+/g, "-")}`,
+            material,
+            color,
+            density,
+            cost,
+            stockGrams: stockPattern[(materialIndex + colorIndex) % stockPattern.length],
+            lowStockThresholdGrams: (materialIndex + colorIndex) % 3 === 0 ? 1000 : 500,
+        })),
+    );
 
     for (const f of filaments) {
         await db.filament.upsert({
@@ -110,6 +147,8 @@ async function main() {
                 color: f.color,
                 density: f.density,
                 costPerGram: f.cost,
+                stockGrams: f.stockGrams,
+                lowStockThresholdGrams: f.lowStockThresholdGrams,
             },
         });
     }

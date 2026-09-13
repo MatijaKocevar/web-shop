@@ -1927,6 +1927,7 @@ export const FilamentScalarFieldEnum = {
   name: 'name',
   material: 'material',
   color: 'color',
+  colorHex: 'colorHex',
   density: 'density',
   costPerGram: 'costPerGram',
   stockGrams: 'stockGrams',
