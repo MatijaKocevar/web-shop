@@ -22,7 +22,7 @@ export function AddToCartForm({ productId, productName, basePrice, variants }: A
     const [pending, setPending] = useState(false);
 
     const selectedVariant = variants.find((v) => v.id === variantId);
-    const unitPrice = (basePrice ?? 0) + (selectedVariant?.priceDelta ?? 0);
+    const unitPrice = selectedVariant?.price ?? basePrice ?? 0;
 
     async function handleAdd() {
         setPending(true);

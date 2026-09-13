@@ -46,7 +46,7 @@ export async function addVariantStock(args: AddVariantStockArgs) {
 
     await db.$transaction(operations);
 
-    revalidatePath("/admin/stock");
+    revalidatePath("/admin/products");
     revalidatePath("/admin");
     revalidatePath("/admin/filaments");
 }

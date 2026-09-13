@@ -55,13 +55,14 @@ export async function VariantForm({ variant, productId, filaments }: VariantForm
                 </label>
 
                 <label className="flex flex-col gap-1.5 text-sm">
-                    <span className="font-medium">{t("priceDelta")}</span>
+                    <span className="font-medium">{tCommon("price")}</span>
                     <input
                         className={inputClass}
-                        name="priceDelta"
+                        name="price"
                         type="number"
                         step="0.01"
-                        defaultValue={variant?.priceDelta ?? ""}
+                        min="0"
+                        defaultValue={variant?.price ?? ""}
                     />
                 </label>
             </div>
@@ -81,7 +82,7 @@ export async function VariantForm({ variant, productId, filaments }: VariantForm
                     <span />
                 )}
                 <div className="flex items-center gap-2">
-                    <Link href="/admin/stock" className={buttonVariants({ variant: "ghost" })}>
+                    <Link href="/admin/products" className={buttonVariants({ variant: "ghost" })}>
                         {tCommon("cancel")}
                     </Link>
                     <Button type="submit">{tCommon("save")}</Button>

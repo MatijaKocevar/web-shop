@@ -1,98 +1,65 @@
 import Link from "next/link";
-import { Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { AdminFormDialog } from "@/components/admin-form-dialog";
-import { AdminTable } from "@/components/admin-table";
-import type { AdminTableColumn } from "@/components/admin-table.types";
-import { Badge } from "@/components/ui/badge";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { publicUrl } from "@/lib/storage-url";
 import { listCategories } from "@/queries/categories";
-import { getProductById, listProducts } from "@/queries/products";
+import { listFilaments } from "@/queries/filaments";
+import { getProductById, getVariantById, listProductsWithVariants } from "@/queries/products";
 import { deleteProduct } from "./_actions/delete-product";
 import { removeProductImage } from "./_actions/remove-product-image";
 import { ProductForm } from "./_components/product-form";
 import { ProductImageUploadForm } from "./_components/product-image-upload-form";
 import { ProductModelUploadForm } from "./_components/product-model-upload-form";
+import { ProductsTable } from "./_components/products-table";
+import { VariantForm } from "./_components/variant-form";
 
 type AdminProductsPageProps = {
-    searchParams: Promise<{ id?: string; new?: string }>;
+    searchParams: Promise<{
+        id?: string;
+        new?: string;
+        newVariant?: string;
+        variantId?: string;
+        product?: string;
+    }>;
 };
 
 export default async function AdminProductsPage({ searchParams }: AdminProductsPageProps) {
-    const { id, new: isNew } = await searchParams;
-    const [products, categories, editing] = await Promise.all([
-        listProducts(),
+    const {
+        id,
+        new: isNew,
+        newVariant,
+        variantId,
+        product: newVariantProductId,
+    } = await searchParams;
+    const [products, categories, filaments, editing, editingVariant] = await Promise.all([
+        listProductsWithVariants(),
         listCategories(),
+        listFilaments(),
         id ? getProductById(id) : null,
+        variantId ? getVariantById(variantId) : null,
     ]);
     const t = await getTranslations("admin.products");
-    const tCommon = await getTranslations("admin.common");
-    const tType = await getTranslations("productType");
+    const tStock = await getTranslations("admin.stock");
 
-    const columns: AdminTableColumn[] = [
-        { label: tCommon("name"), sortable: true, filter: { type: "text" } },
-        {
-            label: tCommon("type"),
-            sortable: true,
-            filter: {
-                type: "select",
-                key: "type",
-                options: [
-                    { value: "READY_MADE", label: tType("READY_MADE") },
-                    { value: "CUSTOM_PRINT", label: tType("CUSTOM_PRINT") },
-                ],
-            },
-        },
-        { label: tCommon("price"), sortable: true },
-        { label: tCommon("category"), sortable: true, filter: { type: "text" } },
-    ];
-
-    const rows = products.map((product) => ({
-        key: product.id,
-        href: `/admin/products?id=${product.id}`,
-        filterValues: { type: product.type },
-        cells: [
-            {
-                content: (
-                    <Link
-                        href={`/admin/products?id=${product.id}`}
-                        className="font-medium hover:underline"
-                    >
-                        {product.name}
-                    </Link>
-                ),
-                search: product.name,
-            },
-            {
-                content: <Badge variant="secondary">{tType(product.type)}</Badge>,
-                search: tType(product.type),
-                sort: product.type,
-            },
-            {
-                content: product.price != null ? `€${product.price.toFixed(2)}` : "—",
-                sort: product.price ?? -1,
-            },
-            {
-                content: product.category?.name ?? "—",
-                className: "text-muted-foreground",
-                search: product.category?.name ?? "",
-            },
-        ],
-    }));
+    const filamentOptions = filaments.map((f) => ({ id: f.id, name: f.name }));
 
     return (
         <div className="flex min-h-0 flex-1 flex-col">
-            <AdminTable
-                columns={columns}
-                rows={rows}
+            <ProductsTable
+                products={products}
                 toolbarActions={
-                    <Link href="/admin/products?new=1" className={buttonVariants({ size: "sm" })}>
-                        {t("new")}
+                    <Link
+                        href="/admin/products?new=1"
+                        aria-label={t("new")}
+                        className={buttonVariants({ size: "sm" })}
+                    >
+                        <Plus className="size-4" />
+                        <span className="hidden sm:inline">{t("new")}</span>
                     </Link>
                 }
-                fill
             />
 
             <AdminFormDialog
@@ -185,6 +152,21 @@ export default async function AdminProductsPage({ searchParams }: AdminProductsP
                 ) : isNew ? (
                     <ProductForm categories={categories} />
                 ) : null}
+            </AdminFormDialog>
+
+            <AdminFormDialog
+                open={Boolean(newVariant) || Boolean(editingVariant)}
+                onCloseHref="/admin/products"
+                title={editingVariant ? tStock("editVariant") : tStock("newVariant")}
+                className="sm:max-w-xl"
+            >
+                {(newVariant || editingVariant) && (
+                    <VariantForm
+                        variant={editingVariant ?? undefined}
+                        productId={newVariant ? newVariantProductId : undefined}
+                        filaments={filamentOptions}
+                    />
+                )}
             </AdminFormDialog>
         </div>
     );

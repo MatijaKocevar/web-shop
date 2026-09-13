@@ -11,6 +11,6 @@ export async function deleteVariant(formData: FormData) {
         await db.productVariant.delete({ where: { id } });
     }
 
-    revalidatePath("/admin/stock");
-    redirect("/admin/stock");
+    revalidatePath("/admin/products");
+    redirect("/admin/products");
 }

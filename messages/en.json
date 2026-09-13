@@ -214,6 +214,8 @@
         "products": {
             "title": "Products",
             "new": "New product",
+            "expandAll": "Expand all",
+            "collapseAll": "Collapse all",
             "newTitle": "New product",
             "edit": "Edit product",
             "slug": "Slug",
@@ -361,7 +363,6 @@
             "gramsUsed": "Grams used",
             "cancel": "Cancel",
             "confirm": "Save",
-            "priceDelta": "Price delta (€)",
             "variant": "Variant"
         }
     }

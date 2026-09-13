@@ -21,7 +21,7 @@ import { cn } from "@/lib/utils";
 import { setFilamentStocks } from "../_actions/set-filament-stocks";
 import type { Filament } from "../_types/filament";
 import { writeCollapsedCookie } from "../_utils/collapsed-filaments";
-import { filamentColorHex } from "../_utils/filament-color";
+import { filamentColorHex } from "@/lib/filament-color";
 import { getFilamentStatus } from "../_utils/filament-status";
 import { StockAdjustCell } from "./stock-adjust-cell";
 import { StockSpools } from "./stock-spools";

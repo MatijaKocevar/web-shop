@@ -73,7 +73,7 @@ export default async function ProductDetailPage({ params }: ProductDetailPagePro
                             variants={product.variants.map((v) => ({
                                 id: v.id,
                                 name: v.name,
-                                priceDelta: v.priceDelta,
+                                price: v.price,
                             }))}
                         />
                     </div>

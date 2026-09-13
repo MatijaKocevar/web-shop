@@ -4,7 +4,7 @@ export type Variant = {
     productId: string;
     filamentId: string | null;
     grams: number | null;
-    priceDelta: number | null;
+    price: number | null;
 };
 
 export type VariantFormFilament = {

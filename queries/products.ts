@@ -81,7 +81,7 @@ export async function getProductBySlug(slug: string) {
         price: product.price ? Number(product.price) : null,
         variants: product.variants.map((v) => ({
             ...v,
-            priceDelta: v.priceDelta ? Number(v.priceDelta) : null,
+            price: v.price ? Number(v.price) : null,
             filament: v.filament
                 ? {
                       ...v.filament,
@@ -96,6 +96,7 @@ export async function getProductBySlug(slug: string) {
 export async function listProductsWithVariants() {
     const products = await db.product.findMany({
         include: {
+            category: { select: { name: true } },
             variants: {
                 include: { filament: true },
                 orderBy: { createdAt: "asc" },
@@ -108,13 +109,21 @@ export async function listProductsWithVariants() {
         id: product.id,
         name: product.name,
         type: product.type,
+        price: product.price ? Number(product.price) : null,
+        category: product.category,
         variants: product.variants.map((variant) => ({
             id: variant.id,
             name: variant.name,
+            price: variant.price ? Number(variant.price) : null,
             stock: variant.stock,
             grams: variant.grams,
             filament: variant.filament
-                ? { id: variant.filament.id, name: variant.filament.name }
+                ? {
+                      id: variant.filament.id,
+                      name: variant.filament.name,
+                      color: variant.filament.color,
+                      colorHex: variant.filament.colorHex,
+                  }
                 : null,
         })),
     }));
@@ -134,6 +143,6 @@ export async function getVariantById(id: string) {
         productId: variant.productId,
         filamentId: variant.filamentId,
         grams: variant.grams,
-        priceDelta: variant.priceDelta ? Number(variant.priceDelta) : null,
+        price: variant.price ? Number(variant.price) : null,
     };
 }

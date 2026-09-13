@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { filamentColorHex } from "../_utils/filament-color";
+import { filamentColorHex } from "@/lib/filament-color";
 
 const inputClass =
     "w-full rounded-md border bg-background px-3 py-2 text-sm focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";

@@ -19,7 +19,7 @@ export async function ProductForm({ product, categories }: ProductFormProps) {
     const tType = await getTranslations("productType");
 
     return (
-        <form action={saveProduct} className="flex max-w-xl flex-col gap-4">
+        <form action={saveProduct} className="flex w-full flex-col gap-4">
             {product && <input type="hidden" name="id" value={product.id} />}
 
             <label className="flex flex-col gap-1.5 text-sm">

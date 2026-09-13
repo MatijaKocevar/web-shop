@@ -160,13 +160,66 @@ async function main() {
         create: { key: "marginPct", value: "30" },
     });
 
-    // --- Sample category + product ---
-    const category = await db.category.upsert({
-        where: { slug: "home" },
-        update: {},
-        create: { name: "Home", slug: "home" },
-    });
+    // --- Categories ---
+    const categoryData = [
+        { slug: "home", name: "Home" },
+        { slug: "office", name: "Office" },
+        { slug: "kitchen", name: "Kitchen" },
+        { slug: "decor", name: "Decor" },
+        { slug: "toys", name: "Toys & Games" },
+        { slug: "tools", name: "Tools" },
+        { slug: "garden", name: "Garden" },
+        { slug: "gadgets", name: "Gadgets" },
+    ];
+    const categoryIds = new Map<string, string>();
 
+    for (const category of categoryData) {
+        const row = await db.category.upsert({
+            where: { slug: category.slug },
+            update: {},
+            create: category,
+        });
+
+        categoryIds.set(category.slug, row.id);
+    }
+
+    // --- Tags ---
+    const tagData = [
+        "functional",
+        "decorative",
+        "gift",
+        "organizer",
+        "minimal",
+        "desk",
+        "wall-mount",
+        "storage",
+        "puzzle",
+        "flexible",
+        "articulated",
+        "planter",
+        "holder",
+        "stand",
+        "clip",
+        "box",
+        "vase",
+        "lamp",
+        "coaster",
+        "gadget",
+        "home",
+    ];
+    const tagIds = new Map<string, string>();
+
+    for (const slug of tagData) {
+        const row = await db.tag.upsert({
+            where: { slug },
+            update: {},
+            create: { slug, name: slug.replace(/-/g, " ") },
+        });
+
+        tagIds.set(slug, row.id);
+    }
+
+    // --- Sample product ---
     const product = await db.product.upsert({
         where: { slug: "desk-organizer" },
         update: {},
@@ -176,7 +229,7 @@ async function main() {
             description: "A modular desk organizer for pens, tools, and small parts.",
             type: "READY_MADE",
             price: 12.5,
-            categoryId: category.id,
+            categoryId: categoryIds.get("home"),
         },
     });
 
@@ -200,6 +253,169 @@ async function main() {
                 productId: product.id,
             },
         });
+    }
+
+    // --- More products ---
+    const productTemplates: {
+        name: string;
+        category: string;
+        price: number | null;
+        grams: number;
+        type?: ProductType;
+    }[] = [
+        { name: "Wall Hook Set", category: "home", price: 8.5, grams: 30 },
+        { name: "Toothbrush Holder", category: "home", price: 7, grams: 25 },
+        { name: "Soap Dish", category: "home", price: 6.5, grams: 20 },
+        { name: "Key Holder", category: "home", price: 9, grams: 28 },
+        { name: "Coat Hook", category: "home", price: 11, grams: 55 },
+        { name: "Door Stopper", category: "home", price: 5.5, grams: 35 },
+        { name: "Pen Cup", category: "office", price: 8, grams: 30 },
+        { name: "Monitor Stand", category: "office", price: 24, grams: 120 },
+        { name: "Cable Clip Set", category: "office", price: 6, grams: 18 },
+        { name: "Phone Stand", category: "office", price: 9.5, grams: 35 },
+        { name: "Document Tray", category: "office", price: 16, grams: 90 },
+        { name: "Headphone Stand", category: "office", price: 18, grams: 85 },
+        { name: "Webcam Cover", category: "office", price: 4.5, grams: 8 },
+        { name: "USB Drive Holder", category: "office", price: 10, grams: 40 },
+        { name: "Business Card Holder", category: "office", price: 7.5, grams: 26 },
+        { name: "Bag Clip Set", category: "kitchen", price: 5.5, grams: 15 },
+        { name: "Spice Rack", category: "kitchen", price: 19, grams: 110 },
+        { name: "Chip Clip", category: "kitchen", price: 4, grams: 10 },
+        { name: "Fruit Bowl", category: "kitchen", price: 22, grams: 140 },
+        { name: "Coaster Set", category: "kitchen", price: 9, grams: 60 },
+        { name: "Utensil Holder", category: "kitchen", price: 14, grams: 75 },
+        { name: "Bottle Opener", category: "kitchen", price: 6.5, grams: 22 },
+        { name: "Fridge Magnet Set", category: "kitchen", price: 7, grams: 24 },
+        { name: "Spiral Vase", category: "decor", price: 17, grams: 95 },
+        { name: "Geometric Planter", category: "decor", price: 15, grams: 80 },
+        { name: "Picture Frame", category: "decor", price: 13, grams: 50 },
+        { name: "Candle Holder", category: "decor", price: 11.5, grams: 45 },
+        { name: "Wall Art Panel", category: "decor", price: 21, grams: 120 },
+        { name: "Minimalist Clock", category: "decor", price: 25, grams: 105 },
+        { name: "Bookend Pair", category: "decor", price: 19.5, grams: 150 },
+        { name: "Abstract Sculpture", category: "decor", price: 28, grams: 180 },
+        { name: "Puzzle Cube", category: "toys", price: 12, grams: 55 },
+        { name: "Fidget Spinner", category: "toys", price: 7.5, grams: 25 },
+        { name: "Articulated Dragon", category: "toys", price: 16.5, grams: 70 },
+        { name: "Chess Set", category: "toys", price: 34, grams: 220 },
+        { name: "Toy Car", category: "toys", price: 9, grams: 40 },
+        { name: "Stacking Rings", category: "toys", price: 14.5, grams: 65 },
+        { name: "Marble Run Piece", category: "toys", price: 8, grams: 32 },
+        { name: "Drill Bit Holder", category: "tools", price: 13, grams: 60 },
+        { name: "Wrench Organizer", category: "tools", price: 15.5, grams: 85 },
+        { name: "Screw Sorter", category: "tools", price: 11, grams: 50 },
+        { name: "Bit Driver Handle", category: "tools", price: 9.5, grams: 38 },
+        { name: "Sanding Block", category: "tools", price: 6, grams: 30 },
+        { name: "Clamp Set", category: "tools", price: 17, grams: 95 },
+        { name: "Tool Box Divider", category: "tools", price: 12.5, grams: 70 },
+        { name: "Seed Starter Tray", category: "garden", price: 12, grams: 65 },
+        { name: "Plant Label Set", category: "garden", price: 6.5, grams: 20 },
+        { name: "Trellis Clip", category: "garden", price: 7, grams: 22 },
+        { name: "Herb Marker", category: "garden", price: 8.5, grams: 26 },
+        { name: "Pot Feet", category: "garden", price: 9, grams: 45 },
+        { name: "Bird Feeder", category: "garden", price: 18.5, grams: 130 },
+        { name: "GoPro Mount", category: "gadgets", price: 10, grams: 35 },
+        { name: "Raspberry Pi Case", category: "gadgets", price: 11.5, grams: 42 },
+        { name: "Cable Winder", category: "gadgets", price: 5, grams: 14 },
+        { name: "Smart Watch Stand", category: "gadgets", price: 12, grams: 48 },
+        { name: "AirTag Holder", category: "gadgets", price: 6, grams: 12 },
+        { name: "Battery Organizer", category: "gadgets", price: 14, grams: 72 },
+        {
+            name: "Custom Name Plate",
+            category: "office",
+            price: null,
+            grams: 30,
+            type: "CUSTOM_PRINT",
+        },
+        { name: "Custom Bracket", category: "tools", price: null, grams: 45, type: "CUSTOM_PRINT" },
+        {
+            name: "Custom Phone Case",
+            category: "gadgets",
+            price: null,
+            grams: 25,
+            type: "CUSTOM_PRINT",
+        },
+        { name: "Custom Vase", category: "decor", price: null, grams: 90, type: "CUSTOM_PRINT" },
+        { name: "Custom Signage", category: "home", price: null, grams: 70, type: "CUSTOM_PRINT" },
+        {
+            name: "Custom Enclosure",
+            category: "gadgets",
+            price: null,
+            grams: 80,
+            type: "CUSTOM_PRINT",
+        },
+    ];
+
+    const categoryTags: Record<string, string[]> = {
+        home: ["functional", "storage", "holder"],
+        office: ["desk", "organizer", "functional"],
+        kitchen: ["functional", "holder", "coaster"],
+        decor: ["decorative", "gift", "vase"],
+        toys: ["puzzle", "gift", "flexible"],
+        tools: ["functional", "storage", "holder"],
+        garden: ["planter", "decorative", "functional"],
+        gadgets: ["gadget", "desk", "holder"],
+    };
+
+    const variantOptions = [
+        { filamentId: "pla-black", label: "PLA · Black" },
+        { filamentId: "pla-white", label: "PLA · White" },
+        { filamentId: "pla-red", label: "PLA · Red" },
+        { filamentId: "pla-blue", label: "PLA · Blue" },
+        { filamentId: "petg-black", label: "PETG · Black" },
+        { filamentId: "petg-blue", label: "PETG · Blue" },
+    ];
+
+    const slugify = (value: string) =>
+        value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, "-")
+            .replace(/^-|-$/g, "");
+
+    for (const [index, template] of productTemplates.entries()) {
+        const slug = slugify(template.name);
+        const type = template.type ?? "READY_MADE";
+        const tagSlugs = [...new Set(categoryTags[template.category] ?? [])];
+
+        const row = await db.product.upsert({
+            where: { slug },
+            update: {},
+            create: {
+                name: template.name,
+                slug,
+                description: `${template.name} — precision 3D printed on demand in our workshop.`,
+                type,
+                price: template.price,
+                categoryId: categoryIds.get(template.category),
+                tags: { connect: tagSlugs.map((tag) => ({ id: tagIds.get(tag)! })) },
+            },
+        });
+
+        if (type !== "READY_MADE") continue;
+
+        const variantCount = 1 + (index % 3);
+
+        for (let v = 0; v < variantCount; v++) {
+            const option = variantOptions[(index + v) % variantOptions.length];
+            const variantPrice =
+                template.price != null
+                    ? template.price + (option.filamentId.startsWith("petg") ? 2 : 0)
+                    : null;
+
+            await db.productVariant.upsert({
+                where: { productId_name: { productId: row.id, name: option.label } },
+                update: { price: variantPrice },
+                create: {
+                    name: option.label,
+                    sku: `${slug}-${option.filamentId}`.toUpperCase(),
+                    stock: (index * 3 + v * 5) % 15,
+                    grams: template.grams,
+                    price: variantPrice,
+                    filamentId: option.filamentId,
+                    productId: row.id,
+                },
+            });
+        }
     }
 
     // --- Sample orders ---

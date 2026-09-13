@@ -28,13 +28,13 @@ export type AggregateProductVariant = {
 
 export type ProductVariantAvgAggregateOutputType = {
   stock: number | null
-  priceDelta: runtime.Decimal | null
+  price: runtime.Decimal | null
   grams: number | null
 }
 
 export type ProductVariantSumAggregateOutputType = {
   stock: number | null
-  priceDelta: runtime.Decimal | null
+  price: runtime.Decimal | null
   grams: number | null
 }
 
@@ -43,7 +43,7 @@ export type ProductVariantMinAggregateOutputType = {
   name: string | null
   sku: string | null
   stock: number | null
-  priceDelta: runtime.Decimal | null
+  price: runtime.Decimal | null
   filamentId: string | null
   grams: number | null
   createdAt: Date | null
@@ -56,7 +56,7 @@ export type ProductVariantMaxAggregateOutputType = {
   name: string | null
   sku: string | null
   stock: number | null
-  priceDelta: runtime.Decimal | null
+  price: runtime.Decimal | null
   filamentId: string | null
   grams: number | null
   createdAt: Date | null
@@ -69,7 +69,7 @@ export type ProductVariantCountAggregateOutputType = {
   name: number
   sku: number
   stock: number
-  priceDelta: number
+  price: number
   filamentId: number
   grams: number
   createdAt: number
@@ -81,13 +81,13 @@ export type ProductVariantCountAggregateOutputType = {
 
 export type ProductVariantAvgAggregateInputType = {
   stock?: true
-  priceDelta?: true
+  price?: true
   grams?: true
 }
 
 export type ProductVariantSumAggregateInputType = {
   stock?: true
-  priceDelta?: true
+  price?: true
   grams?: true
 }
 
@@ -96,7 +96,7 @@ export type ProductVariantMinAggregateInputType = {
   name?: true
   sku?: true
   stock?: true
-  priceDelta?: true
+  price?: true
   filamentId?: true
   grams?: true
   createdAt?: true
@@ -109,7 +109,7 @@ export type ProductVariantMaxAggregateInputType = {
   name?: true
   sku?: true
   stock?: true
-  priceDelta?: true
+  price?: true
   filamentId?: true
   grams?: true
   createdAt?: true
@@ -122,7 +122,7 @@ export type ProductVariantCountAggregateInputType = {
   name?: true
   sku?: true
   stock?: true
-  priceDelta?: true
+  price?: true
   filamentId?: true
   grams?: true
   createdAt?: true
@@ -222,7 +222,7 @@ export type ProductVariantGroupByOutputType = {
   name: string
   sku: string | null
   stock: number
-  priceDelta: runtime.Decimal | null
+  price: runtime.Decimal | null
   filamentId: string | null
   grams: number | null
   createdAt: Date
@@ -258,7 +258,7 @@ export type ProductVariantWhereInput = {
   name?: Prisma.StringFilter<"ProductVariant"> | string
   sku?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   stock?: Prisma.IntFilter<"ProductVariant"> | number
-  priceDelta?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   grams?: Prisma.FloatNullableFilter<"ProductVariant"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
@@ -274,7 +274,7 @@ export type ProductVariantOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrderInput | Prisma.SortOrder
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrderInput | Prisma.SortOrder
+  price?: Prisma.SortOrderInput | Prisma.SortOrder
   filamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   grams?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -294,7 +294,7 @@ export type ProductVariantWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"ProductVariant"> | string
   sku?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   stock?: Prisma.IntFilter<"ProductVariant"> | number
-  priceDelta?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   grams?: Prisma.FloatNullableFilter<"ProductVariant"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
@@ -310,7 +310,7 @@ export type ProductVariantOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrderInput | Prisma.SortOrder
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrderInput | Prisma.SortOrder
+  price?: Prisma.SortOrderInput | Prisma.SortOrder
   filamentId?: Prisma.SortOrderInput | Prisma.SortOrder
   grams?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -331,7 +331,7 @@ export type ProductVariantScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"ProductVariant"> | string
   sku?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
   stock?: Prisma.IntWithAggregatesFilter<"ProductVariant"> | number
-  priceDelta?: Prisma.DecimalNullableWithAggregatesFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.DecimalNullableWithAggregatesFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.StringNullableWithAggregatesFilter<"ProductVariant"> | string | null
   grams?: Prisma.FloatNullableWithAggregatesFilter<"ProductVariant"> | number | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ProductVariant"> | Date | string
@@ -344,7 +344,7 @@ export type ProductVariantCreateInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -358,7 +358,7 @@ export type ProductVariantUncheckedCreateInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: string | null
   grams?: number | null
   createdAt?: Date | string
@@ -372,7 +372,7 @@ export type ProductVariantUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -386,7 +386,7 @@ export type ProductVariantUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -400,7 +400,7 @@ export type ProductVariantCreateManyInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: string | null
   grams?: number | null
   createdAt?: Date | string
@@ -413,7 +413,7 @@ export type ProductVariantUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -424,7 +424,7 @@ export type ProductVariantUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -452,7 +452,7 @@ export type ProductVariantCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   filamentId?: Prisma.SortOrder
   grams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -462,7 +462,7 @@ export type ProductVariantCountOrderByAggregateInput = {
 
 export type ProductVariantAvgOrderByAggregateInput = {
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   grams?: Prisma.SortOrder
 }
 
@@ -471,7 +471,7 @@ export type ProductVariantMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   filamentId?: Prisma.SortOrder
   grams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -484,7 +484,7 @@ export type ProductVariantMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   sku?: Prisma.SortOrder
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   filamentId?: Prisma.SortOrder
   grams?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -494,7 +494,7 @@ export type ProductVariantMinOrderByAggregateInput = {
 
 export type ProductVariantSumOrderByAggregateInput = {
   stock?: Prisma.SortOrder
-  priceDelta?: Prisma.SortOrder
+  price?: Prisma.SortOrder
   grams?: Prisma.SortOrder
 }
 
@@ -624,7 +624,7 @@ export type ProductVariantCreateWithoutProductInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -637,7 +637,7 @@ export type ProductVariantUncheckedCreateWithoutProductInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: string | null
   grams?: number | null
   createdAt?: Date | string
@@ -679,7 +679,7 @@ export type ProductVariantScalarWhereInput = {
   name?: Prisma.StringFilter<"ProductVariant"> | string
   sku?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   stock?: Prisma.IntFilter<"ProductVariant"> | number
-  priceDelta?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.DecimalNullableFilter<"ProductVariant"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.StringNullableFilter<"ProductVariant"> | string | null
   grams?: Prisma.FloatNullableFilter<"ProductVariant"> | number | null
   createdAt?: Prisma.DateTimeFilter<"ProductVariant"> | Date | string
@@ -692,7 +692,7 @@ export type ProductVariantCreateWithoutFilamentInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -705,7 +705,7 @@ export type ProductVariantUncheckedCreateWithoutFilamentInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -744,7 +744,7 @@ export type ProductVariantCreateWithoutOrderItemsInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -757,7 +757,7 @@ export type ProductVariantUncheckedCreateWithoutOrderItemsInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: string | null
   grams?: number | null
   createdAt?: Date | string
@@ -786,7 +786,7 @@ export type ProductVariantUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -799,7 +799,7 @@ export type ProductVariantUncheckedUpdateWithoutOrderItemsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -812,7 +812,7 @@ export type ProductVariantCreateManyProductInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: string | null
   grams?: number | null
   createdAt?: Date | string
@@ -824,7 +824,7 @@ export type ProductVariantUpdateWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -837,7 +837,7 @@ export type ProductVariantUncheckedUpdateWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -850,7 +850,7 @@ export type ProductVariantUncheckedUpdateManyWithoutProductInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   filamentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -862,7 +862,7 @@ export type ProductVariantCreateManyFilamentInput = {
   name: string
   sku?: string | null
   stock?: number
-  priceDelta?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: number | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -874,7 +874,7 @@ export type ProductVariantUpdateWithoutFilamentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -887,7 +887,7 @@ export type ProductVariantUncheckedUpdateWithoutFilamentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -900,7 +900,7 @@ export type ProductVariantUncheckedUpdateManyWithoutFilamentInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   sku?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   stock?: Prisma.IntFieldUpdateOperationsInput | number
-  priceDelta?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  price?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   grams?: Prisma.NullableFloatFieldUpdateOperationsInput | number | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -943,7 +943,7 @@ export type ProductVariantSelect<ExtArgs extends runtime.Types.Extensions.Intern
   name?: boolean
   sku?: boolean
   stock?: boolean
-  priceDelta?: boolean
+  price?: boolean
   filamentId?: boolean
   grams?: boolean
   createdAt?: boolean
@@ -960,7 +960,7 @@ export type ProductVariantSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   sku?: boolean
   stock?: boolean
-  priceDelta?: boolean
+  price?: boolean
   filamentId?: boolean
   grams?: boolean
   createdAt?: boolean
@@ -975,7 +975,7 @@ export type ProductVariantSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   name?: boolean
   sku?: boolean
   stock?: boolean
-  priceDelta?: boolean
+  price?: boolean
   filamentId?: boolean
   grams?: boolean
   createdAt?: boolean
@@ -990,7 +990,7 @@ export type ProductVariantSelectScalar = {
   name?: boolean
   sku?: boolean
   stock?: boolean
-  priceDelta?: boolean
+  price?: boolean
   filamentId?: boolean
   grams?: boolean
   createdAt?: boolean
@@ -998,7 +998,7 @@ export type ProductVariantSelectScalar = {
   productId?: boolean
 }
 
-export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "stock" | "priceDelta" | "filamentId" | "grams" | "createdAt" | "updatedAt" | "productId", ExtArgs["result"]["productVariant"]>
+export type ProductVariantOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "sku" | "stock" | "price" | "filamentId" | "grams" | "createdAt" | "updatedAt" | "productId", ExtArgs["result"]["productVariant"]>
 export type ProductVariantInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   product?: boolean | Prisma.ProductDefaultArgs<ExtArgs>
   filament?: boolean | Prisma.ProductVariant$filamentArgs<ExtArgs>
@@ -1026,7 +1026,7 @@ export type $ProductVariantPayload<ExtArgs extends runtime.Types.Extensions.Inte
     name: string
     sku: string | null
     stock: number
-    priceDelta: runtime.Decimal | null
+    price: runtime.Decimal | null
     filamentId: string | null
     grams: number | null
     createdAt: Date
@@ -1462,7 +1462,7 @@ export interface ProductVariantFieldRefs {
   readonly name: Prisma.FieldRef<"ProductVariant", 'String'>
   readonly sku: Prisma.FieldRef<"ProductVariant", 'String'>
   readonly stock: Prisma.FieldRef<"ProductVariant", 'Int'>
-  readonly priceDelta: Prisma.FieldRef<"ProductVariant", 'Decimal'>
+  readonly price: Prisma.FieldRef<"ProductVariant", 'Decimal'>
   readonly filamentId: Prisma.FieldRef<"ProductVariant", 'String'>
   readonly grams: Prisma.FieldRef<"ProductVariant", 'Float'>
   readonly createdAt: Prisma.FieldRef<"ProductVariant", 'DateTime'>

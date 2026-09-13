@@ -214,6 +214,8 @@
         "products": {
             "title": "Izdelki",
             "new": "Nov izdelek",
+            "expandAll": "Razširi vse",
+            "collapseAll": "Strni vse",
             "newTitle": "Nov izdelek",
             "edit": "Uredi izdelek",
             "slug": "Povezava (slug)",
@@ -361,7 +363,6 @@
             "gramsUsed": "Porabljeni grami",
             "cancel": "Prekliči",
             "confirm": "Shrani",
-            "priceDelta": "Pribitek na ceno (€)",
             "variant": "Varianta"
         }
     }

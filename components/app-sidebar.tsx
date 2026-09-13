@@ -3,16 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
-import {
-    Store,
-    LayoutDashboard,
-    Package,
-    Printer,
-    Layers,
-    Receipt,
-    Users,
-    Warehouse,
-} from "lucide-react";
+import { Store, LayoutDashboard, Package, Printer, Layers, Receipt, Users } from "lucide-react";
 import {
     Sidebar,
     SidebarContent,
@@ -45,7 +36,6 @@ export function AppSidebar({ email }: AppSidebarProps) {
         { href: "/admin/products", label: t("products"), icon: Package, exact: false },
         { href: "/admin/filaments", label: t("filaments"), icon: Layers, exact: false },
         { href: "/admin/printers", label: t("printers"), icon: Printer, exact: false },
-        { href: "/admin/stock", label: t("stock"), icon: Warehouse, exact: false },
         { href: "/admin/orders", label: t("orders"), icon: Receipt, exact: false },
         { href: "/admin/users", label: t("users"), icon: Users, exact: false },
     ];

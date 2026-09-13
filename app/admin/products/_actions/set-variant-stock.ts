@@ -11,6 +11,6 @@ export async function setVariantStock(args: { variantId: string; stock: number }
         data: { stock: Math.round(args.stock) },
     });
 
-    revalidatePath("/admin/stock");
+    revalidatePath("/admin/products");
     revalidatePath("/admin");
 }

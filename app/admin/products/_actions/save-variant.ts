@@ -10,10 +10,10 @@ export async function saveVariant(formData: FormData) {
     const filamentId = (formData.get("filamentId") as string) || null;
     const gramsRaw = formData.get("grams") as string;
     const grams = gramsRaw ? Number(gramsRaw) : null;
-    const priceDeltaRaw = formData.get("priceDelta") as string;
-    const priceDelta = priceDeltaRaw ? Number(priceDeltaRaw) : null;
+    const priceRaw = formData.get("price") as string;
+    const price = priceRaw ? Number(priceRaw) : null;
 
-    if (!productId) redirect("/admin/stock");
+    if (!productId) redirect("/admin/products");
 
     const filament = filamentId
         ? await db.filament.findUnique({ where: { id: filamentId } })
@@ -25,7 +25,7 @@ export async function saveVariant(formData: FormData) {
             data: {
                 filamentId,
                 grams: grams && grams > 0 ? grams : null,
-                priceDelta,
+                price,
             },
         });
     } else {
@@ -35,11 +35,11 @@ export async function saveVariant(formData: FormData) {
                 name: filament?.name ?? "Variant",
                 filamentId,
                 grams: grams && grams > 0 ? grams : null,
-                priceDelta,
+                price,
             },
         });
     }
 
-    revalidatePath("/admin/stock");
-    redirect("/admin/stock");
+    revalidatePath("/admin/products");
+    redirect("/admin/products");
 }
