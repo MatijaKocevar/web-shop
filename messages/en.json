@@ -207,6 +207,7 @@
             "search": "Search…",
             "filter": "Filter…",
             "filterAll": "All",
+            "reset": "Reset filter",
             "noResults": "No matching rows.",
             "results": "{visible} of {total}",
             "doubleClick": "Double-click to open"
@@ -339,7 +340,12 @@
             "password": "New password",
             "passwordConfirm": "Retype password",
             "passwordMismatch": "Passwords do not match.",
-            "passwordHint": "Leave blank to keep the current password"
+            "passwordHint": "Leave blank to keep the current password",
+            "toggleOrders": "Show/hide orders",
+            "expandAll": "Expand all",
+            "collapseAll": "Collapse all",
+            "noOrders": "No orders",
+            "viewOrder": "View order"
         },
         "stock": {
             "product": "Product",

@@ -1,10 +1,12 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import type { Key } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search } from "lucide-react";
+import { ArrowDown, ArrowUp, ArrowUpDown, ListFilter, Search, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { cn } from "@/lib/utils";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import {
     Table,
@@ -40,6 +42,13 @@ type SortState = {
     direction: "asc" | "desc";
 } | null;
 
+type FilterState = {
+    query: string;
+    checked: Set<string> | null;
+};
+
+const EMPTY_FILTER: FilterState = { query: "", checked: null };
+
 function cellText(cell: AdminTableCell): string {
     if (cell.search != null) return String(cell.search);
     if (typeof cell.content === "string") return cell.content;
@@ -70,22 +79,30 @@ export function AdminTable({
     const router = useRouter();
     const [query, setQuery] = useState("");
     const [sort, setSort] = useState<SortState>(null);
-    const [filters, setFilters] = useState<Record<string, string>>({});
+    const [filters, setFilters] = useState<Record<string, FilterState>>({});
 
-    const selectOptions = useMemo(
+    const filterOptions = useMemo(
         () =>
-            columns.map((column) => {
+            columns.map((column, index) => {
                 const filter = column.filter;
-                if (!filter || filter.type !== "select" || filter.options) return null;
+                if (!filter) return null;
 
-                const seen: string[] = [];
+                if (filter.type === "select" && filter.options) return filter.options;
+
+                const seen = new Map<string, string>();
 
                 for (const row of rows) {
-                    const value = row.filterValues?.[filter.key];
-                    if (value && !seen.includes(value)) seen.push(value);
+                    if (row.parentKey != null) continue;
+
+                    const value =
+                        filter.type === "select"
+                            ? row.filterValues?.[filter.key]
+                            : cellText(row.cells[index] ?? { content: "" });
+
+                    if (value && !seen.has(value)) seen.set(value, value);
                 }
 
-                return seen.map((value) => ({ value, label: value }));
+                return [...seen.entries()].map(([value, label]) => ({ value, label }));
             }),
         [columns, rows],
     );
@@ -99,18 +116,49 @@ export function AdminTable({
             const filter = column.filter;
             if (!filter) return;
 
-            const key = filterKey(filter, index);
-            const value = filters[key];
-            if (!value) return;
+            const state = filters[filterKey(filter, index)];
+            if (!state) return;
 
-            if (filter.type === "select") {
-                result = result.filter((row) => row.filterValues?.[filter.key] === value);
-            } else {
+            const byKey = new Map<Key, AdminTableRow>();
+
+            for (const row of rows) {
+                if (row.key != null) byKey.set(row.key, row);
+            }
+
+            const valueOf = (row: AdminTableRow) =>
+                filter.type === "select"
+                    ? (row.filterValues?.[filter.key] ?? "")
+                    : cellText(row.cells[index] ?? { content: "" });
+
+            const parentValueOf = (row: AdminTableRow) => {
+                if (row.parentKey == null) return null;
+
+                const parent = byKey.get(row.parentKey);
+
+                return parent ? valueOf(parent) : null;
+            };
+
+            if (state.checked) {
                 result = result.filter((row) => {
-                    const cell = row.cells[index];
-                    const text = cell ? cellText(cell) : "";
+                    const parentValue = parentValueOf(row);
 
-                    return text.toLowerCase().includes(value.toLowerCase());
+                    return (
+                        state.checked?.has(valueOf(row)) ||
+                        (parentValue != null && state.checked?.has(parentValue))
+                    );
+                });
+            }
+
+            const filterQuery = state.query.trim().toLowerCase();
+
+            if (filterQuery) {
+                result = result.filter((row) => {
+                    const parentValue = parentValueOf(row);
+
+                    return (
+                        valueOf(row).toLowerCase().includes(filterQuery) ||
+                        (parentValue != null && parentValue.toLowerCase().includes(filterQuery))
+                    );
                 });
             }
         });
@@ -144,6 +192,42 @@ export function AdminTable({
         return filter.type === "select" ? filter.key : `text-${index}`;
     }
 
+    function setFilterQuery(key: string, value: string) {
+        setFilters((current) => ({
+            ...current,
+            [key]: { ...(current[key] ?? EMPTY_FILTER), query: value },
+        }));
+    }
+
+    function resetFilter(key: string) {
+        setFilters((current) => {
+            const next = { ...current };
+
+            delete next[key];
+
+            return next;
+        });
+    }
+
+    function setFilterChecked(key: string, checked: Set<string> | null) {
+        setFilters((current) => ({
+            ...current,
+            [key]: { ...(current[key] ?? EMPTY_FILTER), checked },
+        }));
+    }
+
+    function toggleFilterValue(key: string, value: string, selected: boolean, allValues: string[]) {
+        const next = new Set(filters[key]?.checked ?? allValues);
+
+        if (selected) {
+            next.add(value);
+        } else {
+            next.delete(value);
+        }
+
+        setFilterChecked(key, next.size >= allValues.length ? null : next);
+    }
+
     function toggleSort(index: number) {
         setSort((current) => {
             if (!current || current.index !== index) return { index, direction: "asc" };
@@ -152,43 +236,76 @@ export function AdminTable({
         });
     }
 
-    function setFilter(key: string, value: string) {
-        setFilters((current) => ({ ...current, [key]: value }));
-    }
-
     function renderFilterControl(filter: AdminTableColumnFilter, index: number) {
-        const inputClass =
-            "w-full rounded-md border bg-background px-2 py-1 text-xs font-normal focus-visible:ring-2 focus-visible:ring-ring/50 outline-none";
-
-        if (filter.type === "select") {
-            const options = filter.options ?? selectOptions[index] ?? [];
-            const key = filterKey(filter, index);
-
-            return (
-                <select
-                    className={inputClass}
-                    value={filters[key] ?? ""}
-                    onChange={(event) => setFilter(key, event.target.value)}
-                >
-                    <option value="">{t("filterAll")}</option>
-                    {options.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-            );
-        }
-
         const key = filterKey(filter, index);
+        const state = filters[key];
+        const active = Boolean(state && (state.query.trim() !== "" || state.checked != null));
+        const options = filterOptions[index] ?? [];
+        const checked = state?.checked ?? null;
+        const normalized = (state?.query ?? "").trim().toLowerCase();
+        const visibleOptions = normalized
+            ? options.filter((option) => option.label.toLowerCase().includes(normalized))
+            : options;
+        const allValues = options.map((option) => option.value);
+        const noneChecked = checked != null && checked.size === 0;
 
         return (
-            <input
-                className={inputClass}
-                value={filters[key] ?? ""}
-                onChange={(event) => setFilter(key, event.target.value)}
-                placeholder={t("filter")}
-            />
+            <Popover>
+                <PopoverTrigger
+                    className={cn(
+                        "rounded p-1",
+                        active ? "text-primary" : "text-muted-foreground hover:text-foreground",
+                    )}
+                    aria-label={t("filter")}
+                >
+                    <ListFilter className="size-3.5" />
+                </PopoverTrigger>
+                <PopoverContent className="w-64 gap-0 p-0" side="bottom" align="start">
+                    <div className="flex items-center gap-1 border-b p-2">
+                        <input
+                            className="min-w-0 flex-1 rounded-md border bg-background px-2 py-1.5 text-xs font-normal focus-visible:ring-2 focus-visible:ring-ring/50 outline-none"
+                            value={state?.query ?? ""}
+                            onChange={(event) => setFilterQuery(key, event.target.value)}
+                            placeholder={t("filter")}
+                        />
+                        <button
+                            type="button"
+                            className="rounded p-1 text-muted-foreground hover:text-foreground"
+                            onClick={() => resetFilter(key)}
+                            aria-label={t("reset")}
+                            title={t("reset")}
+                        >
+                            <X className="size-3.5" />
+                        </button>
+                    </div>
+                    <div className="flex max-h-72 flex-col gap-0.5 overflow-y-auto p-1.5">
+                        <label className="flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-xs hover:bg-muted">
+                            <Checkbox
+                                checked={checked == null}
+                                indeterminate={checked != null && !noneChecked}
+                                onCheckedChange={(next) =>
+                                    setFilterChecked(key, next ? null : new Set())
+                                }
+                            />
+                            <span className="truncate">{t("filterAll")}</span>
+                        </label>
+                        {visibleOptions.map((option) => (
+                            <label
+                                key={option.value}
+                                className="flex cursor-pointer items-center gap-2 rounded px-1.5 py-1 text-xs hover:bg-muted"
+                            >
+                                <Checkbox
+                                    checked={checked == null || checked.has(option.value)}
+                                    onCheckedChange={(next) =>
+                                        toggleFilterValue(key, option.value, next, allValues)
+                                    }
+                                />
+                                <span className="truncate">{option.label}</span>
+                            </label>
+                        ))}
+                    </div>
+                </PopoverContent>
+            </Popover>
         );
     }
 
@@ -199,9 +316,6 @@ export function AdminTable({
                     <TableRow className="hover:bg-transparent">
                         {columns.map((column, index) => {
                             const active = sort?.index === index;
-                            const filterActive = column.filter
-                                ? (filters[filterKey(column.filter, index)] ?? "") !== ""
-                                : false;
 
                             return (
                                 <TableHead
@@ -227,33 +341,7 @@ export function AdminTable({
                                             )}
                                         </span>
 
-                                        {column.filter && (
-                                            <>
-                                                <div className="hidden min-w-0 flex-1 sm:block">
-                                                    {renderFilterControl(column.filter, index)}
-                                                </div>
-
-                                                <Popover>
-                                                    <PopoverTrigger
-                                                        className={cn(
-                                                            "hidden rounded p-1 sm:hidden max-sm:inline-flex",
-                                                            filterActive
-                                                                ? "text-primary"
-                                                                : "text-muted-foreground",
-                                                        )}
-                                                    >
-                                                        <ListFilter className="size-3.5" />
-                                                    </PopoverTrigger>
-                                                    <PopoverContent
-                                                        className="hidden w-56 sm:hidden max-sm:flex"
-                                                        side="bottom"
-                                                        align="start"
-                                                    >
-                                                        {renderFilterControl(column.filter, index)}
-                                                    </PopoverContent>
-                                                </Popover>
-                                            </>
-                                        )}
+                                        {column.filter && renderFilterControl(column.filter, index)}
 
                                         {column.sortable && (
                                             <button

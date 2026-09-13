@@ -1,3 +1,5 @@
+import type { getOrderById } from "./orders";
+
 export type CheckoutItem = {
     type: string;
     name: string;
@@ -11,3 +13,5 @@ export type CheckoutItem = {
     infill: number | null;
     supports: boolean | null;
 };
+
+export type OrderDetail = NonNullable<Awaited<ReturnType<typeof getOrderById>>>;
