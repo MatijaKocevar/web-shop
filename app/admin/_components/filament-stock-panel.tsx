@@ -21,7 +21,7 @@ export async function FilamentStockPanel({ filaments }: FilamentStockPanelProps)
     const t = await getTranslations("admin.strategy");
 
     return (
-        <section className="rounded-xl border bg-card p-5">
+        <section className="min-w-0 rounded-xl border bg-card p-5">
             <div className="mb-4 flex items-start gap-3">
                 <div className="rounded-lg border bg-muted/50 p-2 text-amber-600">
                     <Layers className="size-5" />
@@ -32,7 +32,7 @@ export async function FilamentStockPanel({ filaments }: FilamentStockPanelProps)
                 </div>
             </div>
 
-            <div className="flex flex-col gap-4">
+            <div className="flex max-h-64 flex-col gap-4 overflow-y-auto pr-2 lg:max-h-[480px]">
                 {filaments.map((f) => {
                     const pct = Math.min(
                         100,
@@ -42,19 +42,19 @@ export async function FilamentStockPanel({ filaments }: FilamentStockPanelProps)
 
                     return (
                         <div key={f.id} className="flex flex-col gap-1.5">
-                            <div className="flex items-center justify-between text-sm">
-                                <span className="flex items-center gap-2 font-medium">
+                            <div className="flex min-w-0 items-center justify-between gap-2 text-sm">
+                                <span className="flex min-w-0 items-center gap-2 font-medium">
                                     <span
-                                        className="size-2.5 rounded-full"
+                                        className="size-2.5 shrink-0 rounded-full"
                                         style={{
                                             backgroundColor: `hsl(${hueFromString(f.color)} 70% 45%)`,
                                         }}
                                     />
-                                    {f.name}
+                                    <span className="truncate">{f.name}</span>
                                 </span>
                                 <span
                                     className={cn(
-                                        "tabular-nums",
+                                        "shrink-0 tabular-nums",
                                         low && "font-medium text-destructive",
                                     )}
                                 >

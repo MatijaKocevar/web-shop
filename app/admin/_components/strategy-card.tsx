@@ -16,7 +16,7 @@ export function StrategyCard({
     children,
 }: StrategyCardProps) {
     return (
-        <section className="rounded-xl border bg-card p-5">
+        <section className="min-w-0 rounded-xl border bg-card p-5">
             <div className="mb-4 flex items-start gap-3">
                 <div className={cn("rounded-lg border bg-muted/50 p-2", accent)}>
                     <Icon className="size-5" />
