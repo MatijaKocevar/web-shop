@@ -43,17 +43,6 @@ export default async function RootLayout({ children }: LayoutProps<"/">) {
             className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
         >
             <body className="flex min-h-full flex-col">
-                <script
-                    dangerouslySetInnerHTML={{
-                        __html:
-                            'var d = window.matchMedia("(prefers-color-scheme: dark)").matches;' +
-                            'var m = document.createElement("meta");' +
-                            'm.name = "theme-color";' +
-                            'm.content = d ? "#0a0a0a" : "#ffffff";' +
-                            "document.head.appendChild(m);" +
-                            'document.head.insertAdjacentHTML("beforeend", \'<link rel="manifest" href="\' + (d ? "/manifest-dark.webmanifest" : "/manifest-light.webmanifest") + \'">\');',
-                    }}
-                />
                 <NextIntlClientProvider messages={messages}>
                     <ThemeProvider
                         attribute="class"
